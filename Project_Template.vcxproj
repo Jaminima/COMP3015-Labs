@@ -78,8 +78,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Dependencies\include;C:\Users\odavies3\Downloads\Project_Template\dependancies\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Dependencies\lib;C:\Users\odavies3\Downloads\Project_Template\dependancies\lib;C:\Users\odavies3\Downloads\Project_Template\dependancies\include;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Dependencies\include;$(MSBuildProjectDirectory)\dependancies\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Dependencies\lib;$(MSBuildProjectDirectory)\dependancies\lib;$(MSBuildProjectDirectory)\dependancies\include;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
