@@ -25,9 +25,6 @@
     <Filter Include="helper\stb">
       <UniqueIdentifier>{2eeab77b-5d84-4893-b9df-1b2ed789b189}</UniqueIdentifier>
     </Filter>
-    <Filter Include="helper\GLFW">
-      <UniqueIdentifier>{a0602d5e-e972-4f4c-8cf5-7553eb5febae}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -53,6 +50,7 @@
     <None Include="shader\basic_uniform.vert">
       <Filter>shaders</Filter>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="helper\scene.h">
@@ -76,10 +74,5 @@
     <ClInclude Include="scenebasic_uniform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Library Include="dependancies\lib\glfw3.lib">
-      <Filter>helper\GLFW</Filter>
-    </Library>
   </ItemGroup>
 </Project>
