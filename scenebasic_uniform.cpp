@@ -55,6 +55,14 @@ void SceneBasic_Uniform::update( float t )
     float angle = cube.assetData->rotation[2];
 
     cube.assetData->rotation[2] = (angle>360 || angle<0) ? 0 : angle + 0.001f;
+
+    angle = cube.assetData->rotation[1];
+
+    cube.assetData->rotation[1] = (angle > 360 || angle < 0) ? 0 : angle + 0.0001f;
+
+    float pos = cube.assetData->position.z;
+
+    cube.assetData->position.z = pos += 1.0f;
 }
 
 void SceneBasic_Uniform::render()

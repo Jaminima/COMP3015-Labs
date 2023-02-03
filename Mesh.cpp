@@ -65,7 +65,12 @@ void Mesh::Build(bool generateColours)
 
 void Mesh::Render(GLSLProgram* prog, AssetData* assetData)
 {
-	glm::mat4 rotationMatrix = glm::rotate(glm::mat4(1.0f), assetData->rotation[2], vec3(0.0f, 0.0f, 1.0f));
+	glm::mat4 rotationMatrix = 
+		glm::rotate(glm::mat4(1.0f), assetData->rotation[0], vec3(1.0f, 0.0f, 0.0f)) *
+		glm::rotate(glm::mat4(1.0f), assetData->rotation[1], vec3(0.0f, 1.0f, 1.0f)) *
+		glm::rotate(glm::mat4(1.0f), assetData->rotation[2], vec3(0.0f, 0.0f, 1.0f));
+
+	rotationMatrix = rotationMatrix + glm::translate(glm::mat4(1.0f), assetData->position);
 
 	GLuint programHandle = prog->getHandle();
 	GLuint location = glGetUniformLocation(programHandle, "RotationMatrix");
