@@ -14,13 +14,18 @@ using std::endl;
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+#include "Asset.h"
+
 using glm::vec3;
 
 SceneBasic_Uniform::SceneBasic_Uniform() : angle(0.0f) {}
-
+ 
 void SceneBasic_Uniform::initScene()
 {
     compile();
+
+    Asset cube("./Assets/cube.obj");
+    cube.Load();
 
     std::cout << std::endl;
 
@@ -91,7 +96,7 @@ glm::mat4 rotationMatrix;
 void SceneBasic_Uniform::update( float t )
 {
     //update your angle here
-    angle = (angle>360 || angle<0) ? 0 : angle + 0.1f;
+    angle = (angle>360 || angle<0) ? 0 : angle + 0.001f;
 }
 
 void SceneBasic_Uniform::render()

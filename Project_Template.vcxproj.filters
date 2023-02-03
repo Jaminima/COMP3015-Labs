@@ -1,78 +1,96 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
+    <Filter Include="Assets">
+      <UniqueIdentifier>{81e137b1-4ea3-4abe-829a-6f64bc994cb6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    <Filter Include="Src\Assets">
+      <UniqueIdentifier>{1e112ae3-9275-4918-913f-739789fee7ba}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="shaders">
+    <Filter Include="Shaders">
       <UniqueIdentifier>{d6ca4009-877c-4d89-9774-b4c1370f02f1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="media">
-      <UniqueIdentifier>{81e137b1-4ea3-4abe-829a-6f64bc994cb6}</UniqueIdentifier>
+    <Filter Include="Src\Misc">
+      <UniqueIdentifier>{2e1cdd50-6554-4cbe-87e5-5d14f6258e31}</UniqueIdentifier>
     </Filter>
-    <Filter Include="helper">
+    <Filter Include="Src\Helper">
       <UniqueIdentifier>{6efe3a76-edc0-4f6f-b45a-1869ab863c2c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="helper\stb">
+    <Filter Include="Src\Helper\stb">
       <UniqueIdentifier>{2eeab77b-5d84-4893-b9df-1b2ed789b189}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="glad.c">
-      <Filter>Source Files</Filter>
+      <Filter>Src</Filter>
     </ClCompile>
     <ClCompile Include="helper\glutils.cpp">
-      <Filter>helper</Filter>
+      <Filter>Src\Helper</Filter>
     </ClCompile>
     <ClCompile Include="helper\glslprogram.cpp">
-      <Filter>helper</Filter>
+      <Filter>Src\Helper</Filter>
     </ClCompile>
     <ClCompile Include="scenebasic_uniform.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Src\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset.cpp">
+      <Filter>Src\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="strutils.cpp">
+      <Filter>Src\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="glad.c">
+      <Filter>Src\Misc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="shader\basic_uniform.frag">
-      <Filter>shaders</Filter>
+      <Filter>Shaders</Filter>
     </None>
     <None Include="shader\basic_uniform.vert">
-      <Filter>shaders</Filter>
+      <Filter>Shaders</Filter>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="helper\scene.h">
-      <Filter>helper</Filter>
+      <Filter>Src\Helper</Filter>
     </ClInclude>
     <ClInclude Include="helper\scenerunner.h">
-      <Filter>helper</Filter>
+      <Filter>Src\Helper</Filter>
     </ClInclude>
     <ClInclude Include="helper\stb\stb_image.h">
-      <Filter>helper\stb</Filter>
+      <Filter>Src\Helper\stb</Filter>
     </ClInclude>
     <ClInclude Include="helper\stb\stb_image_write.h">
-      <Filter>helper\stb</Filter>
+      <Filter>Src\Helper\stb</Filter>
     </ClInclude>
     <ClInclude Include="helper\glutils.h">
-      <Filter>helper</Filter>
+      <Filter>Src\Helper</Filter>
     </ClInclude>
     <ClInclude Include="helper\glslprogram.h">
-      <Filter>helper</Filter>
+      <Filter>Src\Helper</Filter>
     </ClInclude>
     <ClInclude Include="scenebasic_uniform.h">
-      <Filter>Header Files</Filter>
+      <Filter>Src</Filter>
     </ClInclude>
+    <ClInclude Include="Asset.h">
+      <Filter>Src\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="strutils.h">
+      <Filter>Src\Misc</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Object Include="assets\cube.obj">
+      <Filter>Assets</Filter>
+    </Object>
   </ItemGroup>
 </Project>
