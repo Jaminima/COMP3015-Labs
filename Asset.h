@@ -47,6 +47,8 @@ public:
 	void Build(bool generateColours = false);
 
 	void Draw();
+
+	void Render();
 };
 
 class Asset {
@@ -72,6 +74,8 @@ public:
 	void Build(bool generateColours = false);
 
 	void Draw();
+
+	void Render();
 };
 
 #endif

@@ -136,3 +136,11 @@ void Asset::Draw()
         this->meshses[i].Draw();
     }
 }
+
+void Asset::Render()
+{
+    int meshCount = this->meshses.size();
+    for (int i = 0; i < meshCount; i++) {
+        this->meshses[i].Render();
+    }
+}

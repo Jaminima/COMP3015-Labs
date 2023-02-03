@@ -62,3 +62,11 @@ void Mesh::Build(bool generateColours)
 	delete this->components;
 	this->components = 0x0;
 }
+
+void Mesh::Render()
+{
+	glBindVertexArray(this->vaoBuffer);
+	glDrawArrays(GL_TRIANGLES, 0, this->data->vertexSet.size());
+
+	glBindVertexArray(0);
+}
