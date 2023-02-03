@@ -123,4 +123,8 @@ void Asset::ExecuteOBJOperation(string opCode, vector<string> operands)
 
 void Asset::Build()
 {
+    int meshCount = this->meshses.size();
+    for (int i = 0; i < meshCount; i++) {
+        this->meshses[i].Build();
+    }
 }

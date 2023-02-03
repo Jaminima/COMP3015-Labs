@@ -26,6 +26,7 @@ void SceneBasic_Uniform::initScene()
 
     Asset cube("./Assets/cube.obj");
     cube.Load();
+    cube.Build();
 
     std::cout << std::endl;
 
