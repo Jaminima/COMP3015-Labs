@@ -63,8 +63,15 @@ void Mesh::Build(bool generateColours)
 	this->components = 0x0;
 }
 
-void Mesh::Render()
+void Mesh::Render(GLSLProgram* prog, AssetData* assetData)
 {
+	glm::mat4 rotationMatrix = glm::rotate(glm::mat4(1.0f), assetData->rotation[2], vec3(0.0f, 0.0f, 1.0f));
+
+	GLuint programHandle = prog->getHandle();
+	GLuint location = glGetUniformLocation(programHandle, "RotationMatrix");
+
+	glUniformMatrix4fv(location, 1, GL_FALSE, &rotationMatrix[0][0]);
+
 	glBindVertexArray(this->vaoBuffer);
 	glDrawArrays(GL_TRIANGLES, 0, this->data->vertexSet.size());
 

@@ -6,6 +6,7 @@
 #include <string>
 #include <glm/glm.hpp>
 #include <glad/glad.h>
+#include "helper/glslprogram.h"
 
 #define bufferCount 2
 
@@ -27,7 +28,11 @@ public:
 	vector<ivec3> indexSet;
 };
 
-
+class AssetData {
+public:
+	vec3 position;
+	vec3 rotation;
+};
 
 class Mesh {
 private:
@@ -48,7 +53,7 @@ public:
 
 	void Draw();
 
-	void Render();
+	void Render(GLSLProgram* prog, AssetData* assetData);
 };
 
 class Asset {
@@ -56,6 +61,8 @@ public:
 
 	string srcFile;
 	string* srcData = 0x0;
+
+	AssetData* assetData;
 
 	vector<string> materialFiles;
 
@@ -75,7 +82,7 @@ public:
 
 	void Draw();
 
-	void Render();
+	void Render(GLSLProgram* prog);
 };
 
 #endif

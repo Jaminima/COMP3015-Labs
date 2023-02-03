@@ -9,6 +9,7 @@
 Asset::Asset(string srcFile)
 {
 	this->srcFile = srcFile;
+    this->assetData = new AssetData();
 }
 
 void Asset::Load()
@@ -137,10 +138,10 @@ void Asset::Draw()
     }
 }
 
-void Asset::Render()
+void Asset::Render(GLSLProgram* prog)
 {
     int meshCount = this->meshses.size();
     for (int i = 0; i < meshCount; i++) {
-        this->meshses[i].Render();
+        this->meshses[i].Render(prog, this->assetData);
     }
 }
