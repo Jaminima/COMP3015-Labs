@@ -36,7 +36,7 @@ public:
 
 	Mesh(string mesh_name);
 
-	void Build();
+	void Build(bool generateColours = false);
 };
 
 class Asset {
@@ -59,7 +59,7 @@ public:
 
 	void ExecuteOBJOperation(string opCode, vector<string> operands);
 
-	void Build();
+	void Build(bool generateColours = false);
 };
 
 #endif

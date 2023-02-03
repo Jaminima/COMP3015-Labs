@@ -6,7 +6,7 @@ Mesh::Mesh(string mesh_name)
 	this->components = new MeshComponents();
 }
 
-void Mesh::Build()
+void Mesh::Build(bool generateColours)
 {
 	if (this->components == 0x0) throw exception("Component Data Is Missing During OBJ Parsing!");
 
@@ -19,6 +19,10 @@ void Mesh::Build()
 		this->data->vertexSet.push_back(this->components->vertexSet[idx.x - 1]);
 		this->data->texCooSet.push_back(this->components->texCooSet[idx.y - 1]);
 		this->data->normalSet.push_back(this->components->normalSet[idx.z - 1]);
+
+		if (generateColours) {
+			this->data->colourSet.push_back(vec4(1.0f, 1.0f, 1.0f, 1.0f));
+		}
 	}
 
 	delete this->components;

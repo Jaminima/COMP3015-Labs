@@ -121,10 +121,10 @@ void Asset::ExecuteOBJOperation(string opCode, vector<string> operands)
     }
 }
 
-void Asset::Build()
+void Asset::Build(bool generateColours)
 {
     int meshCount = this->meshses.size();
     for (int i = 0; i < meshCount; i++) {
-        this->meshses[i].Build();
+        this->meshses[i].Build(generateColours);
     }
 }
