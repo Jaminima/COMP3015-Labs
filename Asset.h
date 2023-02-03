@@ -5,6 +5,9 @@
 #include <vector>
 #include <string>
 #include <glm/glm.hpp>
+#include <glad/glad.h>
+
+#define bufferCount 2
 
 using namespace std;
 using namespace glm;
@@ -24,10 +27,15 @@ public:
 	vector<ivec3> indexSet;
 };
 
+
+
 class Mesh {
 private:
 
 public:
+	GLuint buffers[bufferCount];
+	GLuint vaoBuffer;
+
 	MeshComponents* components;
 	MeshData* data = 0x0;
 
@@ -37,6 +45,8 @@ public:
 	Mesh(string mesh_name);
 
 	void Build(bool generateColours = false);
+
+	void Draw();
 };
 
 class Asset {
@@ -60,6 +70,8 @@ public:
 	void ExecuteOBJOperation(string opCode, vector<string> operands);
 
 	void Build(bool generateColours = false);
+
+	void Draw();
 };
 
 #endif

@@ -128,3 +128,11 @@ void Asset::Build(bool generateColours)
         this->meshses[i].Build(generateColours);
     }
 }
+
+void Asset::Draw()
+{
+    int meshCount = this->meshses.size();
+    for (int i = 0; i < meshCount; i++) {
+        this->meshses[i].Draw();
+    }
+}
