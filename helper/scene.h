@@ -5,18 +5,22 @@
 
 class Scene
 {
-protected:
-	glm::mat4 model, view, projection;
-
 public:
     int width;
     int height;
     Camera cam;
-    float lastUpdateTime;
+    float lastUpdateTime = 0;
 
 	Scene() : m_animate(true), width(800), height(600) {
         this->cam.aspect = width / height;
     }
+
+    Scene(int width, int height) : m_animate(true) {
+        this->width = width;
+        this->height = height;
+        this->cam.aspect = width / height;
+    }
+
 	virtual ~Scene() {}
 
 	void setDimensions( int w, int h ) {
