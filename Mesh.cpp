@@ -1,7 +1,9 @@
 #include "Asset.h"
 #include "helper/glutils.h"
 #include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
+#include <glm/ext/matrix_transform.hpp> // GLM: translate, rotate
+#include <glm/ext/matrix_clip_space.hpp> // GLM: perspective and ortho 
+#include <glm/gtc/type_ptr.hpp> // GLM: access to the value_ptr
 
 using namespace std;
 using namespace glm;
@@ -65,17 +67,22 @@ void Mesh::Build(bool generateColours)
 
 void Mesh::Render(GLSLProgram* prog, AssetData* assetData)
 {
-	glm::mat4 rotationMatrix = 
-		glm::rotate(glm::mat4(1.0f), assetData->rotation[0], vec3(1.0f, 0.0f, 0.0f)) *
-		glm::rotate(glm::mat4(1.0f), assetData->rotation[1], vec3(0.0f, 1.0f, 1.0f)) *
-		glm::rotate(glm::mat4(1.0f), assetData->rotation[2], vec3(0.0f, 0.0f, 1.0f));
+	glm::mat4 rotationMatrix(1.0f);
+	glm::rotate(rotationMatrix, assetData->rotation[0], vec3(1.0f, 0.0f, 0.0f));
+	glm::rotate(rotationMatrix, assetData->rotation[1], vec3(0.0f, 1.0f, 1.0f));
+	glm::rotate(rotationMatrix, assetData->rotation[2], vec3(0.0f, 0.0f, 1.0f));
 
-	rotationMatrix = rotationMatrix + glm::translate(glm::mat4(1.0f), assetData->position);
+	glm::mat4 translateMatrix;
+	translateMatrix = glm::translate(glm::mat4(1.0f), vec3(assetData->position));
+
+	glm::mat4 projectionMatrix = glm::perspective(90.0f, 4.0f/3, 0.1f, 50.0f);
 
 	GLuint programHandle = prog->getHandle();
-	GLuint location = glGetUniformLocation(programHandle, "RotationMatrix");
+	GLuint rotationRef = glGetUniformLocation(programHandle, "RotationMatrix");
 
-	glUniformMatrix4fv(location, 1, GL_FALSE, &rotationMatrix[0][0]);
+	mat4 mvp = projectionMatrix * translateMatrix * rotationMatrix;
+
+	glUniformMatrix4fv(rotationRef, 1, GL_FALSE, glm::value_ptr(mvp));
 
 	glBindVertexArray(this->vaoBuffer);
 	glDrawArrays(GL_TRIANGLES, 0, this->data->vertexSet.size());

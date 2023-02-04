@@ -62,7 +62,7 @@ void SceneBasic_Uniform::update( float t )
 
     float pos = cube.assetData->position.z;
 
-    cube.assetData->position.z = pos += 1.0f;
+    cube.assetData->position.z = pos -= 0.0001f;
 }
 
 void SceneBasic_Uniform::render()
