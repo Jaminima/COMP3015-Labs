@@ -1,4 +1,4 @@
-#include "strutils.h"
+#include "utils.h"
 
 vector<string> split(string str, string delimiter) {
     vector<string> results;
@@ -18,4 +18,16 @@ vector<string> split(string str, string delimiter) {
     }
 
     return results;
+}
+
+void boundAngles(vec3* angle)
+{
+    while (angle->x > 360) angle->x -= 360;
+    while (angle->x < 0) angle->x += 360;
+
+    while (angle->y > 360) angle->y -= 360;
+    while (angle->y < 0) angle->y += 360;
+
+    while (angle->z > 360) angle->z -= 360;
+    while (angle->z < 0) angle->z += 360;
 }

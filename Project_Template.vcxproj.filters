@@ -43,11 +43,14 @@
     <ClCompile Include="Asset.cpp">
       <Filter>Src\Assets</Filter>
     </ClCompile>
-    <ClCompile Include="strutils.cpp">
+    <ClCompile Include="utils.cpp">
       <Filter>Src\Misc</Filter>
     </ClCompile>
     <ClCompile Include="glad.c">
       <Filter>Src\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Src\Assets</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -84,7 +87,7 @@
     <ClInclude Include="Asset.h">
       <Filter>Src\Assets</Filter>
     </ClInclude>
-    <ClInclude Include="strutils.h">
+    <ClInclude Include="utils.h">
       <Filter>Src\Misc</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">

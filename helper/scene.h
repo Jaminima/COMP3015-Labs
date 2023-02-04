@@ -12,6 +12,7 @@ public:
     int width;
     int height;
     Camera cam;
+    float lastUpdateTime;
 
 	Scene() : m_animate(true), width(800), height(600) {
         this->cam.aspect = width / height;

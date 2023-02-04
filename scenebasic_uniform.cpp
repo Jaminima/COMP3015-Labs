@@ -14,13 +14,13 @@ using std::endl;
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+
 #include "Asset.h"
+#include "utils.h"
 
 using glm::vec3;
 
 SceneBasic_Uniform::SceneBasic_Uniform() : angle(0.0f) {}
-
-
 
 Asset cube("./Assets/cube.obj");
 
@@ -53,25 +53,24 @@ void SceneBasic_Uniform::compile()
 	}
 }
 
-void SceneBasic_Uniform::update( float t )
+void SceneBasic_Uniform::update(float dt)
 {
+    vec3* cubeRot = &cube.assetData->rotation;
+
     //update your angle here
-    float angle = cube.assetData->rotation[2];
 
-    cube.assetData->rotation[2] = (angle>360 || angle<0) ? 0 : angle + 0.001f;
+    cubeRot->z += 0.8f * dt;
+    cubeRot->x += 0.4f * dt;
 
-    angle = cube.assetData->rotation[1];
+    boundAngles(cubeRot);
 
-    cube.assetData->rotation[1] = (angle > 360 || angle < 0) ? 0 : angle + 0.0001f;
-
-    /*float pos = cube.assetData->position.z;
-
-    cube.assetData->position.z = pos -= 0.0001f;*/
-
-    cam.position.z -= 0.001f;
+    cam.position.z -= 1.0f * dt;
     //cam.rotation.y += 0.001f;
 
     cam.updateMatrix();
+
+
+    printf("Update Delta %f ms       \r", dt * 1000);
 }
 
 void SceneBasic_Uniform::render()
