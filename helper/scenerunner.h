@@ -15,7 +15,21 @@ Scene* activeScene;
 
 void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
-    activeScene->keyDown(key);
+    switch (action)
+    {
+        case GLFW_PRESS:
+            activeScene->glKeyDown(key, mods);
+            break;
+        case GLFW_RELEASE:
+            activeScene->glKeyReleased(key, mods);
+            break;
+        case GLFW_REPEAT:
+            activeScene->glKeyHeld(key, mods);
+            break;
+
+    default:
+        break;
+    }
 }
 
 class SceneRunner {

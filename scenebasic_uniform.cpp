@@ -53,26 +53,16 @@ void SceneBasic_Uniform::compile()
 	}
 }
 
-void SceneBasic_Uniform::keyDown(int key) {
-    printf("\rKey Pressed %c                         \n\r",key);
-}
-
 void SceneBasic_Uniform::update(float dt)
 {
-    vec3* cubeRot = &cube.assetData->rotation;
+    processKeys(dt);
 
-    //update your angle here
+    vec3* cubeRot = &cube.assetData->rotation;
 
     cubeRot->z += 0.8f * dt;
     cubeRot->x += 0.4f * dt;
 
     boundAngles(cubeRot);
-
-    cam.position.z -= 1.0f * dt;
-    //cam.rotation.y += 0.001f;
-
-    cam.updateMatrix();
-
 
     printf("Update Delta %f ms       \r", dt * 1000);
 }
@@ -89,4 +79,26 @@ void SceneBasic_Uniform::resize(int w, int h)
     width = w;
     height = h;
     glViewport(0,0,w,h);
+}
+
+void SceneBasic_Uniform::keyActve(int key, int mods, float dt)
+{
+    switch (key) {
+        case 'W':
+            cam.position.z += 10.0f * dt;
+            break;
+
+        case 'S':
+            cam.position.z -= 10.0f * dt;
+            break;
+
+        case 'A':
+            cam.position.x += 10.0f * dt;
+            break;
+
+        case 'D':
+            cam.position.x -= 10.0f * dt;
+            break;
+    }
+    cam.updateMatrix();
 }

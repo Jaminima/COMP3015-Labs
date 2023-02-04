@@ -5,6 +5,9 @@
 
 class Scene
 {
+private:
+    vector<ivec2> pendingKeys;
+
 public:
     int width;
     int height;
@@ -23,7 +26,15 @@ public:
 
 	virtual ~Scene() {}
 
-    virtual void keyDown(int key) = 0;
+    virtual void keyActve(int key, int mods, float dt) = 0;
+
+    void processKeys(float dt);
+
+    void glKeyDown(int key, int mods);
+
+    void glKeyHeld(int key, int mods);
+
+    void glKeyReleased(int key, int mods);
 
 	void setDimensions( int w, int h ) {
 	    width = w;

@@ -52,6 +52,9 @@
     <ClCompile Include="Camera.cpp">
       <Filter>Src\Assets</Filter>
     </ClCompile>
+    <ClCompile Include="helper\scene.cpp">
+      <Filter>Src\Helper</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="shader\basic_uniform.frag">

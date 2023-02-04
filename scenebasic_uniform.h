@@ -22,7 +22,9 @@ public:
     void update( float t );
     void render();
     void resize(int, int);
-    void keyDown(int key);
+
+    // Inherited via Scene
+    virtual void keyActve(int key, int mods, float dt) override;
 };
 
 #endif // SCENEBASIC_UNIFORM_H
