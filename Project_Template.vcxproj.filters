@@ -87,6 +87,9 @@
     <ClInclude Include="strutils.h">
       <Filter>Src\Misc</Filter>
     </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Src\Assets</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Object Include="assets\cube.obj">

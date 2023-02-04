@@ -19,7 +19,9 @@ using std::endl;
 using glm::vec3;
 
 SceneBasic_Uniform::SceneBasic_Uniform() : angle(0.0f) {}
- 
+
+
+
 Asset cube("./Assets/cube.obj");
 
 void SceneBasic_Uniform::initScene()
@@ -69,7 +71,7 @@ void SceneBasic_Uniform::render()
 {
     glClear(GL_COLOR_BUFFER_BIT);
 
-    cube.Render(&prog);
+    cube.Render(&prog, &cam);
 }
 
 void SceneBasic_Uniform::resize(int w, int h)

@@ -8,6 +8,8 @@
 #include <glad/glad.h>
 #include "helper/glslprogram.h"
 
+#include "Camera.h"
+
 #define bufferCount 2
 
 using namespace std;
@@ -53,7 +55,7 @@ public:
 
 	void Draw();
 
-	void Render(GLSLProgram* prog, AssetData* assetData);
+	void Render(GLSLProgram* prog, AssetData* assetData, Camera* camera);
 };
 
 class Asset {
@@ -82,7 +84,7 @@ public:
 
 	void Draw();
 
-	void Render(GLSLProgram* prog);
+	void Render(GLSLProgram* prog, Camera* camera);
 };
 
 #endif

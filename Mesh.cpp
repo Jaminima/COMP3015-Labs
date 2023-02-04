@@ -65,7 +65,7 @@ void Mesh::Build(bool generateColours)
 	this->components = 0x0;
 }
 
-void Mesh::Render(GLSLProgram* prog, AssetData* assetData)
+void Mesh::Render(GLSLProgram* prog, AssetData* assetData, Camera* camera)
 {
 	glm::mat4 model(1.0f);
 	model = glm::translate(model, vec3(assetData->position));
@@ -74,7 +74,7 @@ void Mesh::Render(GLSLProgram* prog, AssetData* assetData)
 	model = glm::rotate(model, assetData->rotation[1], vec3(0.0f, 1.0f, 1.0f));
 	model = glm::rotate(model, assetData->rotation[2], vec3(0.0f, 0.0f, 1.0f));
 
-	glm::mat4 projectionMatrix = glm::perspective(90.0f, 4.0f/3, 0.1f, 50.0f);
+	glm::mat4 projectionMatrix = glm::perspective(camera->fov, camera->aspect, camera->clipNear, camera->clipFar);
 
 	GLuint programHandle = prog->getHandle();
 	GLuint rotationRef = glGetUniformLocation(programHandle, "RotationMatrix");

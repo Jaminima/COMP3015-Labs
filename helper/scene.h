@@ -1,6 +1,7 @@
 #pragma once
 
 #include <glm/glm.hpp>
+#include "../Camera.h"
 
 class Scene
 {
@@ -10,8 +11,11 @@ protected:
 public:
     int width;
     int height;
+    Camera cam;
 
-	Scene() : m_animate(true), width(800), height(600) { }
+	Scene() : m_animate(true), width(800), height(600) {
+        this->cam.aspect = width / height;
+    }
 	virtual ~Scene() {}
 
 	void setDimensions( int w, int h ) {
