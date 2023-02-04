@@ -49,6 +49,7 @@ void Mesh::Build(bool generateColours)
 	this->data = new MeshData();
 
 	int indexCount = this->components->indexSet.size();
+	int thirdIndexCount = indexCount / 3.0f;
 	for (int i = 0; i < indexCount; i++) {
 		ivec3 idx = this->components->indexSet[i];
 
@@ -57,7 +58,9 @@ void Mesh::Build(bool generateColours)
 		this->data->normalSet.push_back(this->components->normalSet[idx.z - 1]);
 
 		if (generateColours) {
-			this->data->colourSet.push_back(vec4(1.0f, 1.0f, 1.0f, 1.0f));
+			int cIdx = i / thirdIndexCount;
+			float c = (float)(i - (thirdIndexCount*cIdx)) / thirdIndexCount;
+			this->data->colourSet.push_back(vec4(cIdx ==0?c : 0.0f, cIdx == 1 ? c : 0.0f, cIdx == 2 ? c : 0.0f, 1.0f));
 		}
 	}
 
