@@ -72,6 +72,8 @@ public:
 
 	Asset(string srcFile);
 
+	Asset(string srcFile, vec3 pos = vec3(), vec3 rot = vec3());
+
 	void Load();
 
 	void ParseOBJ();

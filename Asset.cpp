@@ -138,6 +138,14 @@ void Asset::Draw()
     }
 }
 
+Asset::Asset(string srcFile, vec3 pos, vec3 rot)
+{
+    this->srcFile = srcFile;
+    this->assetData = new AssetData();
+    this->assetData->position = pos;
+    this->assetData->rotation = rot;
+}
+
 void Asset::Render(GLSLProgram* prog, Camera* camera)
 {
     int meshCount = this->meshses.size();
