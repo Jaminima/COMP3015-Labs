@@ -74,12 +74,10 @@ void Mesh::Render(GLSLProgram* prog, AssetData* assetData, Camera* camera)
 	model = glm::rotate(model, assetData->rotation[1], vec3(0.0f, 1.0f, 1.0f));
 	model = glm::rotate(model, assetData->rotation[2], vec3(0.0f, 0.0f, 1.0f));
 
-	glm::mat4 projectionMatrix = glm::perspective(camera->fov, camera->aspect, camera->clipNear, camera->clipFar);
-
 	GLuint programHandle = prog->getHandle();
 	GLuint rotationRef = glGetUniformLocation(programHandle, "RotationMatrix");
 
-	mat4 mvp = projectionMatrix * model;
+	mat4 mvp = camera->projectionMatrix * model;
 
 	glUniformMatrix4fv(rotationRef, 1, GL_FALSE, glm::value_ptr(mvp));
 

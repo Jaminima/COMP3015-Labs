@@ -36,6 +36,8 @@ void SceneBasic_Uniform::initScene()
     prog.printActiveUniforms();
 
     cube.Draw();
+
+    cam.updateMatrix();
 }
 
 void SceneBasic_Uniform::compile()
@@ -62,9 +64,14 @@ void SceneBasic_Uniform::update( float t )
 
     cube.assetData->rotation[1] = (angle > 360 || angle < 0) ? 0 : angle + 0.0001f;
 
-    float pos = cube.assetData->position.z;
+    /*float pos = cube.assetData->position.z;
 
-    cube.assetData->position.z = pos -= 0.0001f;
+    cube.assetData->position.z = pos -= 0.0001f;*/
+
+    cam.position.z -= 0.001f;
+    //cam.rotation.y += 0.001f;
+
+    cam.updateMatrix();
 }
 
 void SceneBasic_Uniform::render()
