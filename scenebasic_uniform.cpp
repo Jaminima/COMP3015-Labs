@@ -53,6 +53,10 @@ void SceneBasic_Uniform::compile()
 	}
 }
 
+void SceneBasic_Uniform::keyDown(int key) {
+    printf("\rKey Pressed %c                         \n\r",key);
+}
+
 void SceneBasic_Uniform::update(float dt)
 {
     vec3* cubeRot = &cube.assetData->rotation;

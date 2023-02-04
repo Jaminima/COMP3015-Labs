@@ -11,6 +11,13 @@
 #include <fstream>
 #include <iostream>
 
+Scene* activeScene;
+
+void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+    activeScene->keyDown(key);
+}
+
 class SceneRunner {
 private:
     GLFWwindow * window;
@@ -70,9 +77,13 @@ public:
     }
 
     int run(Scene & scene) {
+        activeScene = &scene;
+
         scene.setDimensions(fbw, fbh);
         scene.initScene();
         scene.resize(fbw, fbh);
+
+        glfwSetKeyCallback(window, KeyCallback);
 
         // Enter the main loop
         mainLoop(window, scene);

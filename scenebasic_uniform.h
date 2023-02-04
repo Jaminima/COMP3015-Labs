@@ -22,6 +22,7 @@ public:
     void update( float t );
     void render();
     void resize(int, int);
+    void keyDown(int key);
 };
 
 #endif // SCENEBASIC_UNIFORM_H

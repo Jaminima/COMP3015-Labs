@@ -23,6 +23,8 @@ public:
 
 	virtual ~Scene() {}
 
+    virtual void keyDown(int key) = 0;
+
 	void setDimensions( int w, int h ) {
 	    width = w;
 	    height = h;
