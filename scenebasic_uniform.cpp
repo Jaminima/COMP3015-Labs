@@ -63,8 +63,6 @@ void SceneBasic_Uniform::update(float dt)
     cubeRot->x += 0.4f * dt;
 
     boundAngles(cubeRot);
-
-    printf("Update Delta %f ms       \r", dt * 1000);
 }
 
 void SceneBasic_Uniform::render()
@@ -87,21 +85,23 @@ void SceneBasic_Uniform::resize(int w, int h)
 
 void SceneBasic_Uniform::keyActve(int key, int mods, float dt)
 {
+    const float moveStep = 20.0f;
+
     switch (key) {
         case 'W':
-            cam.position.z += 10.0f * dt;
+            cam.position.z += moveStep * dt;
             break;
 
         case 'S':
-            cam.position.z -= 10.0f * dt;
+            cam.position.z -= moveStep * dt;
             break;
 
         case 'A':
-            cam.position.x += 10.0f * dt;
+            cam.position.x += moveStep * dt;
             break;
 
         case 'D':
-            cam.position.x -= 10.0f * dt;
+            cam.position.x -= moveStep * dt;
             break;
     }
     cam.updateMatrix();

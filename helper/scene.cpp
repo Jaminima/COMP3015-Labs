@@ -6,7 +6,7 @@ void Scene::processKeys(float dt)
 	{
 		ivec2 k = pendingKeys.back();
 		pendingKeys.pop_back();
-		printf("\rKey Pressed %c                         \n\r", k[0]);
+		//printf("\rKey Pressed %c                         \n\r", k[0]);
 		keyActve(k[0], k[1], dt);
 	}
 }

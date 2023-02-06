@@ -12,6 +12,7 @@ public:
     int width;
     int height;
     Camera cam;
+    int framesInSecond = 0;
     float lastUpdateTime = 0;
 
 	Scene() : m_animate(true), width(800), height(600) {
@@ -50,7 +51,16 @@ public:
       This is called prior to every frame.  Use this
       to update your animation.
       */
-    virtual void update( float t ) = 0;
+    void updateTriggered(float dt) {
+        update(dt);
+
+        framesInSecond = (lastUpdateTime - dt < floorf(lastUpdateTime)) ? 0 : framesInSecond + 1;
+        int frames = floorf(framesInSecond / (lastUpdateTime - floorf(lastUpdateTime)));
+
+        printf("Update Delta %f ms %i fps       \r", dt * 1000, frames);
+    }
+
+    virtual void update( float dt ) = 0;
 
     /**
       Draw your scene.

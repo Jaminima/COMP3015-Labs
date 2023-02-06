@@ -147,7 +147,7 @@ private:
 			
             float t = float(glfwGetTime());
 
-            scene.update(t - scene.lastUpdateTime);
+            scene.updateTriggered(t - scene.lastUpdateTime);
 
             scene.lastUpdateTime = t;
 
