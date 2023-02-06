@@ -10,7 +10,7 @@
 
 #include "Camera.h"
 
-#define bufferCount 2
+#define bufferCount 4
 
 using namespace std;
 using namespace glm;

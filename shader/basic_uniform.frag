@@ -1,8 +1,11 @@
 #version 460
 
-in vec3 Color;
+in vec4 Color;
+in vec2 vTextureCoordinate;
 layout (location = 0) out vec4 FragColor;
 
+uniform sampler2D faceTexture;
+
 void main() {
-    FragColor = vec4(Color, 1.0);
+    FragColor = texture(faceTexture, vTextureCoordinate)  * Color;
 }
