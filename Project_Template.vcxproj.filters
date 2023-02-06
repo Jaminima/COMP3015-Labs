@@ -101,5 +101,8 @@
     <Object Include="assets\cube.obj">
       <Filter>Assets</Filter>
     </Object>
+    <Object Include="assets\stone.obj">
+      <Filter>Assets</Filter>
+    </Object>
   </ItemGroup>
 </Project>

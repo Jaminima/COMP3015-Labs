@@ -22,7 +22,7 @@ using glm::vec3;
 
 SceneBasic_Uniform::SceneBasic_Uniform() : angle(0.0f) {}
 
-Asset cube("./Assets/cube.obj", vec3(0,0,-4));
+Asset cube("./Assets/stone.obj", vec3(0,0,-30));
 
 void SceneBasic_Uniform::initScene()
 {

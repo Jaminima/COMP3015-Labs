@@ -53,9 +53,13 @@ void Mesh::Build(bool generateColours)
 	for (int i = indexCount - 1; i >= 0; i--) {
 		ivec3 idx = this->components->indexSet[i];
 
-		this->data->vertexSet.push_back(this->components->vertexSet[idx.x - 1]);
-		this->data->texCooSet.push_back(this->components->texCooSet[idx.y - 1]);
-		this->data->normalSet.push_back(this->components->normalSet[idx.z - 1]);
+		this->data->vertexSet.push_back(this->components->vertexSet[(idx.x == -1 ? this->components->normalSet.size() : idx.x) - 1]);
+
+		if (idx.y!=0) 
+			this->data->texCooSet.push_back(this->components->texCooSet[(idx.y == -1 ? this->components->normalSet.size() : idx.y) - 1]);
+
+		if (idx.z != 0)
+			this->data->normalSet.push_back(this->components->normalSet[(idx.z == -1 ? this->components->normalSet.size() : idx.z) - 1]);
 
 		if (generateColours) {
 			int cIdx = i / thirdIndexCount;

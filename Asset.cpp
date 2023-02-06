@@ -47,7 +47,11 @@ void Asset::ParseOBJ()
         ParseOBJLine(line);
 
         start = end + 1;
+
+        printf("Loading Asset From %s %i/%i BYTES\r", this->srcFile.c_str(), end, dataLen);
     }
+
+    std::cout << std::endl;
 
     delete this->srcData;
     this->srcData = 0x0;
@@ -83,7 +87,15 @@ void Asset::ExecuteOBJOperation(string opCode, vector<string> operands)
         return;
     }
 
-    if (this->meshses.size() == 0) throw exception("No Existing Meshes To Operate On");
+    if (this->meshses.size() == 0) {
+        printf("Unnamed Object Detected %s                            \n", this->srcFile.c_str());
+
+        Mesh m("No Name");
+
+        this->meshses.push_back(m);
+
+        //throw exception("No Existing Meshes To Operate On");
+    }
 
     Mesh* m = &this->meshses.back();
 
@@ -111,11 +123,32 @@ void Asset::ExecuteOBJOperation(string opCode, vector<string> operands)
         for (int i = 0; i < operands.size(); i++) {
             vector<string> faceData = split(operands[i], "/");
 
-            ivec3 face(
-                (faceData[0].empty() ? -1 : stoi(faceData[0])),
-                (faceData[1].empty() ? -1 : stoi(faceData[1])),
-                (faceData[2].empty() ? -1 : stoi(faceData[2]))
-            );
+            ivec3 face;
+
+            switch (faceData.size())
+            {
+                case 1:
+                    face = ivec3(
+                        (faceData[0].empty() ? -1 : stoi(faceData[0])),
+                        0,
+                        0
+                    );
+                break;
+                case 2:
+                    face = ivec3(
+                        (faceData[0].empty() ? -1 : stoi(faceData[0])),
+                        (faceData[1].empty() ? -1 : stoi(faceData[1])),
+                        0
+                    );
+                    break;
+                case 3:
+                    face = ivec3(
+                        (faceData[0].empty() ? -1 : stoi(faceData[0])),
+                        (faceData[1].empty() ? -1 : stoi(faceData[1])),
+                        (faceData[2].empty() ? -1 : stoi(faceData[2]))
+                    );
+                    break;
+            }
 
             m->components->indexSet.push_back(face);
         }
