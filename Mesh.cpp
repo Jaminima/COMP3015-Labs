@@ -50,7 +50,7 @@ void Mesh::Build(bool generateColours)
 
 	int indexCount = this->components->indexSet.size();
 	int thirdIndexCount = indexCount / 3.0f;
-	for (int i = 0; i < indexCount; i++) {
+	for (int i = indexCount - 1; i >= 0; i--) {
 		ivec3 idx = this->components->indexSet[i];
 
 		this->data->vertexSet.push_back(this->components->vertexSet[idx.x - 1]);
@@ -60,7 +60,7 @@ void Mesh::Build(bool generateColours)
 		if (generateColours) {
 			int cIdx = i / thirdIndexCount;
 			float c = (float)(i - (thirdIndexCount*cIdx)) / thirdIndexCount;
-			this->data->colourSet.push_back(vec4(cIdx ==0?c : 0.0f, cIdx == 1 ? c : 0.0f, cIdx == 2 ? c : 0.0f, 1.0f));
+			this->data->colourSet.push_back(vec4(i % 3 == 0 ? 1 : 0, i % 3 == 1 ? 1 : 0, i % 3 == 2 ? 1 : 0, 1.0f)/*vec4(cIdx ==0?c : 0.0f, cIdx == 1 ? c : 0.0f, cIdx == 2 ? c : 0.0f, 1.0f)*/);
 		}
 	}
 
