@@ -55,6 +55,9 @@
     <ClCompile Include="helper\scene.cpp">
       <Filter>Src\Helper</Filter>
     </ClCompile>
+    <ClCompile Include="TextureLoad.cpp">
+      <Filter>Src\Helper</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="shader\basic_uniform.frag">
@@ -95,6 +98,9 @@
     </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>Src\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureLoad.h">
+      <Filter>Src\Helper</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

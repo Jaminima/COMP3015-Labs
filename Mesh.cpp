@@ -13,16 +13,16 @@ void Mesh::Draw()
 	glGenBuffers(bufferCount, this->buffers);
 
 	glBindBuffer(GL_ARRAY_BUFFER, this->buffers[0]);
-	glBufferData(GL_ARRAY_BUFFER, this->data->vertexSet.size() * sizeof(vec3), &this->data->vertexSet[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, this->data->vertexSet.size() * sizeof(vec3), this->data->vertexSet.data(), GL_STATIC_DRAW);
 
 	glBindBuffer(GL_ARRAY_BUFFER, this->buffers[1]);
-	glBufferData(GL_ARRAY_BUFFER, this->data->colourSet.size() * sizeof(vec4), &this->data->colourSet[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, this->data->colourSet.size() * sizeof(vec4), this->data->colourSet.data(), GL_STATIC_DRAW);
 
 	glBindBuffer(GL_ARRAY_BUFFER, this->buffers[2]);
-	glBufferData(GL_ARRAY_BUFFER, this->data->colourSet.size() * sizeof(vec3), &this->data->normalSet[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, this->data->normalSet.size() * sizeof(vec3), this->data->normalSet.data(), GL_STATIC_DRAW);
 
 	glBindBuffer(GL_ARRAY_BUFFER, this->buffers[3]);
-	glBufferData(GL_ARRAY_BUFFER, this->data->colourSet.size() * sizeof(vec2), &this->data->texCooSet[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, this->data->texCooSet.size() * sizeof(vec2), this->data->texCooSet.data(), GL_STATIC_DRAW);
 
 	glGenVertexArrays(1, &this->vaoBuffer);
 	glBindVertexArray(this->vaoBuffer);
@@ -78,7 +78,7 @@ void Mesh::Build(bool generateColours)
 		if (generateColours) {
 			int cIdx = i / thirdIndexCount;
 			float c = (float)(i - (thirdIndexCount*cIdx)) / thirdIndexCount;
-			this->data->colourSet.push_back(vec4(i % 3 == 0 ? 1 : 0, i % 3 == 1 ? 1 : 0, i % 3 == 2 ? 1 : 0, 1.0f)/*vec4(cIdx ==0?c : 0.0f, cIdx == 1 ? c : 0.0f, cIdx == 2 ? c : 0.0f, 1.0f)*/);
+			this->data->colourSet.push_back(vec4(1.0f)/*vec4(i % 3 == 0 ? 1 : 0, i % 3 == 1 ? 1 : 0, i % 3 == 2 ? 1 : 0, 1.0f)*//*vec4(cIdx ==0?c : 0.0f, cIdx == 1 ? c : 0.0f, cIdx == 2 ? c : 0.0f, 1.0f)*/);
 		}
 	}
 

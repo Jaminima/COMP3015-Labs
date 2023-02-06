@@ -154,6 +154,7 @@
     <ClCompile Include="helper\glutils.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="scenebasic_uniform.cpp" />
+    <ClCompile Include="TextureLoad.cpp" />
     <ClCompile Include="utils.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -171,6 +172,7 @@
     <ClInclude Include="helper\stb\stb_image.h" />
     <ClInclude Include="helper\stb\stb_image_write.h" />
     <ClInclude Include="scenebasic_uniform.h" />
+    <ClInclude Include="TextureLoad.h" />
     <ClInclude Include="utils.h" />
   </ItemGroup>
   <ItemGroup>

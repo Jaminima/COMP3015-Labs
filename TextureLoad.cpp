@@ -1,5 +1,8 @@
 #include "TextureLoad.h"
 
+#define STB_IMAGE_IMPLEMENTATION
+#include "helper/stb/stb_image.h"
+
 void loadTexture(GLuint& texture, std::string texturepath)
 {
 	// load and create a texture 

@@ -30,6 +30,7 @@ void SceneBasic_Uniform::initScene()
     compile();
 
     cube.Load();
+    cube.AddTexture(prog.getHandle(), "./Assets/cube.png");
     cube.Build(true);
 
     stone.Load();

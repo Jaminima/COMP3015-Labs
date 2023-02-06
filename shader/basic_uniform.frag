@@ -7,5 +7,5 @@ layout (location = 0) out vec4 FragColor;
 uniform sampler2D faceTexture;
 
 void main() {
-    FragColor = texture(faceTexture, vTextureCoordinate)  * Color;
+    FragColor = texture(faceTexture, vTextureCoordinate) * Color;
 }

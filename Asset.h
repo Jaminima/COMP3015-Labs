@@ -64,6 +64,9 @@ public:
 	string srcFile;
 	string* srcData = 0x0;
 
+	bool hasTexture = false;
+	GLuint texture;
+
 	AssetData* assetData;
 
 	vector<string> materialFiles;
@@ -87,6 +90,8 @@ public:
 	void Draw();
 
 	void Render(GLSLProgram* prog, Camera* camera);
+
+	void AddTexture(GLuint program, string file);
 };
 
 #endif

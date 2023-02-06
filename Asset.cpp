@@ -6,6 +6,8 @@
 #include<sstream>
 #include<string>
 
+#include "TextureLoad.h"
+
 Asset::Asset(string srcFile)
 {
 	this->srcFile = srcFile;
@@ -183,6 +185,14 @@ void Asset::Render(GLSLProgram* prog, Camera* camera)
 {
     int meshCount = this->meshses.size();
     for (int i = 0; i < meshCount; i++) {
+        if (hasTexture) glBindTexture(GL_TEXTURE_2D, texture);
         this->meshses[i].Render(prog, this->assetData, camera);
     }
+}
+
+void Asset::AddTexture(GLuint program, string file)
+{
+    loadTexture(texture, file);
+    glUniform1i(glGetUniformLocation(program, "texture"), 0);
+    hasTexture = true;
 }
