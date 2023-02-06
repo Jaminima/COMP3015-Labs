@@ -1,5 +1,10 @@
 #include "Camera.h"
 
+Camera::Camera()
+{
+	this->updateMatrix();
+}
+
 void Camera::updateMatrix() {
 	projectionMatrix = glm::perspective(fov, aspect, clipNear, clipFar);
 

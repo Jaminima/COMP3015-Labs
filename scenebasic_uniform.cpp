@@ -22,7 +22,8 @@ using glm::vec3;
 
 SceneBasic_Uniform::SceneBasic_Uniform() : angle(0.0f) {}
 
-Asset cube("./Assets/stone.obj", vec3(0,0,-30));
+Asset stone("./Assets/stone.obj", vec3(0, 0, -30));
+Asset cube("./Assets/cube.obj", vec3(20,0,-20));
 
 void SceneBasic_Uniform::initScene()
 {
@@ -31,11 +32,15 @@ void SceneBasic_Uniform::initScene()
     cube.Load();
     cube.Build(true);
 
+    stone.Load();
+    stone.Build(true);
+
     std::cout << std::endl;
 
     prog.printActiveUniforms();
 
     cube.Draw();
+    stone.Draw();
 
     cam.updateMatrix();
 }
@@ -63,6 +68,12 @@ void SceneBasic_Uniform::update(float dt)
     cubeRot->x += 0.4f * dt;
 
     boundAngles(cubeRot);
+
+    vec3* stoneRot = &stone.assetData->rotation;
+
+    stoneRot->y += 0.8f * dt;
+
+    boundAngles(stoneRot);
 }
 
 void SceneBasic_Uniform::render()
@@ -74,6 +85,7 @@ void SceneBasic_Uniform::render()
     glEnable(GL_CULL_FACE);
 
     cube.Render(&prog, &cam);
+    stone.Render(&prog, &cam);
 }
 
 void SceneBasic_Uniform::resize(int w, int h)

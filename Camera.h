@@ -11,6 +11,8 @@ using namespace glm;
 
 class Camera {
 public:
+	Camera();
+
 	glm::mat4 projectionMatrix;
 
 	vec3 position;
