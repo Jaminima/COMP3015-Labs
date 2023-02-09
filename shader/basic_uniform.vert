@@ -7,12 +7,21 @@ layout (location = 3) in vec2 VertexTextureCoordinate;
 
 out vec4 Color;
 out vec2 vTextureCoordinate;
+out vec3 LightIntensity;
 
-uniform mat4 RotationMatrix;
+uniform mat4 ModelMatrix;
+uniform mat4 ProjectionMatrix;
+uniform mat3 NormalMatrix;
+
+uniform vec4 LightPosition;
+uniform vec3 Kd;
+uniform vec3 Ld;
 
 void main()
 {
+    vec3 n = normalize( NormalMatrix * VertexNormal);
+
     Color = VertexColor;
     vTextureCoordinate = VertexTextureCoordinate;
-    gl_Position = RotationMatrix * vec4(VertexPosition,1.0);
+    gl_Position = ProjectionMatrix * ModelMatrix * vec4(VertexPosition,1.0);
 }

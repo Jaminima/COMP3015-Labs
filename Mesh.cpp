@@ -93,6 +93,8 @@ void Mesh::Build(bool generateColours)
 
 void Mesh::Render(GLSLProgram* prog, AssetData* assetData, Camera* camera)
 {
+	GLuint programHandle = prog->getHandle();
+
 	glm::mat4 model(1.0f);
 	model = glm::translate(model, vec3(assetData->position));
 
@@ -100,12 +102,17 @@ void Mesh::Render(GLSLProgram* prog, AssetData* assetData, Camera* camera)
 	model = glm::rotate(model, assetData->rotation[1], vec3(0.0f, 1.0f, 1.0f));
 	model = glm::rotate(model, assetData->rotation[2], vec3(0.0f, 0.0f, 1.0f));
 
-	GLuint programHandle = prog->getHandle();
-	GLuint rotationRef = glGetUniformLocation(programHandle, "RotationMatrix");
+	GLuint modelRef = glGetUniformLocation(programHandle, "ModelMatrix");
+	glUniformMatrix4fv(modelRef, 1, GL_FALSE, glm::value_ptr(model));
 
-	mat4 mvp = camera->projectionMatrix * model;
+	GLuint projRef = glGetUniformLocation(programHandle, "ProjectionMatrix");
+	glUniformMatrix4fv(projRef, 1, GL_FALSE, glm::value_ptr(camera->projectionMatrix));
 
-	glUniformMatrix4fv(rotationRef, 1, GL_FALSE, glm::value_ptr(mvp));
+	glm::mat4 mv = model * camera->projectionMatrix;
+
+	GLuint normRef = glGetUniformLocation(programHandle, "NormalMatrix");
+	glm::mat3 normalMatrix = mat3(glm::vec3(mv[0]), glm::vec3(mv[1]), glm::vec3(mv[2]));
+	glUniformMatrix3fv(normRef, 1, GL_FALSE, glm::value_ptr(normalMatrix));
 
 	glBindVertexArray(this->vaoBuffer);
 	glDrawArrays(GL_TRIANGLES, 0, this->data->vertexSet.size());

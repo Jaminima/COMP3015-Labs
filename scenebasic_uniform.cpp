@@ -97,6 +97,8 @@ void SceneBasic_Uniform::resize(int w, int h)
     width = w;
     height = h;
     glViewport(0,0,w,h);
+    cam.aspect = w / h;
+    cam.updateMatrix();
 }
 
 void SceneBasic_Uniform::keyActve(int key, int mods, float dt)
