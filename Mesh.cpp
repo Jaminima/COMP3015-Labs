@@ -117,6 +117,17 @@ void Mesh::Render(GLSLProgram* prog, AssetData* assetData, Camera* camera)
 	glm::mat3 normalMatrix = mat3(glm::vec3(mv[0]), glm::vec3(mv[1]), glm::vec3(mv[2]));
 	glUniformMatrix3fv(normRef, 1, GL_FALSE, glm::value_ptr(normalMatrix));
 
+
+	GLuint kdRef = glGetUniformLocation(programHandle, "Kd");
+	glUniform3fv(kdRef, 1, glm::value_ptr(vec3(1.0f)));
+
+	GLuint ldRef = glGetUniformLocation(programHandle, "Ld");
+	glUniform3fv(ldRef, 1, glm::value_ptr(vec3(1.0f)));
+
+	GLuint lightPosRef = glGetUniformLocation(programHandle, "LightPosition");
+	glUniform4fv(lightPosRef, 1, glm::value_ptr(vec4(camera->position,1)));
+
+
 	glBindVertexArray(this->vaoBuffer);
 	glDrawArrays(GL_TRIANGLES, 0, this->data->vertexSet.size());
 
