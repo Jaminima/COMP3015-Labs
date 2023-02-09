@@ -56,6 +56,15 @@ Mesh::Mesh(string mesh_name)
 	this->components = new MeshComponents();
 }
 
+template<typename T>
+inline void PushFaceIdx(int idx, std::vector<T>* data, std::vector<T>* components) {
+	if (idx != 0) {
+		if (idx == -1) idx = components->size();
+
+		data->push_back(components->at(idx - 1));
+	}
+}
+
 void Mesh::Build(bool generateColours)
 {
 	if (this->components == 0x0) throw exception("Component Data Is Missing During OBJ Parsing!");
@@ -67,13 +76,9 @@ void Mesh::Build(bool generateColours)
 	for (int i = indexCount - 1; i >= 0; i--) {
 		ivec3 idx = this->components->indexSet[i];
 
-		this->data->vertexSet.push_back(this->components->vertexSet[(idx.x == -1 ? this->components->normalSet.size() : idx.x) - 1]);
-
-		if (idx.y!=0) 
-			this->data->texCooSet.push_back(this->components->texCooSet[(idx.y == -1 ? this->components->normalSet.size() : idx.y) - 1]);
-
-		if (idx.z != 0)
-			this->data->normalSet.push_back(this->components->normalSet[(idx.z == -1 ? this->components->normalSet.size() : idx.z) - 1]);
+		PushFaceIdx(idx.x, &this->data->vertexSet, &this->components->vertexSet);
+		PushFaceIdx(idx.y, &this->data->texCooSet, &this->components->texCooSet);
+		PushFaceIdx(idx.z, &this->data->normalSet, &this->components->normalSet);
 
 		if (generateColours) {
 			int cIdx = i / thirdIndexCount;
