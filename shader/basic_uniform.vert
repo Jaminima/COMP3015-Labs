@@ -11,6 +11,7 @@ out vec3 LightIntensity;
 
 uniform mat4 ModelMatrix;
 uniform mat4 ProjectionMatrix;
+uniform mat4 ModelViewMatrix;
 uniform mat3 NormalMatrix;
 
 uniform vec4 LightPosition;
@@ -23,5 +24,5 @@ void main()
 
     Color = VertexColor;
     vTextureCoordinate = VertexTextureCoordinate;
-    gl_Position = ProjectionMatrix * ModelMatrix * vec4(VertexPosition,1.0);
+    gl_Position = ModelViewMatrix * vec4(VertexPosition,1.0);
 }

@@ -108,7 +108,10 @@ void Mesh::Render(GLSLProgram* prog, AssetData* assetData, Camera* camera)
 	GLuint projRef = glGetUniformLocation(programHandle, "ProjectionMatrix");
 	glUniformMatrix4fv(projRef, 1, GL_FALSE, glm::value_ptr(camera->projectionMatrix));
 
-	glm::mat4 mv = model * camera->projectionMatrix;
+	glm::mat4 mv = camera->projectionMatrix * model;
+
+	GLuint modelViewRef = glGetUniformLocation(programHandle, "ModelViewMatrix");
+	glUniformMatrix4fv(modelViewRef, 1, GL_FALSE, glm::value_ptr(mv));
 
 	GLuint normRef = glGetUniformLocation(programHandle, "NormalMatrix");
 	glm::mat3 normalMatrix = mat3(glm::vec3(mv[0]), glm::vec3(mv[1]), glm::vec3(mv[2]));
