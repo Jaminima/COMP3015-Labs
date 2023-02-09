@@ -85,6 +85,8 @@ public:
 
 	void ExecuteOBJOperation(string opCode, vector<string> operands);
 
+	void AppendPointToMesh(string idx, Mesh* m);
+
 	void Build(bool generateColours = false);
 
 	void Draw();

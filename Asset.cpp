@@ -122,39 +122,62 @@ void Asset::ExecuteOBJOperation(string opCode, vector<string> operands)
     }
 
     else if (opCode == "f") {
-        for (int i = 0; i < operands.size(); i++) {
-            vector<string> faceData = split(operands[i], "/");
+        switch (operands.size())
+        {
+        case 3:
+            AppendPointToMesh(operands[0], m);
+            AppendPointToMesh(operands[1], m);
+            AppendPointToMesh(operands[2], m);
+            break;
+        case 4:
+            AppendPointToMesh(operands[0], m);
+            AppendPointToMesh(operands[1], m);
+            AppendPointToMesh(operands[2], m);
 
-            ivec3 face;
+            AppendPointToMesh(operands[2], m);
+            AppendPointToMesh(operands[3], m);
+            AppendPointToMesh(operands[0], m);
 
-            switch (faceData.size())
-            {
-                case 1:
-                    face = ivec3(
-                        (faceData[0].empty() ? 0 : stoi(faceData[0])),
-                        0,
-                        0
-                    );
-                break;
-                case 2:
-                    face = ivec3(
-                        (faceData[0].empty() ? 0 : stoi(faceData[0])),
-                        (faceData[1].empty() ? 0 : stoi(faceData[1])),
-                        0
-                    );
-                    break;
-                case 3:
-                    face = ivec3(
-                        (faceData[0].empty() ? 0 : stoi(faceData[0])),
-                        (faceData[1].empty() ? 0 : stoi(faceData[1])),
-                        (faceData[2].empty() ? 0 : stoi(faceData[2]))
-                    );
-                    break;
-            }
-
-            m->components->indexSet.push_back(face);
+            break;
+        default:
+            throw exception("Improper Face Count");
+            break;
         }
     }
+}
+
+void Asset::AppendPointToMesh(string idx, Mesh* m)
+{
+    vector<string> faceData = split(idx, "/");
+
+    ivec3 face;
+
+    switch (faceData.size())
+    {
+    case 1:
+        face = ivec3(
+            (faceData[0].empty() ? 0 : stoi(faceData[0])),
+            0,
+            0
+        );
+        break;
+    case 2:
+        face = ivec3(
+            (faceData[0].empty() ? 0 : stoi(faceData[0])),
+            (faceData[1].empty() ? 0 : stoi(faceData[1])),
+            0
+        );
+        break;
+    case 3:
+        face = ivec3(
+            (faceData[0].empty() ? 0 : stoi(faceData[0])),
+            (faceData[1].empty() ? 0 : stoi(faceData[1])),
+            (faceData[2].empty() ? 0 : stoi(faceData[2]))
+        );
+        break;
+    }
+
+    m->components->indexSet.push_back(face);
 }
 
 void Asset::Build(bool generateColours)
