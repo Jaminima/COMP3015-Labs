@@ -14,6 +14,7 @@ public:
 	Camera();
 
 	glm::mat4 projectionMatrix;
+	glm::mat4 viewMatrix;
 
 	vec3 position;
 	vec3 rotation;

@@ -10,4 +10,5 @@ uniform sampler2D faceTexture;
 void main() {
     //FragColor = texture(faceTexture, vTextureCoordinate) * Color;
     FragColor = Color * vec4(LightIntensity, 1.0f);
+    //FragColor =  vec4(LightIntensity, 1.0f);
 }

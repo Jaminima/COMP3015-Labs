@@ -10,9 +10,11 @@ void Camera::updateMatrix() {
 
 	boundAngles(&rotation);
 
-	projectionMatrix = glm::rotate(projectionMatrix, rotation[0], vec3(1.0f, 0.0f, 0.0f));
-	projectionMatrix = glm::rotate(projectionMatrix, rotation[1], vec3(0.0f, 1.0f, 1.0f));
-	projectionMatrix = glm::rotate(projectionMatrix, rotation[2], vec3(0.0f, 0.0f, 1.0f));
+	viewMatrix = mat4(1.0f);
 
-	projectionMatrix = glm::translate(projectionMatrix, position);
+	viewMatrix = glm::rotate(viewMatrix, rotation[0], vec3(1.0f, 0.0f, 0.0f));
+	viewMatrix = glm::rotate(viewMatrix, rotation[1], vec3(0.0f, 1.0f, 1.0f));
+	viewMatrix = glm::rotate(viewMatrix, rotation[2], vec3(0.0f, 0.0f, 1.0f));
+
+	viewMatrix = glm::translate(viewMatrix, position);
 }

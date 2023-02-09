@@ -108,7 +108,7 @@ void Mesh::Render(GLSLProgram* prog, AssetData* assetData, Camera* camera)
 	GLuint projRef = glGetUniformLocation(programHandle, "ProjectionMatrix");
 	glUniformMatrix4fv(projRef, 1, GL_FALSE, glm::value_ptr(camera->projectionMatrix));
 
-	glm::mat4 mv = camera->projectionMatrix * model;
+	glm::mat4 mv = camera->viewMatrix * model;
 
 	GLuint modelViewRef = glGetUniformLocation(programHandle, "ModelViewMatrix");
 	glUniformMatrix4fv(modelViewRef, 1, GL_FALSE, glm::value_ptr(mv));
@@ -117,7 +117,6 @@ void Mesh::Render(GLSLProgram* prog, AssetData* assetData, Camera* camera)
 	glm::mat3 normalMatrix = mat3(glm::vec3(mv[0]), glm::vec3(mv[1]), glm::vec3(mv[2]));
 	glUniformMatrix3fv(normRef, 1, GL_FALSE, glm::value_ptr(normalMatrix));
 
-
 	GLuint kdRef = glGetUniformLocation(programHandle, "Kd");
 	glUniform3fv(kdRef, 1, glm::value_ptr(vec3(1.0f)));
 
@@ -125,7 +124,7 @@ void Mesh::Render(GLSLProgram* prog, AssetData* assetData, Camera* camera)
 	glUniform3fv(ldRef, 1, glm::value_ptr(vec3(1.0f)));
 
 	GLuint lightPosRef = glGetUniformLocation(programHandle, "LightPosition");
-	glUniform4fv(lightPosRef, 1, glm::value_ptr(vec4(camera->position,1)));
+	glUniform4fv(lightPosRef, 1, glm::value_ptr(vec4(camera->viewMatrix * vec4(5, 5, -2, 1))));
 
 
 	glBindVertexArray(this->vaoBuffer);
