@@ -131,23 +131,23 @@ void Asset::ExecuteOBJOperation(string opCode, vector<string> operands)
             {
                 case 1:
                     face = ivec3(
-                        (faceData[0].empty() ? -1 : stoi(faceData[0])),
+                        (faceData[0].empty() ? 0 : stoi(faceData[0])),
                         0,
                         0
                     );
                 break;
                 case 2:
                     face = ivec3(
-                        (faceData[0].empty() ? -1 : stoi(faceData[0])),
-                        (faceData[1].empty() ? -1 : stoi(faceData[1])),
+                        (faceData[0].empty() ? 0 : stoi(faceData[0])),
+                        (faceData[1].empty() ? 0 : stoi(faceData[1])),
                         0
                     );
                     break;
                 case 3:
                     face = ivec3(
-                        (faceData[0].empty() ? -1 : stoi(faceData[0])),
-                        (faceData[1].empty() ? -1 : stoi(faceData[1])),
-                        (faceData[2].empty() ? -1 : stoi(faceData[2]))
+                        (faceData[0].empty() ? 0 : stoi(faceData[0])),
+                        (faceData[1].empty() ? 0 : stoi(faceData[1])),
+                        (faceData[2].empty() ? 0 : stoi(faceData[2]))
                     );
                     break;
             }
