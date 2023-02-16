@@ -10,7 +10,15 @@ using namespace glm;
 
 void Mesh::Draw()
 {
+	glGenVertexArrays(1, &this->vaoBuffer);
+	glBindVertexArray(this->vaoBuffer);
+
 	glGenBuffers(bufferCount, this->buffers);
+
+	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(1);
+	glEnableVertexAttribArray(2);
+	/*glEnableVertexAttribArray(3);*/
 
 	glBindBuffer(GL_ARRAY_BUFFER, this->buffers[0]);
 	glBufferData(GL_ARRAY_BUFFER, this->data->vertexSet.size() * sizeof(vec3), this->data->vertexSet.data(), GL_STATIC_DRAW);
@@ -24,28 +32,20 @@ void Mesh::Draw()
 	glBindBuffer(GL_ARRAY_BUFFER, this->buffers[3]);
 	glBufferData(GL_ARRAY_BUFFER, this->data->texCooSet.size() * sizeof(vec2), this->data->texCooSet.data(), GL_STATIC_DRAW);
 
-	glGenVertexArrays(1, &this->vaoBuffer);
-	glBindVertexArray(this->vaoBuffer);
-
-	glEnableVertexAttribArray(0);
-	glEnableVertexAttribArray(1);
-
 	glBindVertexBuffer(0, this->buffers[0], 0, sizeof(vec3));
 	glBindVertexBuffer(1, this->buffers[1], 0, sizeof(vec4));
 	glBindVertexBuffer(2, this->buffers[2], 0, sizeof(vec3));
 	glBindVertexBuffer(3, this->buffers[3], 0, sizeof(vec2));
 
 	glVertexAttribFormat(0, 3, GL_FLOAT, GL_FALSE, 0);
-	glVertexAttribBinding(0, 0);
-
 	glVertexAttribFormat(1, 4, GL_FLOAT, GL_FALSE, 0);
-	glVertexAttribBinding(1, 1);
-
 	glVertexAttribFormat(2, 3, GL_FLOAT, GL_FALSE, 0);
-	glVertexAttribBinding(2, 2);
-
 	glVertexAttribFormat(3, 2, GL_FLOAT, GL_FALSE, 0);
-	glVertexAttribBinding(2, 2);
+
+	glVertexAttribBinding(0, 0);
+	glVertexAttribBinding(1, 1);
+	glVertexAttribBinding(2, 1);
+	/*glVertexAttribBinding(3, 3);*/
 
 	glBindVertexArray(0);
 }
@@ -83,7 +83,9 @@ void Mesh::Build(bool generateColours)
 		if (generateColours) {
 			int cIdx = i / thirdIndexCount;
 			float c = (float)(i - (thirdIndexCount*cIdx)) / thirdIndexCount;
-			this->data->colourSet.push_back(vec4(1.0f)/*vec4(i % 3 == 0 ? 1 : 0, i % 3 == 1 ? 1 : 0, i % 3 == 2 ? 1 : 0, 1.0f)*//*vec4(cIdx ==0?c : 0.0f, cIdx == 1 ? c : 0.0f, cIdx == 2 ? c : 0.0f, 1.0f)*/);
+			//this->data->colourSet.push_back(vec4(0.5f));
+			this->data->colourSet.push_back(vec4(i % 3 == 0 ? 1 : 0, i % 3 == 1 ? 1 : 0, i % 3 == 2 ? 1 : 0, 1.0f));
+			//this->data->colourSet.push_back(vec4(cIdx ==0?c : 0.0f, cIdx == 1 ? c : 0.0f, cIdx == 2 ? c : 0.0f, 1.0f));
 		}
 	}
 
@@ -125,7 +127,6 @@ void Mesh::Render(GLSLProgram* prog, AssetData* assetData, Camera* camera)
 
 	GLuint lightPosRef = glGetUniformLocation(programHandle, "LightPosition");
 	glUniform4fv(lightPosRef, 1, glm::value_ptr(vec4(camera->viewMatrix * vec4(5, 5, -2, 1))));
-
 
 	glBindVertexArray(this->vaoBuffer);
 	glDrawArrays(GL_TRIANGLES, 0, this->data->vertexSet.size());

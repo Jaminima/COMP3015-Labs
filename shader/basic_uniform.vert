@@ -20,16 +20,22 @@ uniform vec3 Ld;
 
 void main()
 {
-    vec3 n = normalize(NormalMatrix * VertexNormal);
+    vec3 n = abs(VertexNormal);
+//
+//    vec3 lightDir = normalize(vec3(LightPosition - vec4(VertexPosition, 1)));
 
-    vec4 n_eye = ModelViewMatrix * vec4(VertexPosition, 1.0f);
+    LightIntensity = n;
 
-    vec3 lightDir = normalize(vec3(LightPosition - n_eye));
-
-    vec3 lightIntensity = Kd * Ld * max(dot(lightDir,n), 0.1f);
+//    vec3 n = normalize(NormalMatrix * VertexNormal);
+//
+//    vec4 n_eye = ModelViewMatrix * vec4(VertexPosition, 1.0f);
+//
+//    vec3 lightDir = normalize(vec3(LightPosition - n_eye));
+//
+//    vec3 lightIntensity = Kd * Ld * max(dot(lightDir,n), 0.1f);
 
     //LightIntensity = max(lightIntensity, vec3(0.0f));
-    LightIntensity = lightIntensity;
+    //LightIntensity = lightIntensity;
 
     Color = VertexColor;
     vTextureCoordinate = VertexTextureCoordinate;
