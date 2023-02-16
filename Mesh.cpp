@@ -84,8 +84,8 @@ void Mesh::Build(bool generateColours)
 			int cIdx = i / thirdIndexCount;
 			float c = (float)(i - (thirdIndexCount*cIdx)) / thirdIndexCount;
 			//this->data->colourSet.push_back(vec4(0.5f));
-			this->data->colourSet.push_back(vec4(i % 3 == 0 ? 1 : 0, i % 3 == 1 ? 1 : 0, i % 3 == 2 ? 1 : 0, 1.0f));
-			//this->data->colourSet.push_back(vec4(cIdx ==0?c : 0.0f, cIdx == 1 ? c : 0.0f, cIdx == 2 ? c : 0.0f, 1.0f));
+			//this->data->colourSet.push_back(vec4(i % 3 == 0 ? 1 : 0, i % 3 == 1 ? 1 : 0, i % 3 == 2 ? 1 : 0, 1.0f));
+			this->data->colourSet.push_back(vec4(cIdx ==0?c : 0.0f, cIdx == 1 ? c : 0.0f, cIdx == 2 ? c : 0.0f, 1.0f));
 		}
 	}
 
@@ -126,7 +126,7 @@ void Mesh::Render(GLSLProgram* prog, AssetData* assetData, Camera* camera)
 	glUniform3fv(ldRef, 1, glm::value_ptr(vec3(1.0f)));
 
 	GLuint lightPosRef = glGetUniformLocation(programHandle, "LightPosition");
-	glUniform4fv(lightPosRef, 1, glm::value_ptr(vec4(camera->viewMatrix * vec4(5, 5, -2, 1))));
+	glUniform4fv(lightPosRef, 1, glm::value_ptr(vec4(camera->viewMatrix * vec4(0, 0, -2, 1))));
 
 	glBindVertexArray(this->vaoBuffer);
 	glDrawArrays(GL_TRIANGLES, 0, this->data->vertexSet.size());

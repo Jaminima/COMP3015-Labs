@@ -20,11 +20,13 @@ uniform vec3 Ld;
 
 void main()
 {
-    vec3 n = abs(VertexNormal);
-//
-//    vec3 lightDir = normalize(vec3(LightPosition - vec4(VertexPosition, 1)));
+    vec4 position = ModelViewMatrix * vec4(VertexPosition, 1);
+    
+    float lightDistance = distance(LightPosition, position);
 
-    LightIntensity = n;
+    float lightStrength = min(max(1.5f-lightDistance / 1.5f, 0.1f),1);
+
+    LightIntensity = vec3(lightStrength);
 
 //    vec3 n = normalize(NormalMatrix * VertexNormal);
 //

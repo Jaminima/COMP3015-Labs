@@ -72,6 +72,7 @@ void SceneBasic_Uniform::update(float dt)
 
     vec3* stoneRot = &stone.assetData->rotation;
 
+    stoneRot->x += 0.8f * dt;
     stoneRot->y += 0.8f * dt;
 
     boundAngles(stoneRot);
