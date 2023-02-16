@@ -3,6 +3,8 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "helper/stb/stb_image.h"
 
+const int ColourChanels[] {0 , GL_R, GL_RG, GL_RGB, GL_RGBA};
+
 void loadTexture(GLuint& texture, std::string texturepath)
 {
 	// load and create a texture 
@@ -24,19 +26,9 @@ void loadTexture(GLuint& texture, std::string texturepath)
 	unsigned char* data = stbi_load(texturepath.c_str(), &width, &height, &nrChannels, 0);
 	if (data)
 	{
-		bool loaded = false;
-		while (!loaded) {
-			try {
-				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-				glGenerateMipmap(GL_TEXTURE_2D);
-				loaded = true;
-				cout << "Loaded Asset " << texturepath.c_str() << "\n";
-			}
-			catch (exception e) {
-				cout << "Retrying Load Asset\n";
-				loaded = false;
-			}
-		}
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, ColourChanels[nrChannels], GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+		cout << "Loaded Asset " << texturepath.c_str() << "\n";
 	}
 	else
 	{
