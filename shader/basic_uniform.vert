@@ -20,11 +20,12 @@ uniform vec3 Ld;
 
 void main()
 {
-    vec4 position = ModelViewMatrix * vec4(VertexPosition, 1);
+    vec4 vertPosition = ModelViewMatrix * vec4(VertexPosition, 1);
+    vec4 lightPosition = ModelViewMatrix * LightPosition;
     
-    float lightDistance = distance(LightPosition, position);
+    float lightDistance = abs(distance(lightPosition, vertPosition));
 
-    float lightStrength = min(max(1.5f-lightDistance / 1.5f, 0.1f),1);
+    float lightStrength = min(max(1/lightDistance, 0.2f),1);
 
     LightIntensity = vec3(lightStrength);
 

@@ -70,12 +70,12 @@ void SceneBasic_Uniform::update(float dt)
 
     boundAngles(cubeRot);
 
-    vec3* stoneRot = &stone.assetData->rotation;
+    /*vec3* stoneRot = &stone.assetData->rotation;
 
     stoneRot->x += 0.8f * dt;
     stoneRot->y += 0.8f * dt;
 
-    boundAngles(stoneRot);
+    boundAngles(stoneRot);*/
 }
 
 void SceneBasic_Uniform::render()
