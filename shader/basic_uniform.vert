@@ -23,22 +23,22 @@ void main()
     vec4 vertPosition = ModelViewMatrix * vec4(VertexPosition, 1);
     vec4 lightPosition = ModelViewMatrix * LightPosition;
     
-    float lightDistance = abs(distance(lightPosition, vertPosition));
-
-    float lightStrength = min(max(1/lightDistance, 0.2f),1);
-
-    LightIntensity = vec3(lightStrength);
-
-//    vec3 n = normalize(NormalMatrix * VertexNormal);
+//    float lightDistance = abs(distance(lightPosition, vertPosition));
 //
-//    vec4 n_eye = ModelViewMatrix * vec4(VertexPosition, 1.0f);
-//
-//    vec3 lightDir = normalize(vec3(LightPosition - n_eye));
-//
-//    vec3 lightIntensity = Kd * Ld * max(dot(lightDir,n), 0.1f);
+//    float lightStrength = min(max(1/lightDistance, 0.2f),1);
 
-    //LightIntensity = max(lightIntensity, vec3(0.0f));
-    //LightIntensity = lightIntensity;
+    //LightIntensity = vec3(lightStrength);
+
+    vec3 n = normalize(NormalMatrix * VertexNormal);
+
+    vec4 n_eye = ModelViewMatrix * vec4(VertexPosition, 1.0f);
+
+    vec3 lightDir = normalize(vec3(LightPosition - n_eye));
+
+    vec3 lightIntensity = Kd * Ld * max(dot(lightDir,n), 0.1f);
+
+    LightIntensity = max(lightIntensity, vec3(0.1f));
+    LightIntensity = lightIntensity;
 
     Color = VertexColor;
     vTextureCoordinate = VertexTextureCoordinate;

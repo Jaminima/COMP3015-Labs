@@ -126,7 +126,7 @@ void Mesh::Render(GLSLProgram* prog, AssetData* assetData, Camera* camera)
 	glUniform3fv(ldRef, 1, glm::value_ptr(vec3(1.0f)));
 
 	GLuint lightPosRef = glGetUniformLocation(programHandle, "LightPosition");
-	glUniform4fv(lightPosRef, 1, glm::value_ptr(vec4(/*camera->viewMatrix * */vec4(camera->position, 1))));
+	glUniform4fv(lightPosRef, 1, glm::value_ptr(vec4(camera->viewMatrix * vec4(-camera->position, 1))));
 
 	glBindVertexArray(this->vaoBuffer);
 	glDrawArrays(GL_TRIANGLES, 0, this->data->vertexSet.size());
