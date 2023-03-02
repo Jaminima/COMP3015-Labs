@@ -37,7 +37,6 @@ void main()
 
     vec3 lightIntensity = Kd * Ld * max(dot(lightDir,n), 0.1f);
 
-    LightIntensity = max(lightIntensity, vec3(0.1f));
     LightIntensity = lightIntensity;
 
     Color = VertexColor;

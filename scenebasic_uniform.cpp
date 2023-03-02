@@ -109,19 +109,19 @@ void SceneBasic_Uniform::keyActve(int key, int mods, float dt)
 
     switch (key) {
         case 'W':
-            cam.position.z += moveStep * dt;
-            break;
-
-        case 'S':
             cam.position.z -= moveStep * dt;
             break;
 
+        case 'S':
+            cam.position.z += moveStep * dt;
+            break;
+
         case 'A':
-            cam.position.x += moveStep * dt;
+            cam.position.x -= moveStep * dt;
             break;
 
         case 'D':
-            cam.position.x -= moveStep * dt;
+            cam.position.x += moveStep * dt;
             break;
     }
     cam.updateMatrix();

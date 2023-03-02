@@ -17,7 +17,8 @@ public:
 	glm::mat4 viewMatrix;
 
 	vec3 position;
-	vec3 rotation;
+	vec3 rotation = vec3(0,-90,0);
+	vec3 lookingAt;
 
 	float fov = 90.0f;
 	float aspect = 1.0f;
