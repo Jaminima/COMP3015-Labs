@@ -20,8 +20,8 @@ uniform vec3 Ld;
 
 void main()
 {
-    vec4 vertPosition = ModelViewMatrix * vec4(VertexPosition, 1);
-    vec4 lightPosition = ModelViewMatrix * LightPosition;
+    //vec4 vertPosition = ModelViewMatrix * vec4(VertexPosition, 1);
+    //vec4 lightPosition = ModelViewMatrix * LightPosition;
     
 //    float lightDistance = abs(distance(lightPosition, vertPosition));
 //
