@@ -106,6 +106,10 @@ void Mesh::Render(GLuint programHandle, AssetData* assetData, SceneObjects* scen
 	GLuint modelRef = glGetUniformLocation(programHandle, "ModelMatrix");
 	glUniformMatrix4fv(modelRef, 1, GL_FALSE, glm::value_ptr(model));
 
+
+	GLuint viewRef = glGetUniformLocation(programHandle, "ViewMatrix");
+	glUniformMatrix4fv(viewRef, 1, GL_FALSE, glm::value_ptr(sceneObjects->cam.viewMatrix));
+
 	GLuint projRef = glGetUniformLocation(programHandle, "ProjectionMatrix");
 	glUniformMatrix4fv(projRef, 1, GL_FALSE, glm::value_ptr(sceneObjects->cam.projectionMatrix));
 

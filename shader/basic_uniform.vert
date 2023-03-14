@@ -10,6 +10,7 @@ out vec2 vTextureCoordinate;
 out vec3 LightIntensity;
 
 uniform mat4 ModelMatrix;
+uniform mat4 ViewMatrix;
 uniform mat4 ProjectionMatrix;
 uniform mat4 ModelViewMatrix;
 uniform mat3 NormalMatrix;
@@ -39,11 +40,11 @@ void main()
     vec4 ambient = Light.ambient;
     vec4 global = Mat.ambient * ambient;
 
-    vec4 diffuse = Light.diffuse * max (dot(N, lightPos), 0.0);
+    vec4 diffuse = Light.diffuse * max (dot(lightPos, N), 0.0);
     diffuse = clamp(diffuse,0,1);
 
     vec3 reflectD = reflect(-lightPos,normal);
-    float spec = pow(max(dot(view,reflectD),0.0),Mat.shininess * 0.1);
+    float spec = pow(max(dot(reflectD,normalize(-VertexPosition)),0.0),Mat.shininess);
 
     vec4 specular = Light.specular * spec;
     specular = clamp(specular,0,1);
