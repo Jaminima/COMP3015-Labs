@@ -22,27 +22,27 @@ using glm::vec3;
 
 SceneBasic_Uniform::SceneBasic_Uniform() : angle(0.0f) {}
 
-Asset stone("./Assets/torus.obj", vec3(0, 0, -2));
+Asset stone("./Assets/torus.obj", vec3(0, -1, -2));
 Asset cube("./Assets/cube.obj", vec3(10,0,-5));
 
 void SceneBasic_Uniform::initScene()
 {
     compile();
 
-    sceneObjects.masterLight.ambient = vec4(0.5,0,0,1);
-    sceneObjects.masterLight.diffuse = vec4(0,0.5,0,1);
-    sceneObjects.masterLight.specular = vec4(0,0,0.5,1);
-    sceneObjects.masterLight.Position = vec3(0, 5, 0);
+    sceneObjects.masterLight.ambient = vec4(0,0,0,1);
+    sceneObjects.masterLight.diffuse = vec4(0,0,0,1);
+    sceneObjects.masterLight.specular = vec4(0.2,0.2,0.2,1);
+    sceneObjects.masterLight.Position = vec3(0, 5, -3);
 
     cube.Load();
     cube.assetData->mat.ambient = vec4(0.1);
-    cube.assetData->mat.shininess = 0.5;
+    cube.assetData->mat.shininess = 1;
     cube.AddTexture(prog.getHandle(), "./Assets/cube.png");
     cube.Build(true);
 
     stone.Load();
     stone.assetData->mat.ambient = vec4(0.1);
-    stone.assetData->mat.shininess = 0.5;
+    stone.assetData->mat.shininess = 1;
     stone.Build(true);
 
     std::cout << std::endl;
