@@ -7,6 +7,11 @@
 #include<string>
 
 #include "TextureLoad.h"
+#include "SceneObjects.h"
+#include "Light.h"
+#include "helper/glslprogram.h"
+
+using namespace glm;
 
 Asset::Asset(string srcFile)
 {
@@ -204,18 +209,29 @@ Asset::Asset(string srcFile, vec3 pos, vec3 rot)
     this->assetData->rotation = rot;
 }
 
-void Asset::Render(GLSLProgram* prog, Camera* camera)
+void Asset::Render(GLSLProgram* prog, SceneObjects* sceneObjects)
 {
+    GLuint programHandle = prog->getHandle();
+    sceneObjects->masterLight.SetUniforms(programHandle);
+
     int meshCount = this->meshses.size();
     for (int i = 0; i < meshCount; i++) {
-        if (hasTexture) glBindTexture(GL_TEXTURE_2D, texture);
-        this->meshses[i].Render(prog, this->assetData, camera);
+        if (this->hasTexture) glBindTexture(GL_TEXTURE_2D, this->texture);
+        this->meshses[i].Render(programHandle, this->assetData, sceneObjects);
     }
 }
 
 void Asset::AddTexture(GLuint program, string file)
 {
-    loadTexture(texture, file);
+    loadTexture(this->texture, file);
     glUniform1i(glGetUniformLocation(program, "texture"), 0);
-    hasTexture = true;
+    this->hasTexture = true;
+}
+
+inline void Material::SetUniforms(GLuint programHandle) {
+    GLuint ref = glGetUniformLocation(programHandle, "Light.ambient");
+    glUniform4fv(ref, 1, glm::value_ptr(ambient));
+
+    ref = glGetUniformLocation(programHandle, "Light.shininess");
+    glUniform1f(ref, shininess);
 }

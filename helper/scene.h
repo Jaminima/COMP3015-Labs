@@ -1,7 +1,7 @@
 #pragma once
 
 #include <glm/glm.hpp>
-#include "../Camera.h"
+#include "../SceneObjects.h"
 
 class Scene
 {
@@ -11,18 +11,20 @@ private:
 public:
     int width;
     int height;
-    Camera cam;
+
+    SceneObjects sceneObjects;
+
     int framesInSecond = 0;
     float lastUpdateTime = 0;
 
 	Scene() : m_animate(true), width(800), height(600) {
-        this->cam.aspect = width / height;
+        this->sceneObjects.cam.aspect = width / height;
     }
 
     Scene(int width, int height) : m_animate(true) {
         this->width = width;
         this->height = height;
-        this->cam.aspect = width / height;
+        this->sceneObjects.cam.aspect = width / height;
     }
 
 	virtual ~Scene() {}

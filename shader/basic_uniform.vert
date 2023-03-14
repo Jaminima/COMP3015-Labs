@@ -14,32 +14,41 @@ uniform mat4 ProjectionMatrix;
 uniform mat4 ModelViewMatrix;
 uniform mat3 NormalMatrix;
 
-uniform vec4 LightPosition;
-uniform vec3 Kd;
-uniform vec3 Ld;
+uniform struct Lighting {
+    vec4 ambient;
+    vec4 diffuse;
+    vec3 Position;
+    vec4 ViewPosition;
+    vec4 specular;
+} Light;
+
+uniform struct Material {
+    vec4 ambient;
+    float shininess;
+} Mat;
 
 void main()
 {
-    //vec4 vertPosition = ModelViewMatrix * vec4(VertexPosition, 1);
-    //vec4 lightPosition = ModelViewMatrix * LightPosition;
-    
-//    float lightDistance = abs(distance(lightPosition, vertPosition));
-//
-//    float lightStrength = min(max(1/lightDistance, 0.2f),1);
+    vec3 N = normalize(NormalMatrix * VertexNormal);
+    vec3 V = vec3(ModelViewMatrix * vec4(VertexPosition,1));
 
-    //LightIntensity = vec3(lightStrength);
+    vec3 lightPos = normalize(Light.ViewPosition.xyz - V);
+    vec3 view = normalize(-V);
+    vec3 normal = normalize(N);
 
-    vec3 n = normalize(NormalMatrix * VertexNormal);
+    vec4 ambient = Light.ambient;
+    vec4 global = Mat.ambient * ambient;
 
-    vec4 n_eye = ModelViewMatrix * vec4(VertexPosition, 1.0f);
+    vec4 diffuse = Light.diffuse * max (dot(N, lightPos), 0.0);
+    diffuse = clamp(diffuse,0,1);
 
-    vec3 lightDir = normalize(vec3(LightPosition - n_eye));
+    vec3 reflectD = reflect(-lightPos,normal);
+    float spec = pow(max(dot(view,reflectD),0.0),Mat.shininess * 0.1);
 
-    vec3 lightIntensity = Kd * Ld * max(dot(lightDir,n), 0.1f);
+    vec4 specular = Light.specular * spec;
+    specular = clamp(specular,0,1);
 
-    LightIntensity = lightIntensity;
-
-    Color = VertexColor;
+    Color = global + ambient + diffuse + specular;
     vTextureCoordinate = VertexTextureCoordinate;
 
     gl_Position = ProjectionMatrix * ModelViewMatrix * vec4(VertexPosition,1.0);

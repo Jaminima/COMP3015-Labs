@@ -149,6 +149,7 @@
     <ClCompile Include="Asset.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="helper\scene.cpp" />
+    <ClCompile Include="Light.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="helper\glslprogram.cpp" />
@@ -172,7 +173,9 @@
     <ClInclude Include="helper\scenerunner.h" />
     <ClInclude Include="helper\stb\stb_image.h" />
     <ClInclude Include="helper\stb\stb_image_write.h" />
+    <ClInclude Include="Light.h" />
     <ClInclude Include="scenebasic_uniform.h" />
+    <ClInclude Include="SceneObjects.h" />
     <ClInclude Include="TextureLoad.h" />
     <ClInclude Include="utils.h" />
   </ItemGroup>

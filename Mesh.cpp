@@ -4,6 +4,7 @@
 #include <glm/ext/matrix_transform.hpp> // GLM: translate, rotate
 #include <glm/ext/matrix_clip_space.hpp> // GLM: perspective and ortho 
 #include <glm/gtc/type_ptr.hpp> // GLM: access to the value_ptr
+#include "SceneObjects.h"
 
 using namespace std;
 using namespace glm;
@@ -93,10 +94,8 @@ void Mesh::Build(bool generateColours)
 	this->components = 0x0;
 }
 
-void Mesh::Render(GLSLProgram* prog, AssetData* assetData, Camera* camera)
+void Mesh::Render(GLuint programHandle, AssetData* assetData, SceneObjects* sceneObjects)
 {
-	GLuint programHandle = prog->getHandle();
-
 	glm::mat4 model(1.0f);
 	model = glm::translate(model, vec3(assetData->position));
 
@@ -108,9 +107,9 @@ void Mesh::Render(GLSLProgram* prog, AssetData* assetData, Camera* camera)
 	glUniformMatrix4fv(modelRef, 1, GL_FALSE, glm::value_ptr(model));
 
 	GLuint projRef = glGetUniformLocation(programHandle, "ProjectionMatrix");
-	glUniformMatrix4fv(projRef, 1, GL_FALSE, glm::value_ptr(camera->projectionMatrix));
+	glUniformMatrix4fv(projRef, 1, GL_FALSE, glm::value_ptr(sceneObjects->cam.projectionMatrix));
 
-	glm::mat4 mv = camera->viewMatrix * model;
+	glm::mat4 mv = sceneObjects->cam.viewMatrix * model;
 
 	GLuint modelViewRef = glGetUniformLocation(programHandle, "ModelViewMatrix");
 	glUniformMatrix4fv(modelViewRef, 1, GL_FALSE, glm::value_ptr(mv));
@@ -119,14 +118,7 @@ void Mesh::Render(GLSLProgram* prog, AssetData* assetData, Camera* camera)
 	glm::mat3 normalMatrix = mat3(glm::vec3(mv[0]), glm::vec3(mv[1]), glm::vec3(mv[2]));
 	glUniformMatrix3fv(normRef, 1, GL_FALSE, glm::value_ptr(normalMatrix));
 
-	GLuint kdRef = glGetUniformLocation(programHandle, "Kd");
-	glUniform3fv(kdRef, 1, glm::value_ptr(vec3(1.0f)));
-
-	GLuint ldRef = glGetUniformLocation(programHandle, "Ld");
-	glUniform3fv(ldRef, 1, glm::value_ptr(vec3(1.0f)));
-
-	GLuint lightPosRef = glGetUniformLocation(programHandle, "LightPosition");
-	glUniform4fv(lightPosRef, 1, glm::value_ptr(vec4(camera->viewMatrix * vec4(camera->position, 1))));
+	sceneObjects->masterLight.SetUniforms(programHandle);
 
 	glBindVertexArray(this->vaoBuffer);
 	glDrawArrays(GL_TRIANGLES, 0, this->data->vertexSet.size());

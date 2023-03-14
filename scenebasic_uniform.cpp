@@ -23,17 +23,26 @@ using glm::vec3;
 SceneBasic_Uniform::SceneBasic_Uniform() : angle(0.0f) {}
 
 Asset stone("./Assets/torus.obj", vec3(0, 0, -2));
-Asset cube("./Assets/cube.obj", vec3(20,0,-20));
+Asset cube("./Assets/cube.obj", vec3(10,0,-5));
 
 void SceneBasic_Uniform::initScene()
 {
     compile();
 
+    sceneObjects.masterLight.ambient = vec4(0.5,0,0,1);
+    sceneObjects.masterLight.diffuse = vec4(0,0.5,0,1);
+    sceneObjects.masterLight.specular = vec4(0,0,0.5,1);
+    sceneObjects.masterLight.Position = vec3(0, 5, 0);
+
     cube.Load();
+    cube.assetData->mat.ambient = vec4(0.1);
+    cube.assetData->mat.shininess = 0.5;
     cube.AddTexture(prog.getHandle(), "./Assets/cube.png");
     cube.Build(true);
 
     stone.Load();
+    stone.assetData->mat.ambient = vec4(0.1);
+    stone.assetData->mat.shininess = 0.5;
     stone.Build(true);
 
     std::cout << std::endl;
@@ -43,7 +52,7 @@ void SceneBasic_Uniform::initScene()
     cube.Draw();
     stone.Draw();
 
-    cam.updateMatrix();
+    sceneObjects.cam.updateMatrix();
 }
 
 void SceneBasic_Uniform::compile()
@@ -90,8 +99,8 @@ void SceneBasic_Uniform::render()
     glDepthFunc(GL_LEQUAL);
     glEnable(GL_DEPTH_TEST);
 
-    cube.Render(&prog, &cam);
-    stone.Render(&prog, &cam);
+    cube.Render(&prog, &sceneObjects);
+    stone.Render(&prog, &sceneObjects);
 }
 
 void SceneBasic_Uniform::resize(int w, int h)
@@ -99,8 +108,8 @@ void SceneBasic_Uniform::resize(int w, int h)
     width = w;
     height = h;
     glViewport(0,0,w,h);
-    cam.aspect = w / h;
-    cam.updateMatrix();
+    sceneObjects.cam.aspect = w / h;
+    sceneObjects.cam.updateMatrix();
 }
 
 void SceneBasic_Uniform::keyActve(int key, int mods, float dt)
@@ -109,20 +118,22 @@ void SceneBasic_Uniform::keyActve(int key, int mods, float dt)
 
     switch (key) {
         case 'W':
-            cam.position.z -= moveStep * dt;
+            sceneObjects.cam.position.z -= moveStep * dt;
             break;
 
         case 'S':
-            cam.position.z += moveStep * dt;
+            sceneObjects.cam.position.z += moveStep * dt;
             break;
 
         case 'A':
-            cam.position.x -= moveStep * dt;
+            sceneObjects.cam.position.x -= moveStep * dt;
             break;
 
         case 'D':
-            cam.position.x += moveStep * dt;
+            sceneObjects.cam.position.x += moveStep * dt;
             break;
     }
-    cam.updateMatrix();
+
+    sceneObjects.cam.updateMatrix();
+    sceneObjects.masterLight.UpdateView(&sceneObjects.cam);
 }

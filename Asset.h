@@ -4,16 +4,29 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include "helper/glutils.h"
 #include <glm/glm.hpp>
+#include <glm/ext/matrix_transform.hpp> // GLM: translate, rotate
+#include <glm/ext/matrix_clip_space.hpp> // GLM: perspective and ortho 
+#include <glm/gtc/type_ptr.hpp> // GLM: access to the value_ptr
 #include <glad/glad.h>
-#include "helper/glslprogram.h"
 
+#include "SceneObjects.h"
 #include "Camera.h"
+#include "helper/glslprogram.h"
 
 #define bufferCount 4
 
 using namespace std;
 using namespace glm;
+
+class Material {
+public:
+	vec4 ambient;
+	float shininess;
+
+	void SetUniforms(GLuint programHandle);
+};
 
 class MeshData {
 public:
@@ -34,6 +47,8 @@ class AssetData {
 public:
 	vec3 position;
 	vec3 rotation;
+
+	Material mat;
 };
 
 class Mesh {
@@ -55,7 +70,7 @@ public:
 
 	void Draw();
 
-	void Render(GLSLProgram* prog, AssetData* assetData, Camera* camera);
+	void Render(GLuint programHandle, AssetData* assetData, SceneObjects* sceneObjects);
 };
 
 class Asset {
@@ -91,7 +106,7 @@ public:
 
 	void Draw();
 
-	void Render(GLSLProgram* prog, Camera* camera);
+	void Render(GLSLProgram* prog, SceneObjects* sceneObjects);
 
 	void AddTexture(GLuint program, string file);
 };
