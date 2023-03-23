@@ -43,7 +43,7 @@ void BuildVector(vector<T>* vec, string data) {
 	int i = 0;
 
 	while (i < data.length()) {
-		auto d = data.substr(i, sizeof(T)).c_str();
+		auto d = data.substr(i, sizeof(T));
 
 		T vect;
 
