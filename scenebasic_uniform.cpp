@@ -42,11 +42,13 @@ void SceneBasic_Uniform::initScene()
 	cube.assetData->mat.shininess = 10;
 	cube.AddTexture(prog.getHandle(), "./Assets/cube.png");
 	cube.Build();
+	cube.Dump();
 
 	stone.Load();
 	stone.assetData->mat.ambient = vec4(0.1);
 	stone.assetData->mat.shininess = 10;
 	stone.Build();
+	stone.Dump();
 
 	fox.Load();
 	fox.assetData->mat.ambient = vec4(0.1);

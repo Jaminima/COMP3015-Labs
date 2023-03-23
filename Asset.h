@@ -70,6 +70,8 @@ public:
 
 	void Draw();
 
+	void Dump(string file);
+
 	void Render(GLuint programHandle, AssetData* assetData, SceneObjects* sceneObjects);
 };
 
@@ -93,6 +95,8 @@ public:
 	Asset(string srcFile, vec3 pos = vec3(), vec3 rot = vec3());
 
 	void Load();
+
+	void Dump();
 
 	void ParseOBJ();
 

@@ -6,6 +6,11 @@
 #include <glm/gtc/type_ptr.hpp> // GLM: access to the value_ptr
 #include "SceneObjects.h"
 
+#include <iostream>
+#include<fstream>
+#include<sstream>
+#include<string>
+
 using namespace std;
 using namespace glm;
 
@@ -49,6 +54,30 @@ void Mesh::Draw()
 	/*glVertexAttribBinding(3, 3);*/
 
 	glBindVertexArray(0);
+}
+
+
+template<typename T>
+inline void DumpVertex(ofstream* fileStr , std::vector<T>* vec) {
+	fileStr->write((char*)vec->data(), vec->size() * sizeof(T));
+}
+
+void Mesh::Dump(string file)
+{
+	ofstream fileStr(file+".dump");
+	if (fileStr) {
+		string len = to_string(this->data->vertexSet.size());
+		fileStr.write(len.c_str(), len.size());
+
+		DumpVertex(&fileStr, &this->data->vertexSet);
+		DumpVertex(&fileStr, &this->data->texCooSet);
+		DumpVertex(&fileStr, &this->data->normalSet);
+
+		printf("Dumped %s With %s elements\n", file.c_str(), len.c_str());
+	}
+
+	fileStr.flush();
+	fileStr.close();
 }
 
 Mesh::Mesh(string mesh_name)

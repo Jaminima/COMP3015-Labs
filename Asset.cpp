@@ -36,6 +36,14 @@ void Asset::Load()
 	}
 }
 
+void Asset::Dump()
+{
+	int meshCount = this->meshses.size();
+	for (int i = 0; i < meshCount; i++) {
+		this->meshses[i].Dump(srcFile);
+	}
+}
+
 void Asset::ParseOBJ()
 {
 	if (this->srcData == 0x0) throw exception("Source Data Is Missing During OBJ Parsing!");
@@ -81,9 +89,14 @@ void Asset::ParseOBJLine(string line)
 void Asset::ExecuteOBJOperation(string opCode, vector<string> operands)
 {
 	if (opCode == "o") {
-		Mesh m(operands[0]);
+		if (meshses.size() == 1 && meshses[0].name == "No Name") {
+			meshses[0].name = operands[0];
+		}
+		else {
+			Mesh m(operands[0]);
 
-		this->meshses.push_back(m);
+			this->meshses.push_back(m);
+		}
 
 		return;
 	}
