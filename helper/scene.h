@@ -64,7 +64,7 @@ public:
         framesInSecond = (lastUpdateTime - dt < floorf(lastUpdateTime)) ? 0 : framesInSecond + 1;
         int frames = floorf(framesInSecond / (lastUpdateTime - floorf(lastUpdateTime)));
 
-        //printf("Update Delta %f ms %i fps       \r", dt * 1000, frames);
+        printf("Update Delta %f ms %i fps       \r", dt * 1000, frames);
     }
 
     virtual void update( float dt ) = 0;
