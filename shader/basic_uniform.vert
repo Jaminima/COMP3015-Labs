@@ -1,9 +1,8 @@
 #version 460
 
 layout (location = 0) in vec3 VertexPosition;
-layout (location = 1) in vec4 VertexColor;
-layout (location = 2) in vec3 VertexNormal;
-layout (location = 3) in vec2 VertexTextureCoordinate;
+layout (location = 1) in vec3 VertexNormal;
+layout (location = 2) in vec2 VertexTextureCoordinate;
 
 out vec4 Color;
 out vec2 vTextureCoordinate;
@@ -33,7 +32,7 @@ void main()
     vec3 N = normalize(NormalMatrix * VertexNormal);
     vec3 V = vec3(ModelViewMatrix * vec4(VertexPosition,1));
 
-    vec3 lightPos = normalize(Light.ViewPosition.xyz - VertexPosition);
+    vec3 lightPos = normalize(Light.ViewPosition.xyz - V);
     vec3 view = normalize(-V);
     vec3 normal = normalize(N);
 
@@ -44,12 +43,13 @@ void main()
     diffuse = clamp(diffuse,0,1);
 
     vec3 reflectD = reflect(-lightPos,normal);
-    float spec = pow(max(dot(reflectD,normalize(-VertexPosition)),0.0),Mat.shininess);
+    float dotVR = max(dot(view,reflectD),0.0);
+    float spec = pow(dotVR,Mat.shininess);
 
     vec4 specular = Light.specular * spec;
-    specular = clamp(specular,0,1);
+    specular = clamp(specular,0.0,1.0);
 
-    Color = specular; //global + ambient + diffuse + specular;
+    Color = global + ambient + diffuse + specular;
     vTextureCoordinate = VertexTextureCoordinate;
 
     gl_Position = ProjectionMatrix * ModelViewMatrix * vec4(VertexPosition,1.0);

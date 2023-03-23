@@ -24,24 +24,24 @@ void Mesh::Draw()
 	glBindBuffer(GL_ARRAY_BUFFER, this->buffers[0]);
 	glBufferData(GL_ARRAY_BUFFER, this->data->vertexSet.size() * sizeof(vec3), this->data->vertexSet.data(), GL_STATIC_DRAW);
 
-	glBindBuffer(GL_ARRAY_BUFFER, this->buffers[1]);
-	glBufferData(GL_ARRAY_BUFFER, this->data->colourSet.size() * sizeof(vec4), this->data->colourSet.data(), GL_STATIC_DRAW);
+	/*glBindBuffer(GL_ARRAY_BUFFER, this->buffers[1]);
+	glBufferData(GL_ARRAY_BUFFER, this->data->colourSet.size() * sizeof(vec4), this->data->colourSet.data(), GL_STATIC_DRAW);*/
 
-	glBindBuffer(GL_ARRAY_BUFFER, this->buffers[2]);
+	glBindBuffer(GL_ARRAY_BUFFER, this->buffers[1]);
 	glBufferData(GL_ARRAY_BUFFER, this->data->normalSet.size() * sizeof(vec3), this->data->normalSet.data(), GL_STATIC_DRAW);
 
-	glBindBuffer(GL_ARRAY_BUFFER, this->buffers[3]);
+	glBindBuffer(GL_ARRAY_BUFFER, this->buffers[2]);
 	glBufferData(GL_ARRAY_BUFFER, this->data->texCooSet.size() * sizeof(vec2), this->data->texCooSet.data(), GL_STATIC_DRAW);
 
 	glBindVertexBuffer(0, this->buffers[0], 0, sizeof(vec3));
-	glBindVertexBuffer(1, this->buffers[1], 0, sizeof(vec4));
-	glBindVertexBuffer(2, this->buffers[2], 0, sizeof(vec3));
-	glBindVertexBuffer(3, this->buffers[3], 0, sizeof(vec2));
+	//glBindVertexBuffer(1, this->buffers[1], 0, sizeof(vec4));
+	glBindVertexBuffer(1, this->buffers[1], 0, sizeof(vec3));
+	glBindVertexBuffer(2, this->buffers[2], 0, sizeof(vec2));
 
 	glVertexAttribFormat(0, 3, GL_FLOAT, GL_FALSE, 0);
-	glVertexAttribFormat(1, 4, GL_FLOAT, GL_FALSE, 0);
-	glVertexAttribFormat(2, 3, GL_FLOAT, GL_FALSE, 0);
-	glVertexAttribFormat(3, 2, GL_FLOAT, GL_FALSE, 0);
+	//glVertexAttribFormat(1, 4, GL_FLOAT, GL_FALSE, 0);
+	glVertexAttribFormat(1, 1, GL_FLOAT, GL_FALSE, 0);
+	glVertexAttribFormat(2, 2, GL_FLOAT, GL_FALSE, 0);
 
 	glVertexAttribBinding(0, 0);
 	glVertexAttribBinding(1, 1);
@@ -81,13 +81,13 @@ void Mesh::Build(bool generateColours)
 		PushFaceIdx(idx.y, &this->data->texCooSet, &this->components->texCooSet);
 		PushFaceIdx(idx.z, &this->data->normalSet, &this->components->normalSet);
 
-		if (generateColours) {
-			int cIdx = i / thirdIndexCount;
-			float c = (float)(i - (thirdIndexCount*cIdx)) / thirdIndexCount;
-			this->data->colourSet.push_back(vec4(1.0f));
-			//this->data->colourSet.push_back(vec4(i % 3 == 0 ? 1 : 0, i % 3 == 1 ? 1 : 0, i % 3 == 2 ? 1 : 0, 1.0f));
-			//this->data->colourSet.push_back(vec4(cIdx ==0?c : 0.0f, cIdx == 1 ? c : 0.0f, cIdx == 2 ? c : 0.0f, 1.0f));
-		}
+		//if (generateColours) {
+		//	int cIdx = i / thirdIndexCount;
+		//	float c = (float)(i - (thirdIndexCount*cIdx)) / thirdIndexCount;
+		//	this->data->colourSet.push_back(vec4(1.0f));
+		//	//this->data->colourSet.push_back(vec4(i % 3 == 0 ? 1 : 0, i % 3 == 1 ? 1 : 0, i % 3 == 2 ? 1 : 0, 1.0f));
+		//	//this->data->colourSet.push_back(vec4(cIdx ==0?c : 0.0f, cIdx == 1 ? c : 0.0f, cIdx == 2 ? c : 0.0f, 1.0f));
+		//}
 	}
 
 	delete this->components;

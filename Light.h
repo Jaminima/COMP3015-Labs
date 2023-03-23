@@ -1,4 +1,4 @@
-#ifndef __Light
+ #ifndef __Light
 #define __Light
 #include "Camera.h"
 #include <glm/glm.hpp>
@@ -25,6 +25,9 @@ public:
         glUniform4fv(ref, 1, glm::value_ptr(diffuse));
 
         ref = glGetUniformLocation(programHandle, "Light.Position");
+        glUniform3fv(ref, 1, glm::value_ptr(Position));
+
+        ref = glGetUniformLocation(programHandle, "Light.ViewPosition");
         glUniform4fv(ref, 1, glm::value_ptr(ViewPosition));
 
         ref = glGetUniformLocation(programHandle, "Light.specular");

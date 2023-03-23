@@ -212,6 +212,7 @@ Asset::Asset(string srcFile, vec3 pos, vec3 rot)
 void Asset::Render(GLSLProgram* prog, SceneObjects* sceneObjects)
 {
     GLuint programHandle = prog->getHandle();
+    assetData->mat.SetUniforms(programHandle);
     sceneObjects->masterLight.SetUniforms(programHandle);
 
     int meshCount = this->meshses.size();

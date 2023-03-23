@@ -15,7 +15,7 @@
 #include "Camera.h"
 #include "helper/glslprogram.h"
 
-#define bufferCount 4
+#define bufferCount 3
 
 using namespace std;
 using namespace glm;

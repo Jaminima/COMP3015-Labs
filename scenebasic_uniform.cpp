@@ -29,20 +29,22 @@ void SceneBasic_Uniform::initScene()
 {
     compile();
 
-    sceneObjects.masterLight.ambient = vec4(0,0,0,1);
-    sceneObjects.masterLight.diffuse = vec4(0,0,0,1);
+    sceneObjects.masterLight.ambient = vec4(0.1,0.1,0.1,1);
+    sceneObjects.masterLight.diffuse = vec4(0,1,0,1);
     sceneObjects.masterLight.specular = vec4(1,1,1,1);
-    sceneObjects.masterLight.Position = vec3(1, 2, -3);
+    sceneObjects.masterLight.Position = vec3(0, -10, -3);
+
+    sceneObjects.masterLight.UpdateView(&sceneObjects.cam);
 
     cube.Load();
     cube.assetData->mat.ambient = vec4(0.1);
-    cube.assetData->mat.shininess = 0.001;
+    cube.assetData->mat.shininess = 10;
     cube.AddTexture(prog.getHandle(), "./Assets/cube.png");
     cube.Build(true);
 
     stone.Load();
     stone.assetData->mat.ambient = vec4(0.1);
-    stone.assetData->mat.shininess = 0.001;
+    stone.assetData->mat.shininess = 10;
     stone.Build(true);
 
     std::cout << std::endl;
@@ -131,6 +133,14 @@ void SceneBasic_Uniform::keyActve(int key, int mods, float dt)
 
         case 'D':
             sceneObjects.cam.position.x += moveStep * dt;
+            break;
+
+        case 'Z':
+            sceneObjects.cam.position.y += moveStep * dt;
+            break;
+
+        case 'X':
+            sceneObjects.cam.position.y -= moveStep * dt;
             break;
     }
 
