@@ -32,7 +32,7 @@ void main()
     vec3 N = normalize(NormalMatrix * VertexNormal);
     vec3 V = vec3(ModelViewMatrix * vec4(VertexPosition,1));
 
-    vec3 lightPos = normalize(Light.ViewPosition.xyz - V);
+    vec3 lightPos = normalize(Light.Position - V);
     vec3 view = normalize(-V);
     vec3 normal = normalize(N);
 

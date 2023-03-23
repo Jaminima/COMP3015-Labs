@@ -22,7 +22,7 @@ using glm::vec3;
 
 SceneBasic_Uniform::SceneBasic_Uniform() : angle(0.0f) {}
 
-Asset stone("./Assets/torus.obj", vec3(0, -1, -2));
+Asset stone("./Assets/torus2.obj", vec3(0, -1, -2));
 Asset cube("./Assets/cube.obj", vec3(10,0,-5));
 
 void SceneBasic_Uniform::initScene()
@@ -30,9 +30,9 @@ void SceneBasic_Uniform::initScene()
     compile();
 
     sceneObjects.masterLight.ambient = vec4(0.1,0.1,0.1,1);
-    sceneObjects.masterLight.diffuse = vec4(0,1,0,1);
+    sceneObjects.masterLight.diffuse = vec4(0.4,0.4,0.4,1);
     sceneObjects.masterLight.specular = vec4(1,1,1,1);
-    sceneObjects.masterLight.Position = vec3(0, -10, -3);
+    sceneObjects.masterLight.Position = vec3(5, -10, -3);
 
     sceneObjects.masterLight.UpdateView(&sceneObjects.cam);
 
