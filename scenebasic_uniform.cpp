@@ -109,6 +109,8 @@ void SceneBasic_Uniform::resize(int w, int h)
 {
     width = w;
     height = h;
+    halfheight = height / 2;
+    halfwidth = width / 2;
     glViewport(0,0,w,h);
     sceneObjects.cam.aspect = w / h;
     sceneObjects.cam.updateMatrix();
@@ -146,4 +148,17 @@ void SceneBasic_Uniform::keyActve(int key, int mods, float dt)
 
     sceneObjects.cam.updateMatrix();
     sceneObjects.masterLight.UpdateView(&sceneObjects.cam);
+}
+
+void SceneBasic_Uniform::mouseMove(int x, int y)
+{
+    const float rotStep = 0.0001f;
+
+    int dx = halfwidth - x;
+    int dy = halfheight - y;
+
+    sceneObjects.cam.rotation += vec3(dy * rotStep, dx * rotStep, 0);
+
+    sceneObjects.cam.updateMatrix();
+
 }

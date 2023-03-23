@@ -4,11 +4,12 @@
 
 Camera::Camera()
 {
+	projectionMatrix = glm::perspective(fov, aspect, clipNear, clipFar);
+
 	this->updateMatrix();
 }
 
 void Camera::updateMatrix() {
-	projectionMatrix = glm::perspective(fov, aspect, clipNear, clipFar);
 
 	boundAngles(&rotation);
 

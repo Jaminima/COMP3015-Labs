@@ -11,6 +11,8 @@ private:
 public:
     int width;
     int height;
+    int halfwidth;
+    int halfheight;
 
     SceneObjects sceneObjects;
 
@@ -30,6 +32,8 @@ public:
 	virtual ~Scene() {}
 
     virtual void keyActve(int key, int mods, float dt) = 0;
+
+    virtual void mouseMove(int x, int y) = 0;
 
     void processKeys(float dt);
 

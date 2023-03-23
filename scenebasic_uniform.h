@@ -25,6 +25,7 @@ public:
 
     // Inherited via Scene
     virtual void keyActve(int key, int mods, float dt) override;
+    virtual void mouseMove(int x, int y) override;
 };
 
 #endif // SCENEBASIC_UNIFORM_H

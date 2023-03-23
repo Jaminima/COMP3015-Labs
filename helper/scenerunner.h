@@ -32,6 +32,11 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
     }
 }
 
+void MouseCallback(GLFWwindow* window, double xpos, double ypos)
+{
+    activeScene->mouseMove(xpos, ypos);
+}
+
 class SceneRunner {
 private:
     GLFWwindow * window;
@@ -98,6 +103,9 @@ public:
         scene.resize(fbw, fbh);
 
         glfwSetKeyCallback(window, KeyCallback);
+
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+        glfwSetCursorPosCallback(window, MouseCallback);
 
         // Enter the main loop
         mainLoop(window, scene);
