@@ -10,6 +10,7 @@
 #include<fstream>
 #include<sstream>
 #include<string>
+#include <algorithm>
 
 using namespace std;
 using namespace glm;
@@ -62,14 +63,23 @@ inline void DumpVertex(ofstream* fileStr , std::vector<T>* vec) {
 	fileStr->write((char*)vec->data(), vec->size() * sizeof(T));
 }
 
+inline string GetFormattedLengthString(int length) {
+	string old_str = to_string(length);
+	const size_t n_zero = 8;
+
+	auto new_str = std::string(n_zero - std::min(n_zero, old_str.length()), '0') + old_str;
+
+	return string(new_str);
+}
+
 void Mesh::Dump(ofstream* fileStr)
 {
-	string nameLen = to_string(name.size());
+	string nameLen = GetFormattedLengthString(name.size());
 	fileStr->write(nameLen.c_str(), nameLen.size());
 
 	fileStr->write(name.c_str(), name.size());
 
-	string len = to_string(this->data->vertexSet.size());
+	string len = GetFormattedLengthString(this->data->vertexSet.size());
 	fileStr->write(len.c_str(), len.size());
 
 	DumpVertex(fileStr, &this->data->vertexSet);

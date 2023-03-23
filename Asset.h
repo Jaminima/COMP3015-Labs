@@ -80,6 +80,7 @@ public:
 
 	string srcFile;
 	string* srcData = 0x0;
+	bool loadedFromDump = false;
 
 	bool hasTexture = false;
 	GLuint texture;
@@ -95,6 +96,8 @@ public:
 	Asset(string srcFile, vec3 pos = vec3(), vec3 rot = vec3());
 
 	void Load();
+
+	bool TryLoadDump();
 
 	void Dump();
 

@@ -21,6 +21,8 @@ Asset::Asset(string srcFile)
 
 void Asset::Load()
 {
+	if (TryLoadDump()) return;
+
 	ifstream file(this->srcFile);
 	string str;
 	if (file) {
@@ -36,8 +38,90 @@ void Asset::Load()
 	}
 }
 
+template<typename T>
+void BuildVector(vector<T>* vec, string data) {
+	int i = 0;
+
+	while (i < data.length()) {
+		auto d = data.substr(i, sizeof(T)).c_str();
+
+		T vect;
+
+		memcpy(&vect, &d[0],sizeof(T));
+
+ 		vec->push_back(vect);
+
+		i += sizeof(T);
+	}
+}
+
+bool Asset::TryLoadDump()
+{
+	ifstream file(srcFile + ".dump");
+	string str;
+	if (file) {
+		printf("Loading Dump For File %s\n", srcFile.c_str());
+		loadedFromDump = true;
+
+		ostringstream ss;
+		ss << file.rdbuf(); // reading data
+		str = ss.str();
+
+		int idx = 0;
+		int strlen = str.length();
+		while (idx < strlen) {
+			string lenStr = str.substr(idx, 8);
+			int len = stoi(lenStr);
+
+			idx += 8;
+
+			string name = str.substr(idx, len);
+
+			idx += len;
+
+			lenStr = str.substr(idx, 8);
+			len = stoi(lenStr);
+
+			idx += 8;
+
+			int vec3len = len * sizeof(vec3);
+			int vec2len = len * sizeof(vec2);
+
+			string vertexes = str.substr(idx, vec3len);
+
+			idx += vec3len;
+
+			string texCoo = str.substr(idx, vec2len);
+
+			idx += vec2len;
+
+			string normals = str.substr(idx, vec3len);
+
+			idx += vec3len;
+
+			Mesh m(name);
+
+			m.data = new MeshData();
+
+			BuildVector(&m.data->vertexSet, vertexes);
+			BuildVector(&m.data->texCooSet, texCoo);
+			BuildVector(&m.data->normalSet, normals);
+		}
+
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
 void Asset::Dump()
 {
+	if (loadedFromDump) {
+		//printf("Skipping Dumping Of File %s\n", srcFile.c_str());
+		return;
+	}
+
 	ofstream fileStr(srcFile + ".dump");
 
 	int meshCount = this->meshses.size();
