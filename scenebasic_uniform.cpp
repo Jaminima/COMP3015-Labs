@@ -32,17 +32,17 @@ void SceneBasic_Uniform::initScene()
     sceneObjects.masterLight.ambient = vec4(0,0,0,1);
     sceneObjects.masterLight.diffuse = vec4(0,0,0,1);
     sceneObjects.masterLight.specular = vec4(1,1,1,1);
-    sceneObjects.masterLight.Position = vec3(0, 2, -3);
+    sceneObjects.masterLight.Position = vec3(1, 2, -3);
 
     cube.Load();
     cube.assetData->mat.ambient = vec4(0.1);
-    cube.assetData->mat.shininess = 100;
+    cube.assetData->mat.shininess = 0.001;
     cube.AddTexture(prog.getHandle(), "./Assets/cube.png");
     cube.Build(true);
 
     stone.Load();
     stone.assetData->mat.ambient = vec4(0.1);
-    stone.assetData->mat.shininess = 100;
+    stone.assetData->mat.shininess = 0.001;
     stone.Build(true);
 
     std::cout << std::endl;

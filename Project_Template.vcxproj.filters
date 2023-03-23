@@ -59,7 +59,7 @@
       <Filter>Src\Helper</Filter>
     </ClCompile>
     <ClCompile Include="Light.cpp">
-      <Filter>Src</Filter>
+      <Filter>Src\Assets</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

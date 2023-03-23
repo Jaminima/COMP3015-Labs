@@ -33,7 +33,7 @@ void main()
     vec3 N = normalize(NormalMatrix * VertexNormal);
     vec3 V = vec3(ModelViewMatrix * vec4(VertexPosition,1));
 
-    vec3 lightPos = normalize(Light.ViewPosition.xyz - V);
+    vec3 lightPos = normalize(Light.ViewPosition.xyz - VertexPosition);
     vec3 view = normalize(-V);
     vec3 normal = normalize(N);
 
@@ -49,7 +49,7 @@ void main()
     vec4 specular = Light.specular * spec;
     specular = clamp(specular,0,1);
 
-    Color = global + ambient + diffuse + specular;
+    Color = specular; //global + ambient + diffuse + specular;
     vTextureCoordinate = VertexTextureCoordinate;
 
     gl_Position = ProjectionMatrix * ModelViewMatrix * vec4(VertexPosition,1.0);

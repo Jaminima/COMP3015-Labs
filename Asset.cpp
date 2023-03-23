@@ -229,9 +229,9 @@ void Asset::AddTexture(GLuint program, string file)
 }
 
 inline void Material::SetUniforms(GLuint programHandle) {
-    GLuint ref = glGetUniformLocation(programHandle, "Light.ambient");
+    GLuint ref = glGetUniformLocation(programHandle, "Mat.ambient");
     glUniform4fv(ref, 1, glm::value_ptr(ambient));
 
-    ref = glGetUniformLocation(programHandle, "Light.shininess");
+    ref = glGetUniformLocation(programHandle, "Mat.shininess");
     glUniform1f(ref, shininess);
 }
