@@ -70,7 +70,7 @@ public:
 
 	void Draw();
 
-	void Dump(string file);
+	void Dump(ofstream* fileStr);
 
 	void Render(GLuint programHandle, AssetData* assetData, SceneObjects* sceneObjects);
 };

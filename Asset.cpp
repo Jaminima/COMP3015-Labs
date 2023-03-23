@@ -38,10 +38,15 @@ void Asset::Load()
 
 void Asset::Dump()
 {
+	ofstream fileStr(srcFile + ".dump");
+
 	int meshCount = this->meshses.size();
 	for (int i = 0; i < meshCount; i++) {
-		this->meshses[i].Dump(srcFile);
+		this->meshses[i].Dump(&fileStr);
 	}
+
+	fileStr.flush();
+	fileStr.close();
 }
 
 void Asset::ParseOBJ()

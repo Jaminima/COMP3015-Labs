@@ -62,22 +62,21 @@ inline void DumpVertex(ofstream* fileStr , std::vector<T>* vec) {
 	fileStr->write((char*)vec->data(), vec->size() * sizeof(T));
 }
 
-void Mesh::Dump(string file)
+void Mesh::Dump(ofstream* fileStr)
 {
-	ofstream fileStr(file+".dump");
-	if (fileStr) {
-		string len = to_string(this->data->vertexSet.size());
-		fileStr.write(len.c_str(), len.size());
+	string nameLen = to_string(name.size());
+	fileStr->write(nameLen.c_str(), nameLen.size());
 
-		DumpVertex(&fileStr, &this->data->vertexSet);
-		DumpVertex(&fileStr, &this->data->texCooSet);
-		DumpVertex(&fileStr, &this->data->normalSet);
+	fileStr->write(name.c_str(), name.size());
 
-		printf("Dumped %s With %s elements\n", file.c_str(), len.c_str());
-	}
+	string len = to_string(this->data->vertexSet.size());
+	fileStr->write(len.c_str(), len.size());
 
-	fileStr.flush();
-	fileStr.close();
+	DumpVertex(fileStr, &this->data->vertexSet);
+	DumpVertex(fileStr, &this->data->texCooSet);
+	DumpVertex(fileStr, &this->data->normalSet);
+
+	printf("Dumped Mesh %s With %s elements\n", name.c_str(), len.c_str());
 }
 
 Mesh::Mesh(string mesh_name)
