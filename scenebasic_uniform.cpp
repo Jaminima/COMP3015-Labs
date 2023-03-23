@@ -21,6 +21,8 @@ using glm::vec3;
 
 SceneBasic_Uniform::SceneBasic_Uniform() : angle(0.0f) {}
 
+Asset fox("./Assets/fox.obj", vec3(0, -1, 10));
+Asset train("./Assets/steam-train.obj", vec3(10, -1, 0));
 Asset stone("./Assets/torus2.obj", vec3(0, -1, -2));
 Asset cube("./Assets/cube.obj", vec3(10, 0, -5));
 
@@ -39,12 +41,22 @@ void SceneBasic_Uniform::initScene()
 	cube.assetData->mat.ambient = vec4(0.1);
 	cube.assetData->mat.shininess = 10;
 	cube.AddTexture(prog.getHandle(), "./Assets/cube.png");
-	cube.Build(true);
+	cube.Build();
 
 	stone.Load();
 	stone.assetData->mat.ambient = vec4(0.1);
 	stone.assetData->mat.shininess = 10;
-	stone.Build(true);
+	stone.Build();
+
+	fox.Load();
+	fox.assetData->mat.ambient = vec4(0.1);
+	fox.assetData->mat.shininess = 10;
+	fox.Build();
+
+	train.Load();
+	train.assetData->mat.ambient = vec4(0.1);
+	train.assetData->mat.shininess = 10;
+	train.Build();
 
 	std::cout << std::endl;
 
@@ -103,6 +115,8 @@ void SceneBasic_Uniform::render()
 
 	cube.Render(&prog, &sceneObjects);
 	stone.Render(&prog, &sceneObjects);
+	fox.Render(&prog, &sceneObjects);
+	train.Render(&prog, &sceneObjects);
 }
 
 void SceneBasic_Uniform::resize(int w, int h)
