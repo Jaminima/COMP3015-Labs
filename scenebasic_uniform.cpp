@@ -136,27 +136,27 @@ void SceneBasic_Uniform::keyActve(int key, int mods, float dt)
 
 	switch (key) {
 	case 'W':
-		offset.z -= moveStep * dt;
-		break;
-
-	case 'S':
 		offset.z += moveStep * dt;
 		break;
 
-	case 'A':
-		offset.x -= moveStep * dt;
+	case 'S':
+		offset.z -= moveStep * dt;
 		break;
 
-	case 'D':
+	case 'A':
 		offset.x += moveStep * dt;
 		break;
 
+	case 'D':
+		offset.x -= moveStep * dt;
+		break;
+
 	case 'Z':
-		offset.y += moveStep * dt;
+		offset.y -= moveStep * dt;
 		break;
 
 	case 'X':
-		offset.y -= moveStep * dt;
+		offset.y += moveStep * dt;
 		break;
 	}
 

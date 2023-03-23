@@ -53,7 +53,8 @@ vec3 Camera::rotateDirection(vec3 dir)
 
 void Camera::updatePosition(vec3 offset)
 {
-	vec3 shift = rotateDirection(vec3(offset.x, offset.z, offset.y));
+	//vec3 shift = rotateDirection(vec3(offset.x, offset.z, offset.y));
+	vec3 shift = rotateDirection(offset);
 
 	position += vec3(shift);
 }
