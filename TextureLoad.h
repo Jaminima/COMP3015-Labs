@@ -11,4 +11,3 @@ using namespace std;
 void loadTexture(GLuint& texture, std::string texturepath);
 
 #endif // !__TextureLoading
-

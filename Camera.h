@@ -5,7 +5,7 @@
 #include <glm/glm.hpp>
 
 #include <glm/ext/matrix_transform.hpp> // GLM: translate, rotate
-#include <glm/ext/matrix_clip_space.hpp> // GLM: perspective and ortho 
+#include <glm/ext/matrix_clip_space.hpp> // GLM: perspective and ortho
 
 using namespace glm;
 
@@ -17,7 +17,7 @@ public:
 	glm::mat4 viewMatrix;
 
 	vec3 position;
-	vec3 rotation = vec3(0,-90,0);
+	vec3 rotation = vec3(0, 180, 0);
 	vec3 lookingAt;
 
 	float cosx;

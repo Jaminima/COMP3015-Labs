@@ -1,6 +1,7 @@
 #include "Camera.h"
 
 #define PI 3.14159f
+#define halfPI PI/2
 #define DegreesToRadians (PI/180)
 
 Camera::Camera()
@@ -11,7 +12,6 @@ Camera::Camera()
 }
 
 void Camera::updateMatrix() {
-
 	boundAngles(&rotation);
 
 	vec3 radianRot = rotation * DegreesToRadians;
@@ -24,11 +24,11 @@ void Camera::updateMatrix() {
 	siny = sinf(radianRot.y);
 	sinz = sinf(radianRot.z);
 
-	vec3 dir = vec3(0, -PI, 0);
+	vec3 dir = vec3(0, 0, PI);
 
 	lookingAt = rotateDirection(dir);
 
-	viewMatrix = glm::lookAt(position, position+lookingAt, vec3(0, 1, 0));
+	viewMatrix = glm::lookAt(position, position + lookingAt, vec3(0, 1, 0));
 }
 
 vec3 Camera::rotateDirection(vec3 dir)
@@ -53,7 +53,7 @@ vec3 Camera::rotateDirection(vec3 dir)
 
 void Camera::updatePosition(vec3 offset)
 {
-	vec3 shift = rotateDirection(vec3(offset.x,offset.z,offset.y));
+	vec3 shift = rotateDirection(vec3(offset.x, offset.z, offset.y));
 
 	position += vec3(shift);
 }

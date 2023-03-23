@@ -7,7 +7,7 @@
 #include "helper/glutils.h"
 #include <glm/glm.hpp>
 #include <glm/ext/matrix_transform.hpp> // GLM: translate, rotate
-#include <glm/ext/matrix_clip_space.hpp> // GLM: perspective and ortho 
+#include <glm/ext/matrix_clip_space.hpp> // GLM: perspective and ortho
 #include <glm/gtc/type_ptr.hpp> // GLM: access to the value_ptr
 #include <glad/glad.h>
 

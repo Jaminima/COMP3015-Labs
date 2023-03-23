@@ -14,7 +14,6 @@ using std::endl;
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-
 #include "Asset.h"
 #include "utils.h"
 
@@ -23,38 +22,38 @@ using glm::vec3;
 SceneBasic_Uniform::SceneBasic_Uniform() : angle(0.0f) {}
 
 Asset stone("./Assets/torus2.obj", vec3(0, -1, -2));
-Asset cube("./Assets/cube.obj", vec3(10,0,-5));
+Asset cube("./Assets/cube.obj", vec3(10, 0, -5));
 
 void SceneBasic_Uniform::initScene()
 {
-    compile();
+	compile();
 
-    sceneObjects.masterLight.ambient = vec4(0.1,0.1,0.1,1);
-    sceneObjects.masterLight.diffuse = vec4(0.4,0.4,0.4,1);
-    sceneObjects.masterLight.specular = vec4(1,1,1,1);
-    sceneObjects.masterLight.Position = vec3(5, -10, -3);
+	sceneObjects.masterLight.ambient = vec4(0.1, 0.1, 0.1, 1);
+	sceneObjects.masterLight.diffuse = vec4(0.4, 0.4, 0.4, 1);
+	sceneObjects.masterLight.specular = vec4(1, 1, 1, 1);
+	sceneObjects.masterLight.Position = vec3(5, -10, -3);
 
-    sceneObjects.masterLight.UpdateView(&sceneObjects.cam);
+	sceneObjects.masterLight.UpdateView(&sceneObjects.cam);
 
-    cube.Load();
-    cube.assetData->mat.ambient = vec4(0.1);
-    cube.assetData->mat.shininess = 10;
-    cube.AddTexture(prog.getHandle(), "./Assets/cube.png");
-    cube.Build(true);
+	cube.Load();
+	cube.assetData->mat.ambient = vec4(0.1);
+	cube.assetData->mat.shininess = 10;
+	cube.AddTexture(prog.getHandle(), "./Assets/cube.png");
+	cube.Build(true);
 
-    stone.Load();
-    stone.assetData->mat.ambient = vec4(0.1);
-    stone.assetData->mat.shininess = 10;
-    stone.Build(true);
+	stone.Load();
+	stone.assetData->mat.ambient = vec4(0.1);
+	stone.assetData->mat.shininess = 10;
+	stone.Build(true);
 
-    std::cout << std::endl;
+	std::cout << std::endl;
 
-    prog.printActiveUniforms();
+	prog.printActiveUniforms();
 
-    cube.Draw();
-    stone.Draw();
+	cube.Draw();
+	stone.Draw();
 
-    sceneObjects.cam.updateMatrix();
+	sceneObjects.cam.updateMatrix();
 }
 
 void SceneBasic_Uniform::compile()
@@ -64,7 +63,8 @@ void SceneBasic_Uniform::compile()
 		prog.compileShader("shader/basic_uniform.frag");
 		prog.link();
 		prog.use();
-	} catch (GLSLProgramException &e) {
+	}
+	catch (GLSLProgramException& e) {
 		cerr << e.what() << endl;
 		exit(EXIT_FAILURE);
 	}
@@ -72,97 +72,97 @@ void SceneBasic_Uniform::compile()
 
 void SceneBasic_Uniform::update(float dt)
 {
-    processKeys(dt);
+	processKeys(dt);
 
-    vec3* cubeRot = &cube.assetData->rotation;
+	vec3* cubeRot = &cube.assetData->rotation;
 
-    cubeRot->z += 0.8f * dt;
-    cubeRot->x += 0.4f * dt;
+	cubeRot->z += 0.8f * dt;
+	cubeRot->x += 0.4f * dt;
 
-    boundAngles(cubeRot);
+	boundAngles(cubeRot);
 
-    /*vec3* stoneRot = &stone.assetData->rotation;
+	/*vec3* stoneRot = &stone.assetData->rotation;
 
-    stoneRot->x += 0.8f * dt;
-    stoneRot->y += 0.8f * dt;
+	stoneRot->x += 0.8f * dt;
+	stoneRot->y += 0.8f * dt;
 
-    boundAngles(stoneRot);*/
+	boundAngles(stoneRot);*/
 }
 
 void SceneBasic_Uniform::render()
 {
-    glClearColor(0, 0, 0, 1);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClearColor(0, 0, 0, 1);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    glFrontFace(GL_CW);
-    glCullFace(GL_BACK);
-    glEnable(GL_CULL_FACE);
+	glFrontFace(GL_CW);
+	glCullFace(GL_BACK);
+	glEnable(GL_CULL_FACE);
 
-    glDepthFunc(GL_LEQUAL);
-    glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LEQUAL);
+	glEnable(GL_DEPTH_TEST);
 
-    cube.Render(&prog, &sceneObjects);
-    stone.Render(&prog, &sceneObjects);
+	cube.Render(&prog, &sceneObjects);
+	stone.Render(&prog, &sceneObjects);
 }
 
 void SceneBasic_Uniform::resize(int w, int h)
 {
-    width = w;
-    height = h;
-    glViewport(0,0,w,h);
-    sceneObjects.cam.aspect = w / h;
-    sceneObjects.cam.updateMatrix();
+	width = w;
+	height = h;
+	glViewport(0, 0, w, h);
+	sceneObjects.cam.aspect = w / h;
+	sceneObjects.cam.updateMatrix();
 }
 
 void SceneBasic_Uniform::keyActve(int key, int mods, float dt)
 {
-    const float moveStep = 20.0f;
+	const float moveStep = 20.0f;
 
-    vec3 offset = vec3();
+	vec3 offset = vec3();
 
-    switch (key) {
-        case 'W':
-            offset.z -= moveStep * dt;
-            break;
+	switch (key) {
+	case 'W':
+		offset.z -= moveStep * dt;
+		break;
 
-        case 'S':
-            offset.z += moveStep * dt;
-            break;
+	case 'S':
+		offset.z += moveStep * dt;
+		break;
 
-        case 'A':
-            offset.x -= moveStep * dt;
-            break;
+	case 'A':
+		offset.x -= moveStep * dt;
+		break;
 
-        case 'D':
-            offset.x += moveStep * dt;
-            break;
+	case 'D':
+		offset.x += moveStep * dt;
+		break;
 
-        case 'Z':
-            offset.y += moveStep * dt;
-            break;
+	case 'Z':
+		offset.y += moveStep * dt;
+		break;
 
-        case 'X':
-            offset.y -= moveStep * dt;
-            break;
-    }
+	case 'X':
+		offset.y -= moveStep * dt;
+		break;
+	}
 
-    sceneObjects.cam.updatePosition(offset);
+	sceneObjects.cam.updatePosition(offset);
 
-    sceneObjects.cam.updateMatrix();
-    sceneObjects.masterLight.UpdateView(&sceneObjects.cam);
+	sceneObjects.cam.updateMatrix();
+	sceneObjects.masterLight.UpdateView(&sceneObjects.cam);
 }
 
 void SceneBasic_Uniform::mouseMove(int x, int y)
 {
-    const float rotStep = 0.01f;
+	const float rotStep = 0.01f;
 
-    int dx = cMouseX - x;
-    int dy = cMouseY - y;
-    
-    sceneObjects.cam.rotation += vec3(dy * rotStep, -dx * rotStep, 0);
+	int dx = cMouseX - x;
+	int dy = cMouseY - y;
 
-    sceneObjects.cam.updateMatrix();
+	sceneObjects.cam.rotation += vec3(dy * rotStep, dx * rotStep, 0);
 
-    cMouseX = x;
-    cMouseY = y;
+	sceneObjects.cam.updateMatrix();
+
+	cMouseX = x;
+	cMouseY = y;
 }

@@ -12,18 +12,17 @@ void Scene::processKeys(float dt)
 }
 
 void Scene::glKeyDown(int key, int mods) {
-	pendingKeys.push_back(ivec2(key,mods));
+	pendingKeys.push_back(ivec2(key, mods));
 }
 
 void Scene::glKeyHeld(int key, int mods) {
 	for (int i = 0; i < pendingKeys.size(); i++) {
 		ivec2 k = pendingKeys[i];
-		if (k[0]==key && k[1]==mods) return;
+		if (k[0] == key && k[1] == mods) return;
 	}
 
 	pendingKeys.push_back(ivec2(key, mods));
 }
 
 void Scene::glKeyReleased(int key, int mods) {
-
 }

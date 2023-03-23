@@ -2,7 +2,7 @@
 #include "helper/glutils.h"
 #include <glm/glm.hpp>
 #include <glm/ext/matrix_transform.hpp> // GLM: translate, rotate
-#include <glm/ext/matrix_clip_space.hpp> // GLM: perspective and ortho 
+#include <glm/ext/matrix_clip_space.hpp> // GLM: perspective and ortho
 #include <glm/gtc/type_ptr.hpp> // GLM: access to the value_ptr
 #include "SceneObjects.h"
 
@@ -105,7 +105,6 @@ void Mesh::Render(GLuint programHandle, AssetData* assetData, SceneObjects* scen
 
 	GLuint modelRef = glGetUniformLocation(programHandle, "ModelMatrix");
 	glUniformMatrix4fv(modelRef, 1, GL_FALSE, glm::value_ptr(model));
-
 
 	GLuint viewRef = glGetUniformLocation(programHandle, "ViewMatrix");
 	glUniformMatrix4fv(viewRef, 1, GL_FALSE, glm::value_ptr(sceneObjects->cam.viewMatrix));
