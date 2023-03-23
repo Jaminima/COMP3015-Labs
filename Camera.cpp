@@ -16,16 +16,23 @@ void Camera::updateMatrix() {
 
 	vec3 radianRot = rotation * DegreesToRadians;
 
-	float cosx = cosf(radianRot.x);
-	float cosy = cosf(radianRot.y);
-	float cosz = cosf(radianRot.z);
+	cosx = cosf(radianRot.x);
+	cosy = cosf(radianRot.y);
+	cosz = cosf(radianRot.z);
 
-	float sinx = sinf(radianRot.x);
-	float siny = sinf(radianRot.y);
-	float sinz = sinf(radianRot.z);
+	sinx = sinf(radianRot.x);
+	siny = sinf(radianRot.y);
+	sinz = sinf(radianRot.z);
 
 	vec3 dir = vec3(0, -PI, 0);
 
+	lookingAt = rotateDirection(dir);
+
+	viewMatrix = glm::lookAt(position, position+lookingAt, vec3(0, 1, 0));
+}
+
+vec3 Camera::rotateDirection(vec3 dir)
+{
 	dir = vec3(
 		dir.x,
 		(cosx * dir.y) + (sinx * dir.z),
@@ -41,7 +48,12 @@ void Camera::updateMatrix() {
 		(cosz * dir.y) - (sinz * dir.x),
 		dir.z);
 
-	lookingAt = dir;
+	return dir;
+}
 
-	viewMatrix = glm::lookAt(position, position+lookingAt, vec3(0, 1, 0));
+void Camera::updatePosition(vec3 offset)
+{
+	vec3 shift = rotateDirection(vec3(offset.x,offset.z,offset.y));
+
+	position += vec3(shift);
 }

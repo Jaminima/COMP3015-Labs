@@ -118,31 +118,35 @@ void SceneBasic_Uniform::keyActve(int key, int mods, float dt)
 {
     const float moveStep = 20.0f;
 
+    vec3 offset = vec3();
+
     switch (key) {
         case 'W':
-            sceneObjects.cam.position.z -= moveStep * dt;
+            offset.z -= moveStep * dt;
             break;
 
         case 'S':
-            sceneObjects.cam.position.z += moveStep * dt;
+            offset.z += moveStep * dt;
             break;
 
         case 'A':
-            sceneObjects.cam.position.x -= moveStep * dt;
+            offset.x -= moveStep * dt;
             break;
 
         case 'D':
-            sceneObjects.cam.position.x += moveStep * dt;
+            offset.x += moveStep * dt;
             break;
 
         case 'Z':
-            sceneObjects.cam.position.y += moveStep * dt;
+            offset.y += moveStep * dt;
             break;
 
         case 'X':
-            sceneObjects.cam.position.y -= moveStep * dt;
+            offset.y -= moveStep * dt;
             break;
     }
+
+    sceneObjects.cam.updatePosition(offset);
 
     sceneObjects.cam.updateMatrix();
     sceneObjects.masterLight.UpdateView(&sceneObjects.cam);
