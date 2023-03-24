@@ -109,6 +109,8 @@ void Mesh::Render(GLuint programHandle, AssetData* assetData, SceneObjects* scen
 	model = glm::rotate(model, assetData->rotation[1], vec3(0.0f, 1.0f, 1.0f));
 	model = glm::rotate(model, assetData->rotation[2], vec3(0.0f, 0.0f, 1.0f));
 
+	model = glm::scale(model, assetData->scale);
+
 	GLuint modelRef = glGetUniformLocation(programHandle, "ModelMatrix");
 	glUniformMatrix4fv(modelRef, 1, GL_FALSE, glm::value_ptr(model));
 
