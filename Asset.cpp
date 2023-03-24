@@ -24,7 +24,7 @@ void Asset::Load(bool ignoreDump)
 {
 	if (!ignoreDump && TryLoadDump()) return;
 
-	ifstream file(this->srcFile);
+	ifstream file("./assets/"+this->srcFile);
 	string str;
 	if (file) {
 		ostringstream ss;
@@ -135,7 +135,8 @@ void Asset::ExecuteOBJOperation(string opCode, vector<string> operands)
 	}
 
 	else if (opCode == "f") {
-		switch (operands.size())
+		int faceVertexes = operands.size();
+		switch (faceVertexes)
 		{
 		case 3:
 			AppendPointToMesh(operands[0], m);
@@ -153,7 +154,23 @@ void Asset::ExecuteOBJOperation(string opCode, vector<string> operands)
 
 			break;
 		default:
-			throw exception("Improper Face Count");
+			if (faceVertexes < 3){
+				throw exception("Improper Face Count");
+			}
+			else {
+				for (int i = 0; i < faceVertexes-2; i ++) {
+					if (i & 1) {
+						AppendPointToMesh(operands[i], m);
+						AppendPointToMesh(operands[i + 1], m);
+						AppendPointToMesh(operands[i + 2], m);
+					}
+					else {
+						AppendPointToMesh(operands[i], m);
+						AppendPointToMesh(operands[i + 2], m);
+						AppendPointToMesh(operands[i + 1], m);
+					}
+				}
+			}
 			break;
 		}
 	}

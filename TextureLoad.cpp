@@ -28,7 +28,7 @@ void loadTexture(GLuint& texture, std::string texturepath)
 	{
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, ColourChanels[nrChannels], GL_UNSIGNED_BYTE, data);
 		glGenerateMipmap(GL_TEXTURE_2D);
-		cout << "Loaded Asset " << texturepath.c_str() << "\n";
+		cout << "Loaded Texture " << texturepath.c_str() << "\n";
 	}
 	else
 	{

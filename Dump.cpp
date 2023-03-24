@@ -64,14 +64,13 @@ int BuildVector(vector<T>* vec, char* data, int idx) {
 
 bool Asset::TryLoadDump()
 {
-	string filePath = srcFile + ".dump";
+	string filePath = "./assets/dumps/" + srcFile + ".dump";
 
 	ifstream file(filePath, ios::binary | ios::ate);
 	if (file) {
 		int sz = file.tellg();
 		file.seekg(0);
 
-		printf("Loading Dump For File %s\n", srcFile.c_str());
 		loadedFromDump = true;
 
 		char* str_buff = new char[sz];
@@ -104,6 +103,10 @@ bool Asset::TryLoadDump()
 			idx += BuildVector(&m.data->normalSet, str_buff, idx);
 
 			this->meshses.push_back(m);
+
+			string total = to_string(m.data->vertexSet.size() + m.data->texCooSet.size() + m.data->normalSet.size());
+
+			printf("Loaded Dump For Mesh %s Containing %s Elements\n", name.c_str(), total.c_str());
 		}
 
 		return true;
@@ -120,7 +123,7 @@ void Asset::Dump()
 		return;
 	}
 
-	ofstream fileStr(srcFile + ".dump", ios::binary);
+	ofstream fileStr("./assets/dumps/" + srcFile + ".dump", ios::binary);
 
 	int meshCount = this->meshses.size();
 	for (int i = 0; i < meshCount; i++) {

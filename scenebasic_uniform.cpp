@@ -23,11 +23,11 @@ using glm::vec3;
 
 SceneBasic_Uniform::SceneBasic_Uniform() : angle(0.0f) {}
 
-Asset fox("./Assets/fox.obj", vec3(0, -1, -10));
-Asset train("./Assets/steam-train.obj", vec3(5, -1, -5));
-Asset torus("./Assets/torus2.obj", vec3(0, -1, -2));
-Asset torus_nodump("./Assets/torus2.obj", vec3(0, -1, -2));
-Asset cube("./Assets/cube.obj", vec3(10, 0, -5));
+Asset fox("fox.obj", vec3(0, -1, -10));
+Asset room("lowroom.obj", vec3(5, -1, -5));
+Asset torus("torus2.obj", vec3(0, -1, -2));
+Asset torus_nodump("torus2.obj", vec3(0, -1, -2));
+Asset cube("cube.obj", vec3(10, 0, -5));
 
 void SceneBasic_Uniform::initScene()
 {
@@ -67,12 +67,12 @@ void SceneBasic_Uniform::initScene()
 	fox.Build();
 	fox.Dump();
 
-	train.Load();
-	train.assetData->mat.ambient = vec4(0.1);
-	train.assetData->mat.shininess = 10;
-	train.assetData->scale = vec3(0.01);
-	train.Build();
-	train.Dump();
+	room.Load();
+	room.assetData->mat.ambient = vec4(0.1);
+	room.assetData->mat.shininess = 10;
+	room.assetData->scale = vec3(1);
+	room.Build();
+	room.Dump();
 
 	std::cout << std::endl;
 
@@ -81,7 +81,7 @@ void SceneBasic_Uniform::initScene()
 	cube.Draw();
 	torus.Draw();
 	fox.Draw();
-	train.Draw();
+	room.Draw();
 
 
 	sceneObjects.cam.updateMatrix();
@@ -135,7 +135,7 @@ void SceneBasic_Uniform::render()
 	cube.Render(&prog, &sceneObjects);
 	torus.Render(&prog, &sceneObjects);
 	fox.Render(&prog, &sceneObjects);
-	train.Render(&prog, &sceneObjects);
+	room.Render(&prog, &sceneObjects);
 }
 
 void SceneBasic_Uniform::resize(int w, int h)
