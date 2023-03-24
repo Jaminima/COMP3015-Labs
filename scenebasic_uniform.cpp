@@ -50,7 +50,7 @@ void SceneBasic_Uniform::initScene()
 	stone.Build();
 	stone.Dump();
 
-	fox.Load();
+	/*fox.Load();
 	fox.assetData->mat.ambient = vec4(0.1);
 	fox.assetData->mat.shininess = 10;
 	fox.Build();
@@ -58,7 +58,7 @@ void SceneBasic_Uniform::initScene()
 	train.Load();
 	train.assetData->mat.ambient = vec4(0.1);
 	train.assetData->mat.shininess = 10;
-	train.Build();
+	train.Build();*/
 
 	std::cout << std::endl;
 

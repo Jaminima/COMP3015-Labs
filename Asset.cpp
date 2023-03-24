@@ -2,9 +2,9 @@
 #include "utils.h"
 
 #include <iostream>
-#include<fstream>
-#include<sstream>
-#include<string>
+#include <fstream>
+#include <sstream>
+#include <string>
 
 #include "TextureLoad.h"
 #include "SceneObjects.h"
@@ -12,6 +12,7 @@
 #include "helper/glslprogram.h"
 
 using namespace glm;
+using namespace std;
 
 Asset::Asset(string srcFile)
 {
@@ -57,29 +58,37 @@ void BuildVector(vector<T>* vec, string data) {
 
 bool Asset::TryLoadDump()
 {
-	ifstream file(srcFile + ".dump");
+	string filePath = srcFile + ".dump";
+
+	ifstream file(filePath);
 	string str;
 	if (file) {
+		ifstream fileBin(filePath, ios::binary | ios::ate);
+		int sz = fileBin.tellg();
+		fileBin.close();
+
 		printf("Loading Dump For File %s\n", srcFile.c_str());
 		loadedFromDump = true;
 
-		ostringstream ss;
-		ss << file.rdbuf(); // reading data
-		str = ss.str();
+		char* str_buff = new char[sz];
+
+		file.read(str_buff, sz);
 
 		int idx = 0;
-		int strlen = str.length();
-		while (idx < strlen) {
-			string lenStr = str.substr(idx, 8);
+		while (idx < sz * 0.9) {
+			string lenStr;
+			memcpy(lenStr.data(), &str_buff[idx], 8);
+
 			int len = stoi(lenStr);
 
 			idx += 8;
 
-			string name = str.substr(idx, len);
+			string name;
+			memcpy(name.data(), &str_buff[idx], len);
 
 			idx += len;
 
-			lenStr = str.substr(idx, 8);
+			memcpy(lenStr.data(), &str_buff[idx], 8);
 			len = stoi(lenStr);
 
 			idx += 8;
@@ -87,26 +96,27 @@ bool Asset::TryLoadDump()
 			int vec3len = len * sizeof(vec3);
 			int vec2len = len * sizeof(vec2);
 
-			string vertexes = str.substr(idx, vec3len);
-
-			idx += vec3len;
-
-			string texCoo = str.substr(idx, vec2len);
-
-			idx += vec2len;
-
-			string normals = str.substr(idx, vec3len);
-
-			idx += vec3len;
-
 			Mesh m(name);
-
 			m.data = new MeshData();
 
-			BuildVector(&m.data->vertexSet, vertexes);
-			BuildVector(&m.data->texCooSet, texCoo);
-			BuildVector(&m.data->normalSet, normals);
+			string vecData = string(vec3len, '\0');
+
+			memcpy(vecData.data(), &str_buff[idx], vec3len);
+			BuildVector(&m.data->vertexSet, vecData);
+			idx += vec3len;
+
+			memcpy(vecData.data(), &str_buff[idx], vec3len);
+			BuildVector(&m.data->texCooSet, vecData.substr(0,vec2len));
+			idx += vec2len;
+
+			memcpy(vecData.data(), &str_buff[idx], vec3len);
+			BuildVector(&m.data->normalSet, vecData);
+			idx += vec3len;
+
+			this->meshses.push_back(m);
 		}
+
+		file.close();
 
 		return true;
 	}
@@ -289,6 +299,10 @@ void Asset::AppendPointToMesh(string idx, Mesh* m)
 
 void Asset::Build(bool generateColours)
 {
+	if (this->loadedFromDump) {
+		return;
+	}
+
 	int meshCount = this->meshses.size();
 	for (int i = 0; i < meshCount; i++) {
 		this->meshses[i].Build(generateColours);
