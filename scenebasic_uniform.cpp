@@ -51,12 +51,12 @@ void SceneBasic_Uniform::initScene()
 	torus.Build();
 	torus.Dump();
 
-	torus_nodump.Load(true);
+	/*torus_nodump.Load(true);
 	torus_nodump.assetData->mat.ambient = vec4(0.1);
 	torus_nodump.assetData->mat.shininess = 10;
 	torus_nodump.Build();
 
-	bool eq = torus.AssetEqual(&torus_nodump);
+	bool eq = torus.AssetEqual(&torus_nodump);*/
 
 	/*fox.Load();
 	fox.assetData->mat.ambient = vec4(0.1);

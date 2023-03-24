@@ -57,12 +57,11 @@ bool Asset::TryLoadDump()
 {
 	string filePath = srcFile + ".dump";
 
-	ifstream file(filePath);
+	ifstream file(filePath, ios::binary | ios::ate);
 	string str;
 	if (file) {
-		ifstream fileBin(filePath, ios::binary | ios::ate);
-		int sz = fileBin.tellg();
-		fileBin.close();
+		int sz = file.tellg();
+		file.seekg(0);
 
 		printf("Loading Dump For File %s\n", srcFile.c_str());
 		loadedFromDump = true;
@@ -70,6 +69,8 @@ bool Asset::TryLoadDump()
 		char* str_buff = new char[sz];
 
 		file.read(str_buff, sz);
+
+		file.close();
 
 		int idx = 0;
 		while (idx < sz * 0.9) {
@@ -113,8 +114,6 @@ bool Asset::TryLoadDump()
 			this->meshses.push_back(m);
 		}
 
-		file.close();
-
 		return true;
 	}
 	else {
@@ -129,7 +128,7 @@ void Asset::Dump()
 		return;
 	}
 
-	ofstream fileStr(srcFile + ".dump");
+	ofstream fileStr(srcFile + ".dump", ios::binary);
 
 	int meshCount = this->meshses.size();
 	for (int i = 0; i < meshCount; i++) {

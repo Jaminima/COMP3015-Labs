@@ -28,5 +28,11 @@ inline bool VectorEqual(vector<T>* vec1, vector<T>* vec2) {
 
 bool Mesh::MeshEqual(Mesh* m)
 {
-	return VectorEqual(&data->vertexSet,&m->data->vertexSet) && VectorEqual(&data->normalSet, &m->data->normalSet) && VectorEqual(&data->texCooSet, &m->data->texCooSet);
+	if (!VectorEqual(&data->vertexSet, &m->data->vertexSet)) return false;
+
+	if (!VectorEqual(&data->normalSet, &m->data->normalSet)) return false;
+
+	if (!VectorEqual(&data->texCooSet, &m->data->texCooSet)) return false;
+
+	return  true;
 }
