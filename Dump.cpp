@@ -39,16 +39,13 @@ void Mesh::Dump(ofstream* fileStr)
 
 
 template<typename T>
-void BuildVector(vector<T>* vec, string data) {
+void BuildVector(vector<T>* vec, char* data, int dLen) {
 	int i = 0;
-	int dLen = data.length();
 
 	while (i < dLen) {
-		auto d = data.substr(i, sizeof(T));
-
 		T vect;
 
-		memcpy(&vect, &d[0], sizeof(T));
+		memcpy(&vect, &data[i], sizeof(T));
 
 		vec->push_back(vect);
 
@@ -99,18 +96,18 @@ bool Asset::TryLoadDump()
 			Mesh m(name);
 			m.data = new MeshData();
 
-			string vecData = string(vec3len, '\0');
+			char* vecData = new char[vec3len];
 
-			memcpy(vecData.data(), &str_buff[idx], vec3len);
-			BuildVector(&m.data->vertexSet, vecData);
+			memcpy(vecData, &str_buff[idx], vec3len);
+			BuildVector(&m.data->vertexSet, vecData, vec3len);
 			idx += vec3len;
 
-			memcpy(vecData.data(), &str_buff[idx], vec3len);
-			BuildVector(&m.data->texCooSet, vecData.substr(0, vec2len));
+			memcpy(vecData, &str_buff[idx], vec2len);
+			BuildVector(&m.data->texCooSet, vecData, vec2len);
 			idx += vec2len;
 
-			memcpy(vecData.data(), &str_buff[idx], vec3len);
-			BuildVector(&m.data->normalSet, vecData);
+			memcpy(vecData, &str_buff[idx], vec3len);
+			BuildVector(&m.data->normalSet, vecData,vec3len);
 			idx += vec3len;
 
 			this->meshses.push_back(m);
