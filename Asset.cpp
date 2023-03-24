@@ -244,9 +244,11 @@ void Asset::Render(GLSLProgram* prog, SceneObjects* sceneObjects)
 	assetData->mat.SetUniforms(programHandle);
 	sceneObjects->masterLight.SetUniforms(programHandle);
 
+	if (this->hasTexture) glBindTexture(GL_TEXTURE_2D, this->texture);
+	else glBindTexture(GL_TEXTURE_2D, 0);
+
 	int meshCount = this->meshses.size();
 	for (int i = 0; i < meshCount; i++) {
-		if (this->hasTexture) glBindTexture(GL_TEXTURE_2D, this->texture);
 		this->meshses[i].Render(programHandle, this->assetData, sceneObjects);
 	}
 }
