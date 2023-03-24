@@ -23,8 +23,8 @@ using glm::vec3;
 
 SceneBasic_Uniform::SceneBasic_Uniform() : angle(0.0f) {}
 
-Asset fox("./Assets/fox.obj", vec3(0, -1, 10));
-Asset train("./Assets/steam-train.obj", vec3(10, -1, 0));
+Asset fox("./Assets/fox.obj", vec3(0, -1, -10));
+Asset train("./Assets/steam-train.obj", vec3(5, -1, -5));
 Asset torus("./Assets/torus2.obj", vec3(0, -1, -2));
 Asset torus_nodump("./Assets/torus2.obj", vec3(0, -1, -2));
 Asset cube("./Assets/cube.obj", vec3(10, 0, -5));
@@ -36,7 +36,7 @@ void SceneBasic_Uniform::initScene()
 	sceneObjects.masterLight.ambient = vec4(0.1, 0.1, 0.1, 1);
 	sceneObjects.masterLight.diffuse = vec4(0.4, 0.4, 0.4, 1);
 	sceneObjects.masterLight.specular = vec4(1, 1, 1, 1);
-	sceneObjects.masterLight.Position = vec3(5, -10, -3);
+	sceneObjects.masterLight.Position = vec3(5, 10, -3);
 
 	sceneObjects.masterLight.UpdateView(&sceneObjects.cam);
 
@@ -63,12 +63,14 @@ void SceneBasic_Uniform::initScene()
 	fox.Load();
 	fox.assetData->mat.ambient = vec4(0.1);
 	fox.assetData->mat.shininess = 10;
+	fox.assetData->scale = vec3(0.1);
 	fox.Build();
 	fox.Dump();
 
 	train.Load();
 	train.assetData->mat.ambient = vec4(0.1);
 	train.assetData->mat.shininess = 10;
+	train.assetData->scale = vec3(0.01);
 	train.Build();
 	train.Dump();
 
