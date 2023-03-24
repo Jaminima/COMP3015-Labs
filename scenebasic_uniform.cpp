@@ -13,6 +13,8 @@ using std::endl;
 #include "helper/glutils.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <thread>
+#include <chrono>
 
 #include "Asset.h"
 #include "utils.h"
@@ -23,7 +25,8 @@ SceneBasic_Uniform::SceneBasic_Uniform() : angle(0.0f) {}
 
 Asset fox("./Assets/fox.obj", vec3(0, -1, 10));
 Asset train("./Assets/steam-train.obj", vec3(10, -1, 0));
-Asset stone("./Assets/torus2.obj", vec3(0, -1, -2));
+Asset torus("./Assets/torus2.obj", vec3(0, -1, -2));
+Asset torus_nodump("./Assets/torus2.obj", vec3(0, -1, -2));
 Asset cube("./Assets/cube.obj", vec3(10, 0, -5));
 
 void SceneBasic_Uniform::initScene()
@@ -42,13 +45,22 @@ void SceneBasic_Uniform::initScene()
 	cube.assetData->mat.shininess = 10;
 	cube.AddTexture(prog.getHandle(), "./Assets/cube.png");
 	cube.Build();
+	cube.Dump();
 
-	stone.Load();
-	stone.assetData->mat.ambient = vec4(0.1);
-	stone.assetData->mat.shininess = 10;
-	stone.Build();
+	torus.Load();
+	torus.assetData->mat.ambient = vec4(0.1);
+	torus.assetData->mat.shininess = 10;
+	torus.Build();
+	torus.Dump();
 
-	fox.Load();
+	/*torus_nodump.Load(true);
+	torus_nodump.assetData->mat.ambient = vec4(0.1);
+	torus_nodump.assetData->mat.shininess = 10;
+	torus_nodump.Build();
+
+	bool eq = torus.AssetEqual(&torus_nodump);*/
+
+	/*fox.Load();
 	fox.assetData->mat.ambient = vec4(0.1);
 	fox.assetData->mat.shininess = 10;
 	fox.Build();
@@ -56,14 +68,14 @@ void SceneBasic_Uniform::initScene()
 	train.Load();
 	train.assetData->mat.ambient = vec4(0.1);
 	train.assetData->mat.shininess = 10;
-	train.Build();
+	train.Build();*/
 
 	std::cout << std::endl;
 
 	prog.printActiveUniforms();
 
 	cube.Draw();
-	stone.Draw();
+	torus.Draw();
 
 	sceneObjects.cam.updateMatrix();
 }
@@ -114,7 +126,7 @@ void SceneBasic_Uniform::render()
 	glEnable(GL_DEPTH_TEST);
 
 	cube.Render(&prog, &sceneObjects);
-	stone.Render(&prog, &sceneObjects);
+	torus.Render(&prog, &sceneObjects);
 	fox.Render(&prog, &sceneObjects);
 	train.Render(&prog, &sceneObjects);
 }

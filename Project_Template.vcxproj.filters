@@ -61,6 +61,12 @@
     <ClCompile Include="Light.cpp">
       <Filter>Src\Assets</Filter>
     </ClCompile>
+    <ClCompile Include="Dump.cpp">
+      <Filter>Src\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="Comparison.cpp">
+      <Filter>Src\Assets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="shader\basic_uniform.frag">

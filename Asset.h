@@ -66,9 +66,13 @@ public:
 
 	Mesh(string mesh_name);
 
+	bool MeshEqual(Mesh* m);
+
 	void Build(bool generateColours = false);
 
 	void Draw();
+
+	void Dump(ofstream* fileStr);
 
 	void Render(GLuint programHandle, AssetData* assetData, SceneObjects* sceneObjects);
 };
@@ -78,6 +82,7 @@ public:
 
 	string srcFile;
 	string* srcData = 0x0;
+	bool loadedFromDump = false;
 
 	bool hasTexture = false;
 	GLuint texture;
@@ -92,7 +97,13 @@ public:
 
 	Asset(string srcFile, vec3 pos = vec3(), vec3 rot = vec3());
 
-	void Load();
+	bool AssetEqual(Asset* a);
+
+	void Load(bool ignoreDump = false);
+
+	bool TryLoadDump();
+
+	void Dump();
 
 	void ParseOBJ();
 

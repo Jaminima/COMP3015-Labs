@@ -2,9 +2,9 @@
 #include "utils.h"
 
 #include <iostream>
-#include<fstream>
-#include<sstream>
-#include<string>
+#include <fstream>
+#include <sstream>
+#include <string>
 
 #include "TextureLoad.h"
 #include "SceneObjects.h"
@@ -12,6 +12,7 @@
 #include "helper/glslprogram.h"
 
 using namespace glm;
+using namespace std;
 
 Asset::Asset(string srcFile)
 {
@@ -19,8 +20,10 @@ Asset::Asset(string srcFile)
 	this->assetData = new AssetData();
 }
 
-void Asset::Load()
+void Asset::Load(bool ignoreDump)
 {
+	if (!ignoreDump && TryLoadDump()) return;
+
 	ifstream file(this->srcFile);
 	string str;
 	if (file) {
@@ -81,9 +84,14 @@ void Asset::ParseOBJLine(string line)
 void Asset::ExecuteOBJOperation(string opCode, vector<string> operands)
 {
 	if (opCode == "o") {
-		Mesh m(operands[0]);
+		if (meshses.size() == 1 && meshses[0].name == "No Name") {
+			meshses[0].name = operands[0];
+		}
+		else {
+			Mesh m(operands[0]);
 
-		this->meshses.push_back(m);
+			this->meshses.push_back(m);
+		}
 
 		return;
 	}
@@ -187,6 +195,10 @@ void Asset::AppendPointToMesh(string idx, Mesh* m)
 
 void Asset::Build(bool generateColours)
 {
+	if (this->loadedFromDump) {
+		return;
+	}
+
 	int meshCount = this->meshses.size();
 	for (int i = 0; i < meshCount; i++) {
 		this->meshses[i].Build(generateColours);
