@@ -60,15 +60,17 @@ void SceneBasic_Uniform::initScene()
 
 	bool eq = torus.AssetEqual(&torus_nodump);*/
 
-	/*fox.Load();
+	fox.Load();
 	fox.assetData->mat.ambient = vec4(0.1);
 	fox.assetData->mat.shininess = 10;
 	fox.Build();
+	fox.Dump();
 
 	train.Load();
 	train.assetData->mat.ambient = vec4(0.1);
 	train.assetData->mat.shininess = 10;
-	train.Build();*/
+	train.Build();
+	train.Dump();
 
 	std::cout << std::endl;
 
@@ -76,6 +78,9 @@ void SceneBasic_Uniform::initScene()
 
 	cube.Draw();
 	torus.Draw();
+	fox.Draw();
+	train.Draw();
+
 
 	sceneObjects.cam.updateMatrix();
 }
