@@ -46,12 +46,12 @@ void Mesh::Draw()
 
 	glVertexAttribFormat(0, 3, GL_FLOAT, GL_FALSE, 0);
 	//glVertexAttribFormat(1, 4, GL_FLOAT, GL_FALSE, 0);
-	glVertexAttribFormat(1, 1, GL_FLOAT, GL_FALSE, 0);
+	glVertexAttribFormat(1, 3, GL_FLOAT, GL_FALSE, 0);
 	glVertexAttribFormat(2, 2, GL_FLOAT, GL_FALSE, 0);
 
 	glVertexAttribBinding(0, 0);
 	glVertexAttribBinding(1, 1);
-	glVertexAttribBinding(2, 1);
+	glVertexAttribBinding(2, 2);
 	/*glVertexAttribBinding(3, 3);*/
 
 	glBindVertexArray(0);
