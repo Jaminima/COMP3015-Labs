@@ -27,7 +27,7 @@ Asset fox("fox.obj", vec3(0, -1, -10));
 Asset room("lowroom.obj", vec3(5, -1, -5));
 Asset torus("torus2.obj", vec3(0, -1, -2));
 Asset torus_nodump("torus2.obj", vec3(0, -1, -2));
-Asset cube("cube.obj", vec3(10, 0, -5));
+Asset cube("cube2.obj", vec3(10, 0, -5));
 
 void SceneBasic_Uniform::initScene()
 {
@@ -43,7 +43,7 @@ void SceneBasic_Uniform::initScene()
 	cube.Load();
 	cube.assetData->mat.ambient = vec4(0.1);
 	cube.assetData->mat.shininess = 10;
-	cube.AddTexture(prog.getHandle(), "./Assets/cube.png");
+	cube.AddTexture(prog.getHandle(), "./Assets/stone.png");
 	cube.Build();
 	cube.Dump();
 
@@ -84,7 +84,6 @@ void SceneBasic_Uniform::initScene()
 	fox.Draw();
 	room.Draw();
 
-
 	sceneObjects.cam.updateMatrix();
 }
 
@@ -110,6 +109,13 @@ void SceneBasic_Uniform::update(float dt)
 
 	cubeRot->z += 0.8f * dt;
 	cubeRot->x += 0.4f * dt;
+
+	boundAngles(cubeRot);
+
+	vec3* foxRot = &fox.assetData->rotation;
+
+	foxRot->z += 0.8f * dt;
+	foxRot->y += 0.4f * dt;
 
 	boundAngles(cubeRot);
 

@@ -39,7 +39,6 @@ void Mesh::Dump(ofstream* fileStr)
 	printf("Dumped Mesh %s With %s elements\n", name.c_str(), total.c_str());
 }
 
-
 template<typename T>
 int BuildVector(vector<T>* vec, char* data, int idx) {
 	string lenStr;
