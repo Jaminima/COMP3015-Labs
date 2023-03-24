@@ -66,6 +66,8 @@ public:
 
 	Mesh(string mesh_name);
 
+	bool MeshEqual(Mesh* m);
+
 	void Build(bool generateColours = false);
 
 	void Draw();
@@ -95,7 +97,9 @@ public:
 
 	Asset(string srcFile, vec3 pos = vec3(), vec3 rot = vec3());
 
-	void Load();
+	bool AssetEqual(Asset* a);
+
+	void Load(bool ignoreDump = false);
 
 	bool TryLoadDump();
 

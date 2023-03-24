@@ -24,6 +24,7 @@ SceneBasic_Uniform::SceneBasic_Uniform() : angle(0.0f) {}
 Asset fox("./Assets/fox.obj", vec3(0, -1, 10));
 Asset train("./Assets/steam-train.obj", vec3(10, -1, 0));
 Asset torus("./Assets/torus2.obj", vec3(0, -1, -2));
+Asset torus_nodump("./Assets/torus2.obj", vec3(0, -1, -2));
 Asset cube("./Assets/cube.obj", vec3(10, 0, -5));
 
 void SceneBasic_Uniform::initScene()
@@ -49,6 +50,13 @@ void SceneBasic_Uniform::initScene()
 	torus.assetData->mat.shininess = 10;
 	torus.Build();
 	torus.Dump();
+
+	torus_nodump.Load(true);
+	torus_nodump.assetData->mat.ambient = vec4(0.1);
+	torus_nodump.assetData->mat.shininess = 10;
+	torus_nodump.Build();
+
+	bool eq = torus.AssetEqual(&torus_nodump);
 
 	/*fox.Load();
 	fox.assetData->mat.ambient = vec4(0.1);

@@ -57,38 +57,6 @@ void Mesh::Draw()
 	glBindVertexArray(0);
 }
 
-
-template<typename T>
-inline void DumpVertex(ofstream* fileStr , std::vector<T>* vec) {
-	fileStr->write((char*)vec->data(), vec->size() * sizeof(T));
-}
-
-inline string GetFormattedLengthString(int length) {
-	string old_str = to_string(length);
-	const size_t n_zero = 8;
-
-	auto new_str = std::string(n_zero - std::min(n_zero, old_str.length()), '0') + old_str;
-
-	return string(new_str);
-}
-
-void Mesh::Dump(ofstream* fileStr)
-{
-	string nameLen = GetFormattedLengthString(name.size());
-	fileStr->write(nameLen.c_str(), nameLen.size());
-
-	fileStr->write(name.c_str(), name.size());
-
-	string len = GetFormattedLengthString(this->data->vertexSet.size());
-	fileStr->write(len.c_str(), len.size());
-
-	DumpVertex(fileStr, &this->data->vertexSet);
-	DumpVertex(fileStr, &this->data->texCooSet);
-	DumpVertex(fileStr, &this->data->normalSet);
-
-	printf("Dumped Mesh %s With %s elements\n", name.c_str(), len.c_str());
-}
-
 Mesh::Mesh(string mesh_name)
 {
 	this->name = mesh_name;

@@ -149,6 +149,8 @@
   <ItemGroup>
     <ClCompile Include="Asset.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Comparison.cpp" />
+    <ClCompile Include="Dump.cpp" />
     <ClCompile Include="helper\scene.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="Mesh.cpp" />
