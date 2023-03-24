@@ -64,6 +64,7 @@ void SceneBasic_Uniform::initScene()
 	fox.assetData->mat.ambient = vec4(0.1);
 	fox.assetData->mat.shininess = 10;
 	fox.assetData->scale = vec3(0.1);
+	fox.AddTexture(prog.getHandle(), "./Assets/fox.png");
 	fox.Build();
 	fox.Dump();
 
