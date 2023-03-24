@@ -42,8 +42,9 @@ void Asset::Load()
 template<typename T>
 void BuildVector(vector<T>* vec, string data) {
 	int i = 0;
+	int dLen = data.length();
 
-	while (i < data.length()) {
+	while (i < dLen) {
 		auto d = data.substr(i, sizeof(T));
 
 		T vect;

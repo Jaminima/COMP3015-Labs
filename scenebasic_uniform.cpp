@@ -23,7 +23,7 @@ SceneBasic_Uniform::SceneBasic_Uniform() : angle(0.0f) {}
 
 Asset fox("./Assets/fox.obj", vec3(0, -1, 10));
 Asset train("./Assets/steam-train.obj", vec3(10, -1, 0));
-Asset stone("./Assets/torus2.obj", vec3(0, -1, -2));
+Asset torus("./Assets/torus2.obj", vec3(0, -1, -2));
 Asset cube("./Assets/cube.obj", vec3(10, 0, -5));
 
 void SceneBasic_Uniform::initScene()
@@ -44,11 +44,11 @@ void SceneBasic_Uniform::initScene()
 	cube.Build();
 	cube.Dump();
 
-	stone.Load();
-	stone.assetData->mat.ambient = vec4(0.1);
-	stone.assetData->mat.shininess = 10;
-	stone.Build();
-	stone.Dump();
+	torus.Load();
+	torus.assetData->mat.ambient = vec4(0.1);
+	torus.assetData->mat.shininess = 10;
+	torus.Build();
+	torus.Dump();
 
 	/*fox.Load();
 	fox.assetData->mat.ambient = vec4(0.1);
@@ -65,7 +65,7 @@ void SceneBasic_Uniform::initScene()
 	prog.printActiveUniforms();
 
 	cube.Draw();
-	stone.Draw();
+	torus.Draw();
 
 	sceneObjects.cam.updateMatrix();
 }
@@ -116,7 +116,7 @@ void SceneBasic_Uniform::render()
 	glEnable(GL_DEPTH_TEST);
 
 	cube.Render(&prog, &sceneObjects);
-	stone.Render(&prog, &sceneObjects);
+	torus.Render(&prog, &sceneObjects);
 	fox.Render(&prog, &sceneObjects);
 	train.Render(&prog, &sceneObjects);
 }
