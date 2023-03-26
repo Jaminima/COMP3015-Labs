@@ -24,7 +24,7 @@ using glm::vec3;
 SceneBasic_Uniform::SceneBasic_Uniform() : angle(0.0f) {}
 
 Asset fox("fox.obj", vec3(0, -1, -10));
-Asset room("lowroom.obj", vec3(5, -1, -5));
+Asset submarine("submarine.obj", vec3(5, -1, 50));
 Asset torus("torus2.obj", vec3(0, -1, -2));
 Asset torus_nodump("torus2.obj", vec3(0, -1, -2));
 Asset cube("cube2.obj", vec3(10, 0, -5));
@@ -43,7 +43,7 @@ void SceneBasic_Uniform::initScene()
 	cube.Load();
 	cube.assetData->mat.ambient = vec4(0.1);
 	cube.assetData->mat.shininess = 10;
-	cube.AddTexture(prog.getHandle(), "./Assets/stone.png");
+	cube.AddTexture(prog.getHandle(), ".stone.png");
 	cube.Build();
 	cube.Dump();
 
@@ -64,16 +64,16 @@ void SceneBasic_Uniform::initScene()
 	fox.assetData->mat.ambient = vec4(0.1);
 	fox.assetData->mat.shininess = 10;
 	fox.assetData->scale = vec3(0.1);
-	fox.AddTexture(prog.getHandle(), "./Assets/fox.png");
+	fox.AddTexture(prog.getHandle(), "fox.png");
 	fox.Build();
 	fox.Dump();
 
-	room.Load();
-	room.assetData->mat.ambient = vec4(0.1);
-	room.assetData->mat.shininess = 10;
-	room.assetData->scale = vec3(1);
-	room.Build();
-	room.Dump();
+	submarine.Load();
+	submarine.assetData->mat.ambient = vec4(0.1);
+	submarine.assetData->mat.shininess = 10;
+	submarine.assetData->scale = vec3(0.1);
+	submarine.Build();
+	submarine.Dump();
 
 	std::cout << std::endl;
 
@@ -82,7 +82,7 @@ void SceneBasic_Uniform::initScene()
 	cube.Draw();
 	torus.Draw();
 	fox.Draw();
-	room.Draw();
+	submarine.Draw();
 
 	sceneObjects.cam.updateMatrix();
 }
@@ -112,12 +112,12 @@ void SceneBasic_Uniform::update(float dt)
 
 	boundAngles(cubeRot);
 
-	vec3* foxRot = &fox.assetData->rotation;
+	/*vec3* foxRot = &fox.assetData->rotation;
 
 	foxRot->z += 0.8f * dt;
 	foxRot->y += 0.4f * dt;
 
-	boundAngles(cubeRot);
+	boundAngles(cubeRot);*/
 
 	/*vec3* stoneRot = &stone.assetData->rotation;
 
@@ -142,7 +142,7 @@ void SceneBasic_Uniform::render()
 	cube.Render(&prog, &sceneObjects);
 	torus.Render(&prog, &sceneObjects);
 	fox.Render(&prog, &sceneObjects);
-	room.Render(&prog, &sceneObjects);
+	submarine.Render(&prog, &sceneObjects);
 }
 
 void SceneBasic_Uniform::resize(int w, int h)

@@ -255,7 +255,7 @@ void Asset::Render(GLSLProgram* prog, SceneObjects* sceneObjects)
 
 void Asset::AddTexture(GLuint program, string file)
 {
-	loadTexture(this->texture, file);
+	loadTexture(this->texture, "./assets/textures/"+file);
 	glUniform1i(glGetUniformLocation(program, "texture"), 0);
 	this->hasTexture = true;
 }
