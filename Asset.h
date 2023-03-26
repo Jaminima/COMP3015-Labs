@@ -119,7 +119,7 @@ public:
 
 	void Draw();
 
-	void Render(GLSLProgram* prog, SceneObjects* sceneObjects);
+	void Render(GLuint programHandle, SceneObjects* sceneObjects);
 
 	void AddTexture(GLuint program, string file);
 };

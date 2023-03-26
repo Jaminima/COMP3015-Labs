@@ -33,12 +33,25 @@ void SceneBasic_Uniform::initScene()
 {
 	compile();
 
-	sceneObjects.masterLight.ambient = vec4(0.1, 0.1, 0.1, 1);
-	sceneObjects.masterLight.diffuse = vec4(0.4, 0.4, 0.4, 1);
-	sceneObjects.masterLight.specular = vec4(1, 1, 1, 1);
-	sceneObjects.masterLight.Position = vec3(5, 10, -3);
+	Lighting l1 = Lighting();
 
-	sceneObjects.masterLight.UpdateView(&sceneObjects.cam);
+	l1.ambient = vec4(0.1, 0.1, 0.1, 1);
+	l1.diffuse = vec4(0.4, 0.4, 0.4, 1);
+	l1.specular = vec4(1, 1, 1, 1);
+	l1.Position = vec3(5, 10, -3);
+
+	sceneObjects.AddLight(l1);
+
+	Lighting l2 = Lighting();
+
+	l2.ambient = vec4(0.1, 0.1, 0.1, 1);
+	l2.diffuse = vec4(0.4, 0, 0, 1);
+	l2.specular = vec4(0, 1, 1, 1);
+	l2.Position = vec3(5, -10, -3);
+
+	sceneObjects.AddLight(l2);
+
+	sceneObjects.UpdateAllLightViews(&sceneObjects.cam);
 
 	cube.Load();
 	cube.assetData->mat.ambient = vec4(0.1);
@@ -90,8 +103,12 @@ void SceneBasic_Uniform::initScene()
 void SceneBasic_Uniform::compile()
 {
 	try {
-		prog.compileShader("shader/basic_uniform.vert");
-		prog.compileShader("shader/basic_uniform.frag");
+		//prog.compileShader("shader/phong/phong.vert");
+		//prog.compileShader("shader/phong/blinn.vert");
+		prog.compileShader("shader/phong/blinnMulti.vert");
+
+		prog.compileShader("shader/phong/phong.frag");
+		//prog.compileShader("shader/toon.frag");
 		prog.link();
 		prog.use();
 	}
@@ -139,10 +156,17 @@ void SceneBasic_Uniform::render()
 	glDepthFunc(GL_LEQUAL);
 	glEnable(GL_DEPTH_TEST);
 
-	cube.Render(&prog, &sceneObjects);
-	torus.Render(&prog, &sceneObjects);
-	fox.Render(&prog, &sceneObjects);
-	submarine.Render(&prog, &sceneObjects);
+	GLuint programHandle = prog.getHandle();
+
+	GLuint ref = glGetUniformLocation(programHandle, "toonBands");
+	glUniform1i(ref, sceneObjects.cam.toonBands);
+
+	sceneObjects.SetAllLightUniforms(programHandle);
+
+	cube.Render(programHandle, &sceneObjects);
+	torus.Render(programHandle, &sceneObjects);
+	fox.Render(programHandle, &sceneObjects);
+	submarine.Render(programHandle, &sceneObjects);
 }
 
 void SceneBasic_Uniform::resize(int w, int h)
@@ -189,7 +213,7 @@ void SceneBasic_Uniform::keyActve(int key, int mods, float dt)
 	sceneObjects.cam.updatePosition(offset);
 
 	sceneObjects.cam.updateMatrix();
-	sceneObjects.masterLight.UpdateView(&sceneObjects.cam);
+	sceneObjects.UpdateAllLightViews(&sceneObjects.cam);
 }
 
 void SceneBasic_Uniform::mouseMove(int x, int y)
