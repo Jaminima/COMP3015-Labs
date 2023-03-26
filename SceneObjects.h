@@ -8,7 +8,12 @@ public:
 	Camera cam;
 
 	Lighting lights[10];
-	int activeLights = 1;
+	int activeLights = 0;
+
+	void AddLight(Lighting l) {
+		lights[activeLights] = l;
+		activeLights++;
+	}
 
 	void SetAllLightUniforms(GLuint programHandle) {
 		GLuint ref = glGetUniformLocation(programHandle, "lights");

@@ -40,7 +40,7 @@ void SceneBasic_Uniform::initScene()
 	l1.specular = vec4(1, 1, 1, 1);
 	l1.Position = vec3(5, 10, -3);
 
-	sceneObjects.lights[0] = l1;
+	sceneObjects.AddLight(l1);
 
 	Lighting l2 = Lighting();
 
@@ -49,9 +49,7 @@ void SceneBasic_Uniform::initScene()
 	l2.specular = vec4(0, 1, 1, 1);
 	l2.Position = vec3(5, -10, -3);
 
-	sceneObjects.lights[1] = l2;
-
-	sceneObjects.activeLights = 2;
+	sceneObjects.AddLight(l2);
 
 	sceneObjects.UpdateAllLightViews(&sceneObjects.cam);
 
