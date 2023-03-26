@@ -93,8 +93,8 @@ void SceneBasic_Uniform::compile()
 		//prog.compileShader("shader/phong/phong.vert");
 		prog.compileShader("shader/phong/blinn.vert");
 
-		//prog.compileShader("shader/phong/phong.frag");
-		prog.compileShader("shader/toon.frag");
+		prog.compileShader("shader/phong/phong.frag");
+		//prog.compileShader("shader/toon.frag");
 		prog.link();
 		prog.use();
 	}

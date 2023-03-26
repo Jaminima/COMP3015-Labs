@@ -20,8 +20,8 @@ vec4 toon(vec4 c){
 
 void main() {
     vec4 tex = texture(faceTexture, vTextureCoordinate);
-
-    if (tex.rgb==vec3(0)) tex = vec4(1);
+    
+    if (all(equal(tex.rgb,vec3(0)))) tex = vec4(1);
 
     vec4 col = tex * Color;
 
