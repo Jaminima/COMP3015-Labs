@@ -136,8 +136,6 @@ void Mesh::Render(GLuint programHandle, AssetData* assetData, SceneObjects* scen
 	glm::mat3 normalMatrix = mat3(glm::vec3(mv[0]), glm::vec3(mv[1]), glm::vec3(mv[2]));
 	glUniformMatrix3fv(normRef, 1, GL_FALSE, glm::value_ptr(normalMatrix));
 
-	sceneObjects->masterLight.SetUniforms(programHandle);
-
 	glBindVertexArray(this->vaoBuffer);
 	glDrawArrays(GL_TRIANGLES, 0, this->data->vertexSet.size());
 

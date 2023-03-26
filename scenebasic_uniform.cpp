@@ -33,12 +33,16 @@ void SceneBasic_Uniform::initScene()
 {
 	compile();
 
-	sceneObjects.masterLight.ambient = vec4(0.1, 0.1, 0.1, 1);
-	sceneObjects.masterLight.diffuse = vec4(0.4, 0.4, 0.4, 1);
-	sceneObjects.masterLight.specular = vec4(1, 1, 1, 1);
-	sceneObjects.masterLight.Position = vec3(5, 10, -3);
+	Lighting l1 = Lighting();
 
-	sceneObjects.masterLight.UpdateView(&sceneObjects.cam);
+	l1.ambient = vec4(0.1, 0.1, 0.1, 1);
+	l1.diffuse = vec4(0.4, 0.4, 0.4, 1);
+	l1.specular = vec4(1, 1, 1, 1);
+	l1.Position = vec3(5, 10, -3);
+
+	l1.UpdateView(&sceneObjects.cam);
+
+	sceneObjects.lights[0] = l1;
 
 	cube.Load();
 	cube.assetData->mat.ambient = vec4(0.1);
@@ -148,7 +152,7 @@ void SceneBasic_Uniform::render()
 	GLuint ref = glGetUniformLocation(programHandle, "toonBands");
 	glUniform1i(ref, sceneObjects.cam.toonBands);
 
-	sceneObjects.masterLight.SetUniforms(programHandle);
+	sceneObjects.SetAllLightUniforms(programHandle);
 
 	cube.Render(programHandle, &sceneObjects);
 	torus.Render(programHandle, &sceneObjects);
@@ -200,7 +204,7 @@ void SceneBasic_Uniform::keyActve(int key, int mods, float dt)
 	sceneObjects.cam.updatePosition(offset);
 
 	sceneObjects.cam.updateMatrix();
-	sceneObjects.masterLight.UpdateView(&sceneObjects.cam);
+	sceneObjects.UpdateAllLightViews(&sceneObjects.cam);
 }
 
 void SceneBasic_Uniform::mouseMove(int x, int y)
