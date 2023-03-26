@@ -66,9 +66,16 @@ Mesh::Mesh(string mesh_name)
 template<typename T>
 inline void PushFaceIdx(int idx, std::vector<T>* data, std::vector<T>* components) {
 	if (idx != 0) {
-		if (idx == -1) idx = components->size();
+		int compSize = components->size();
+		if (idx == -1) idx = compSize;
 
-		data->push_back(components->at(idx - 1));
+		if (idx > compSize) {
+			//printf("Invalid Index Of %d\n", idx);
+		}
+		else {
+			data->push_back(components->at(idx - 1));
+		}
+		
 	}
 }
 
