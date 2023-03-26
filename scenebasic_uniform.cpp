@@ -40,9 +40,20 @@ void SceneBasic_Uniform::initScene()
 	l1.specular = vec4(1, 1, 1, 1);
 	l1.Position = vec3(5, 10, -3);
 
-	l1.UpdateView(&sceneObjects.cam);
-
 	sceneObjects.lights[0] = l1;
+
+	Lighting l2 = Lighting();
+
+	l2.ambient = vec4(0.1, 0.1, 0.1, 1);
+	l2.diffuse = vec4(0.4, 0, 0, 1);
+	l2.specular = vec4(0, 1, 1, 1);
+	l2.Position = vec3(5, -10, -3);
+
+	sceneObjects.lights[1] = l2;
+
+	sceneObjects.activeLights = 2;
+
+	sceneObjects.UpdateAllLightViews(&sceneObjects.cam);
 
 	cube.Load();
 	cube.assetData->mat.ambient = vec4(0.1);

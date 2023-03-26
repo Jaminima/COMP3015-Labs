@@ -61,9 +61,14 @@ void main()
     vec3 view = normalize(-V);
     vec3 normal = normalize(N);
 
+    vec4 lightColour = vec4(0);
+
+    for (int i=0;i<lights;i++){
+        lightColour+=ProcessLight(i,N,V,view,normal);
+    }
 
 
-    Color = ProcessLight(0,N,V,view,normal);
+    Color = lightColour/lights;
     vTextureCoordinate = VertexTextureCoordinate;
 
     gl_Position = ProjectionMatrix * ModelViewMatrix * vec4(VertexPosition,1.0);

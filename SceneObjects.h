@@ -11,6 +11,9 @@ public:
 	int activeLights = 1;
 
 	void SetAllLightUniforms(GLuint programHandle) {
+		GLuint ref = glGetUniformLocation(programHandle, "lights");
+		glUniform1i(ref, activeLights);
+
 		for (int i = 0; i < activeLights; i++) {
 			lights[i].SetUniforms(programHandle,i);
 		}
