@@ -166,8 +166,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="shader\basic_uniform.frag" />
-    <None Include="shader\basic_uniform.vert" />
+    <None Include="shader\blinnphong\phong.frag" />
+    <None Include="shader\blinnphong\phong.vert" />
+    <None Include="shader\phong\phong.frag" />
+    <None Include="shader\phong\phong.vert" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Asset.h" />

@@ -23,6 +23,12 @@
     <Filter Include="Src\Helper\stb">
       <UniqueIdentifier>{2eeab77b-5d84-4893-b9df-1b2ed789b189}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shaders\phong">
+      <UniqueIdentifier>{6d27488a-be47-4637-964e-e527700f2359}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\blinnphong">
+      <UniqueIdentifier>{1c85b94c-ab52-475d-9935-d60bdb3603d3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -69,13 +75,19 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="shader\basic_uniform.frag">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="shader\basic_uniform.vert">
-      <Filter>Shaders</Filter>
-    </None>
     <None Include="packages.config" />
+    <None Include="shader\phong\phong.frag">
+      <Filter>Shaders\phong</Filter>
+    </None>
+    <None Include="shader\phong\phong.vert">
+      <Filter>Shaders\phong</Filter>
+    </None>
+    <None Include="shader\blinnphong\phong.frag">
+      <Filter>Shaders\blinnphong</Filter>
+    </None>
+    <None Include="shader\blinnphong\phong.vert">
+      <Filter>Shaders\blinnphong</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="helper\scene.h">
