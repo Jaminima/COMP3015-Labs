@@ -142,10 +142,17 @@ void SceneBasic_Uniform::render()
 	glDepthFunc(GL_LEQUAL);
 	glEnable(GL_DEPTH_TEST);
 
-	cube.Render(&prog, &sceneObjects);
-	torus.Render(&prog, &sceneObjects);
-	fox.Render(&prog, &sceneObjects);
-	submarine.Render(&prog, &sceneObjects);
+	GLuint programHandle = prog.getHandle();
+
+	GLuint ref = glGetUniformLocation(programHandle, "toonBands");
+	glUniform1i(ref, sceneObjects.cam.toonBands);
+
+	sceneObjects.masterLight.SetUniforms(programHandle);
+
+	cube.Render(programHandle, &sceneObjects);
+	torus.Render(programHandle, &sceneObjects);
+	fox.Render(programHandle, &sceneObjects);
+	submarine.Render(programHandle, &sceneObjects);
 }
 
 void SceneBasic_Uniform::resize(int w, int h)

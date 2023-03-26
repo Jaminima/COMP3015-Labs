@@ -238,11 +238,9 @@ Asset::Asset(string srcFile, vec3 pos, vec3 rot)
 	this->assetData->rotation = rot;
 }
 
-void Asset::Render(GLSLProgram* prog, SceneObjects* sceneObjects)
+void Asset::Render(GLuint programHandle, SceneObjects* sceneObjects)
 {
-	GLuint programHandle = prog->getHandle();
 	assetData->mat.SetUniforms(programHandle);
-	sceneObjects->masterLight.SetUniforms(programHandle);
 
 	if (this->hasTexture) glBindTexture(GL_TEXTURE_2D, this->texture);
 	else glBindTexture(GL_TEXTURE_2D, 0);
