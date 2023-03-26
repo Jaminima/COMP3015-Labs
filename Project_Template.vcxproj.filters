@@ -26,9 +26,6 @@
     <Filter Include="Shaders\phong">
       <UniqueIdentifier>{6d27488a-be47-4637-964e-e527700f2359}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Shaders\blinnphong">
-      <UniqueIdentifier>{1c85b94c-ab52-475d-9935-d60bdb3603d3}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -82,11 +79,11 @@
     <None Include="shader\phong\phong.vert">
       <Filter>Shaders\phong</Filter>
     </None>
-    <None Include="shader\blinnphong\phong.frag">
-      <Filter>Shaders\blinnphong</Filter>
+    <None Include="shader\phong\blinn.vert">
+      <Filter>Shaders\phong</Filter>
     </None>
-    <None Include="shader\blinnphong\phong.vert">
-      <Filter>Shaders\blinnphong</Filter>
+    <None Include="shader\toon.frag">
+      <Filter>Shaders</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

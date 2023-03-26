@@ -90,8 +90,11 @@ void SceneBasic_Uniform::initScene()
 void SceneBasic_Uniform::compile()
 {
 	try {
-		prog.compileShader("shader/blinnphong/phong.vert");
-		prog.compileShader("shader/blinnphong/phong.frag");
+		//prog.compileShader("shader/phong/phong.vert");
+		prog.compileShader("shader/phong/blinn.vert");
+
+		//prog.compileShader("shader/phong/phong.frag");
+		prog.compileShader("shader/toon.frag");
 		prog.link();
 		prog.use();
 	}

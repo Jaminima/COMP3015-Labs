@@ -6,14 +6,24 @@ in vec2 vTextureCoordinate;
 layout (location = 0) out vec4 FragColor;
 
 uniform sampler2D faceTexture;
+uniform int toonBands = 10;
+
+vec4 toon(vec4 c){
+    c *= toonBands;
+
+    c = round(c);
+
+    c /= toonBands;
+
+    return c;
+}
 
 void main() {
     vec4 tex = texture(faceTexture, vTextureCoordinate);
 
     if (tex.rgb==vec3(0)) tex = vec4(1);
 
-    FragColor = tex * Color;
-    //FragColor = Color;
-    //FragColor = Color * vec4(LightIntensity, 1.0f);
-    //FragColor =  vec4(LightIntensity, 1.0f);
+    vec4 col = tex * Color;
+
+    FragColor = toon(col);
 }
