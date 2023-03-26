@@ -17,20 +17,22 @@ public:
 	vec4 ViewPosition;
 	vec4 specular;
 
-	void SetUniforms(GLuint programHandle) {
-		GLuint ref = glGetUniformLocation(programHandle, "Light.ambient");
+	void SetUniforms(GLuint programHandle, int lightId = 0) {
+		string lightStr = "Light[" + to_string(lightId) + "].";
+
+		GLuint ref = glGetUniformLocation(programHandle, (lightStr +"ambient").c_str());
 		glUniform4fv(ref, 1, glm::value_ptr(ambient));
 
-		ref = glGetUniformLocation(programHandle, "Light.diffuse");
+		ref = glGetUniformLocation(programHandle, (lightStr + "diffuse").c_str());
 		glUniform4fv(ref, 1, glm::value_ptr(diffuse));
 
-		ref = glGetUniformLocation(programHandle, "Light.Position");
+		ref = glGetUniformLocation(programHandle, (lightStr + "Position").c_str());
 		glUniform3fv(ref, 1, glm::value_ptr(Position));
 
-		ref = glGetUniformLocation(programHandle, "Light.ViewPosition");
+		ref = glGetUniformLocation(programHandle, (lightStr + "ViewPosition").c_str());
 		glUniform4fv(ref, 1, glm::value_ptr(ViewPosition));
 
-		ref = glGetUniformLocation(programHandle, "Light.specular");
+		ref = glGetUniformLocation(programHandle, (lightStr + "specular").c_str());
 		glUniform4fv(ref, 1, glm::value_ptr(specular));
 	}
 

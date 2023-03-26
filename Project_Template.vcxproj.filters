@@ -85,6 +85,9 @@
     <None Include="shader\toon.frag">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="shader\phong\blinnMulti.vert">
+      <Filter>Shaders\phong</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="helper\scene.h">
