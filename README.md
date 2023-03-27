@@ -1,5 +1,7 @@
 # COMP3015 CW1
 
+***Please ensure you restore packages through NuGet beforee attempting to run the code through VS!***
+
 ## System Spec
 
 - Windows 11
