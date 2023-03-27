@@ -29,6 +29,8 @@ uniform struct Material {
     float shininess;
 } Mat;
 
+uniform int toggle_global = 1, toggle_ambient = 1, toggle_diffuse = 1, toggle_specular = 1;
+
 vec4 ProcessLight(int lightID, vec3 N, vec3 V, vec3 view, vec3 normal){
     Lighting _light = Light[lightID];
 
@@ -50,7 +52,7 @@ vec4 ProcessLight(int lightID, vec3 N, vec3 V, vec3 view, vec3 normal){
     vec4 specular = _light.specular * spec;
     specular = clamp(specular,0.0,1.0);
 
-    return  global + ambient + diffuse + specular;
+    return  (toggle_global * global) + (toggle_ambient * ambient) + (toggle_diffuse * diffuse) + (toggle_specular * specular);
 }
 
 void main()

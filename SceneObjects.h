@@ -16,6 +16,8 @@ public:
 		bool enableToon = false;
 		int toonBands = 10;
 
+		bool toggle_global = 1, toggle_ambient = 1, toggle_diffuse = 1, toggle_specular = 1;
+
 	} shaderConf;
 
 	void AddLight(Lighting l) {
@@ -29,6 +31,18 @@ public:
 
 		ref = glGetUniformLocation(programHandle, "toonBands");
 		glUniform1i(ref, shaderConf.toonBands);
+
+		ref = glGetUniformLocation(programHandle, "toggle_global");
+		glUniform1i(ref, shaderConf.toggle_global);
+
+		ref = glGetUniformLocation(programHandle, "toggle_ambient");
+		glUniform1i(ref, shaderConf.toggle_ambient);
+
+		ref = glGetUniformLocation(programHandle, "toggle_diffuse");
+		glUniform1i(ref, shaderConf.toggle_diffuse);
+
+		ref = glGetUniformLocation(programHandle, "toggle_specular");
+		glUniform1i(ref, shaderConf.toggle_specular);
 	}
 
 	void SetAllLightUniforms(GLuint programHandle) {

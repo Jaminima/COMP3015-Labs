@@ -186,41 +186,61 @@ void SceneBasic_Uniform::keyActve(int key, int mods, float dt)
 
 	vec3 offset = vec3();
 
-	switch (key) {
-	case 'W':
-		offset.z += moveStep * dt;
-		break;
-
-	case 'S':
-		offset.z -= moveStep * dt;
-		break;
-
-	case 'A':
-		offset.x += moveStep * dt;
-		break;
-
-	case 'D':
-		offset.x -= moveStep * dt;
-		break;
-
-	case 'Z':
-		offset.y -= moveStep * dt;
-		break;
-
-	case 'X':
-		offset.y += moveStep * dt;
-		break;
-	case 'T':
-		if (mods == GLFW_MOD_SHIFT) {
-			sceneObjects.shaderConf.toonBands++;
+	if (mods == GLFW_MOD_ALT) {
+		switch (key)
+		{
+		case 'G':
+			sceneObjects.shaderConf.toggle_global = !sceneObjects.shaderConf.toggle_global;
+			break;
+		case 'A':
+			sceneObjects.shaderConf.toggle_ambient = !sceneObjects.shaderConf.toggle_ambient;
+			break;
+		case 'D':
+			sceneObjects.shaderConf.toggle_diffuse = !sceneObjects.shaderConf.toggle_diffuse;
+			break;
+		case 'S':
+			sceneObjects.shaderConf.toggle_specular = !sceneObjects.shaderConf.toggle_specular;
+			break;
 		}
-		else if (mods == GLFW_MOD_CONTROL) {
-			sceneObjects.shaderConf.toonBands--;
+	}
+
+	else {
+		switch (key) {
+			case 'W':
+				offset.z += moveStep * dt;
+				break;
+
+			case 'S':
+				offset.z -= moveStep * dt;
+				break;
+
+			case 'A':
+				offset.x += moveStep * dt;
+				break;
+
+			case 'D':
+				offset.x -= moveStep * dt;
+				break;
+
+			case 'Z':
+				offset.y -= moveStep * dt;
+				break;
+
+			case 'X':
+				offset.y += moveStep * dt;
+				break;
+			case 'T':
+				if (mods == GLFW_MOD_SHIFT) {
+					sceneObjects.shaderConf.toonBands++;
+				}
+				else if (mods == GLFW_MOD_CONTROL) {
+					sceneObjects.shaderConf.toonBands--;
+				}
+				else {
+					sceneObjects.shaderConf.enableToon = !sceneObjects.shaderConf.enableToon;
+				}
+				break;
 		}
-		else {
-			sceneObjects.shaderConf.enableToon = !sceneObjects.shaderConf.enableToon;
-		}
-		break;
 	}
 
 	sceneObjects.cam.updatePosition(offset);
