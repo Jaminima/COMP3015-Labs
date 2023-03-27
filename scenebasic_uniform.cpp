@@ -24,10 +24,10 @@ using glm::vec3;
 
 SceneBasic_Uniform::SceneBasic_Uniform() : angle(0.0f) {}
 
-Asset fox("fox.obj", vec3(0, -1, -10));
+Asset fox("fox.obj", vec3(0, -1, -5));
 Asset submarine("submarine.obj", vec3(5, -1, 50));
-Asset torus("torus2.obj", vec3(0, -1, -2));
-Asset torus_nodump("torus2.obj", vec3(0, -1, -2));
+Asset torus("torus2.obj", vec3(0, -0.6, -2),vec3(40,45,0));
+Asset flatplane("flatplane.obj", vec3(0, -1, 0));
 Asset cube("cube2.obj", vec3(-2, 0, -2));
 
 void SceneBasic_Uniform::initScene()
@@ -68,17 +68,18 @@ void SceneBasic_Uniform::initScene()
 	torus.Build();
 	torus.Dump();
 
-	/*torus_nodump.Load(true);
-	torus_nodump.assetData->mat.ambient = vec4(0.1);
-	torus_nodump.assetData->mat.shininess = 10;
-	torus_nodump.Build();
-
-	bool eq = torus.AssetEqual(&torus_nodump);*/
+	flatplane.Load();
+	flatplane.assetData->mat.ambient = vec4(0.1);
+	flatplane.assetData->mat.shininess = 10;
+	flatplane.assetData->scale = vec3(10);
+	flatplane.assetData->mat.AddTexture(prog.getHandle(), "floor.png");
+	flatplane.Build();
+	flatplane.Dump();
 
 	fox.Load();
 	fox.assetData->mat.ambient = vec4(0.1);
 	fox.assetData->mat.shininess = 10;
-	fox.assetData->scale = vec3(0.1);
+	fox.assetData->scale = vec3(0.05);
 	fox.assetData->mat.AddTexture(prog.getHandle(), "fox.png");
 	fox.assetData->mat.AddTexture(prog.getHandle(), "dirt.png");
 	fox.Build();
@@ -99,6 +100,7 @@ void SceneBasic_Uniform::initScene()
 	torus.Draw();
 	fox.Draw();
 	submarine.Draw();
+	flatplane.Draw();
 
 	sceneObjects.cam.updateMatrix();
 }
@@ -141,12 +143,12 @@ void SceneBasic_Uniform::update(float dt)
 
 	boundAngles(cubeRot);*/
 
-	/*vec3* stoneRot = &stone.assetData->rotation;
+	vec3* torRot = &torus.assetData->rotation;
 
-	stoneRot->x += 0.8f * dt;
-	stoneRot->y += 0.8f * dt;
+	//torRot->x += 0.8f * dt;
+	torRot->y += 1.8f * dt;
 
-	boundAngles(stoneRot);*/
+	boundAngles(torRot);
 }
 
 void SceneBasic_Uniform::render()
@@ -171,6 +173,7 @@ void SceneBasic_Uniform::render()
 	torus.Render(programHandle, &sceneObjects);
 	fox.Render(programHandle, &sceneObjects);
 	submarine.Render(programHandle, &sceneObjects);
+	flatplane.Render(programHandle, &sceneObjects);
 }
 
 void SceneBasic_Uniform::resize(int w, int h)
