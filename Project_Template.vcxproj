@@ -83,8 +83,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Dependencies\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Dependencies\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Dependencies\include;$(MSBuildProjectDirectory)\dependancies\include;$(ProjectDir)\packages\glm.0.9.9.800\build\native\include;$(ProjectDir)\packages\glfw.3.3.8\build\native\include\GLFW;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Dependencies\lib;$(MSBuildProjectDirectory)\dependancies\lib;$(MSBuildProjectDirectory)\dependancies\include;$(ProjectDir)\packages\glfw.3.3.8\build\native\lib\static\v143\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -187,17 +187,6 @@
     <ClInclude Include="SceneObjects.h" />
     <ClInclude Include="TextureLoad.h" />
     <ClInclude Include="utils.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Object Include="assets\cube.obj">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </Object>
-    <Object Include="assets\stone.obj">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </Object>
-    <Object Include="assets\torus.obj">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </Object>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

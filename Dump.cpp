@@ -42,7 +42,7 @@ void Mesh::Dump(ofstream* fileStr)
 template<typename T>
 int BuildVector(vector<T>* vec, char* data, int idx) {
 	string lenStr;
-	memcpy(lenStr.data(), &data[idx], 8);
+	memcpy((void*)lenStr.data(), &data[idx], 8);
 
 	int dLen = stoi(lenStr) * sizeof(T);
 
@@ -81,14 +81,14 @@ bool Asset::TryLoadDump()
 		int idx = 0;
 		while (idx < sz * 0.9) {
 			string lenStr;
-			memcpy(lenStr.data(), &str_buff[idx], 8);
+			memcpy((void*)lenStr.data(), &str_buff[idx], 8);
 
 			int len = stoi(lenStr);
 
 			idx += 8;
 
 			string name;
-			memcpy(name.data(), &str_buff[idx], len);
+			memcpy((void*)name.data(), &str_buff[idx], len);
 
 			idx += len;
 
