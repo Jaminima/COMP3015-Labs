@@ -20,8 +20,6 @@ public:
 	vec3 rotation = vec3(0, 180, 0);
 	vec3 lookingAt;
 
-	int toonBands = 5;
-
 	float cosx;
 	float cosy;
 	float cosz;

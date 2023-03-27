@@ -18,6 +18,7 @@ using std::endl;
 
 #include "Asset.h"
 #include "utils.h"
+#include <glfw3.h>
 
 using glm::vec3;
 
@@ -105,10 +106,12 @@ void SceneBasic_Uniform::compile()
 	try {
 		//prog.compileShader("shader/phong/phong.vert");
 		//prog.compileShader("shader/phong/blinn.vert");
-		prog.compileShader("shader/phong/blinnMulti.vert");
+		//prog.compileShader("shader/phong/blinnMulti.vert");
+		prog.compileShader("shader/configurable/configurable.vert");
 
-		prog.compileShader("shader/phong/phong.frag");
+		//prog.compileShader("shader/phong/phong.frag");
 		//prog.compileShader("shader/toon.frag");
+		prog.compileShader("shader/configurable/configurable.frag");
 		prog.link();
 		prog.use();
 	}
@@ -158,8 +161,7 @@ void SceneBasic_Uniform::render()
 
 	GLuint programHandle = prog.getHandle();
 
-	GLuint ref = glGetUniformLocation(programHandle, "toonBands");
-	glUniform1i(ref, sceneObjects.cam.toonBands);
+	sceneObjects.SetShaderConfig(programHandle);
 
 	sceneObjects.SetAllLightUniforms(programHandle);
 
@@ -207,6 +209,17 @@ void SceneBasic_Uniform::keyActve(int key, int mods, float dt)
 
 	case 'X':
 		offset.y += moveStep * dt;
+		break;
+	case 'T':
+		if (mods == GLFW_MOD_SHIFT) {
+			sceneObjects.shaderConf.toonBands++;
+		}
+		else if (mods == GLFW_MOD_CONTROL) {
+			sceneObjects.shaderConf.toonBands--;
+		}
+		else {
+			sceneObjects.shaderConf.enableToon = !sceneObjects.shaderConf.enableToon;
+		}
 		break;
 	}
 

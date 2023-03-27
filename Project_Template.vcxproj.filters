@@ -26,6 +26,9 @@
     <Filter Include="Shaders\phong">
       <UniqueIdentifier>{6d27488a-be47-4637-964e-e527700f2359}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shaders\configurable">
+      <UniqueIdentifier>{e08e7da4-39ed-4fa6-938d-951647e7624d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -87,6 +90,12 @@
     </None>
     <None Include="shader\phong\blinnMulti.vert">
       <Filter>Shaders\phong</Filter>
+    </None>
+    <None Include="shader\configurable\configurable.frag">
+      <Filter>Shaders\configurable</Filter>
+    </None>
+    <None Include="shader\configurable\configurable.vert">
+      <Filter>Shaders\configurable</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

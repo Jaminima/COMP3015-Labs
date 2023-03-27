@@ -10,9 +10,25 @@ public:
 	Lighting lights[10];
 	int activeLights = 0;
 
+	struct ShaderConfig
+	{
+	public:
+		bool enableToon = false;
+		int toonBands = 10;
+
+	} shaderConf;
+
 	void AddLight(Lighting l) {
 		lights[activeLights] = l;
 		activeLights++;
+	}
+
+	void SetShaderConfig(GLuint programHandle) {
+		GLuint ref = glGetUniformLocation(programHandle, "enableToon");
+		glUniform1i(ref, shaderConf.enableToon);
+
+		ref = glGetUniformLocation(programHandle, "toonBands");
+		glUniform1i(ref, shaderConf.toonBands);
 	}
 
 	void SetAllLightUniforms(GLuint programHandle) {

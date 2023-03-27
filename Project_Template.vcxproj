@@ -166,6 +166,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="shader\configurable\configurable.frag" />
+    <None Include="shader\configurable\configurable.vert" />
     <None Include="shader\phong\blinn.vert" />
     <None Include="shader\phong\blinnMulti.vert" />
     <None Include="shader\phong\phong.frag" />
