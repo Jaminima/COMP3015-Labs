@@ -26,7 +26,7 @@ SceneBasic_Uniform::SceneBasic_Uniform() : angle(0.0f) {}
 
 Asset fox("fox.obj", vec3(0, -1, -5));
 Asset submarine("submarine.obj", vec3(5, -1, 50));
-Asset torus("torus2.obj", vec3(0, -0.6, -2),vec3(40,45,0));
+Asset torus("torus2.obj", vec3(0, -0.6, -2), vec3(40, 45, 0));
 Asset flatplane("flatplane.obj", vec3(0, -1, 0));
 Asset cube("cube2.obj", vec3(-2, 0, -2));
 
