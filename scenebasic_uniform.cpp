@@ -208,40 +208,40 @@ void SceneBasic_Uniform::keyActve(int key, int mods, float dt)
 
 	else {
 		switch (key) {
-			case 'W':
-				offset.z += moveStep * dt;
-				break;
+		case 'W':
+			offset.z += moveStep * dt;
+			break;
 
-			case 'S':
-				offset.z -= moveStep * dt;
-				break;
+		case 'S':
+			offset.z -= moveStep * dt;
+			break;
 
-			case 'A':
-				offset.x += moveStep * dt;
-				break;
+		case 'A':
+			offset.x += moveStep * dt;
+			break;
 
-			case 'D':
-				offset.x -= moveStep * dt;
-				break;
+		case 'D':
+			offset.x -= moveStep * dt;
+			break;
 
-			case 'Z':
-				offset.y -= moveStep * dt;
-				break;
+		case 'Z':
+			offset.y -= moveStep * dt;
+			break;
 
-			case 'X':
-				offset.y += moveStep * dt;
-				break;
-			case 'T':
-				if (mods == GLFW_MOD_SHIFT) {
-					sceneObjects.shaderConf.toonBands++;
-				}
-				else if (mods == GLFW_MOD_CONTROL) {
-					sceneObjects.shaderConf.toonBands--;
-				}
-				else {
-					sceneObjects.shaderConf.enableToon = !sceneObjects.shaderConf.enableToon;
-				}
-				break;
+		case 'X':
+			offset.y += moveStep * dt;
+			break;
+		case 'T':
+			if (mods == GLFW_MOD_SHIFT) {
+				sceneObjects.shaderConf.toonBands++;
+			}
+			else if (mods == GLFW_MOD_CONTROL) {
+				sceneObjects.shaderConf.toonBands--;
+			}
+			else {
+				sceneObjects.shaderConf.enableToon = !sceneObjects.shaderConf.enableToon;
+			}
+			break;
 		}
 	}
 

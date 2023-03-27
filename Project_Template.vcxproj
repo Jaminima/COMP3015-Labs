@@ -161,7 +161,6 @@
     <ClCompile Include="helper\glutils.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="scenebasic_uniform.cpp" />
-    <ClCompile Include="TextureLoad.cpp" />
     <ClCompile Include="utils.cpp" />
   </ItemGroup>
   <ItemGroup>

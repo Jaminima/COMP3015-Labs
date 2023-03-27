@@ -75,7 +75,6 @@ inline void PushFaceIdx(int idx, std::vector<T>* data, std::vector<T>* component
 		else {
 			data->push_back(components->at(idx - 1));
 		}
-		
 	}
 }
 

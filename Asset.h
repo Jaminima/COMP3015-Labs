@@ -91,7 +91,7 @@ public:
 
 	string srcFile;
 	string* srcData = 0x0;
-	bool loadedFromDump = false; 
+	bool loadedFromDump = false;
 
 	AssetData* assetData;
 

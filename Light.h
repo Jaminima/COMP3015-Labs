@@ -20,7 +20,7 @@ public:
 	void SetUniforms(GLuint programHandle, int lightId = 0) {
 		string lightStr = "Light[" + to_string(lightId) + "].";
 
-		GLuint ref = glGetUniformLocation(programHandle, (lightStr +"ambient").c_str());
+		GLuint ref = glGetUniformLocation(programHandle, (lightStr + "ambient").c_str());
 		glUniform4fv(ref, 1, glm::value_ptr(ambient));
 
 		ref = glGetUniformLocation(programHandle, (lightStr + "diffuse").c_str());

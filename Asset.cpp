@@ -268,8 +268,8 @@ inline void Material::SetUniforms(GLuint programHandle) {
 	glUniform1i(ref, activeTextureLayers);
 
 	for (int i = 0; i < activeTextureLayers; i++) {
-		glActiveTexture(GL_TEXTURE0+i);
+		glActiveTexture(GL_TEXTURE0 + i);
 		glBindTexture(GL_TEXTURE_2D, textureLayers[i].faceTexture);
-		glUniform1i(glGetUniformLocation(programHandle, ("textureLayers["+to_string(i)+"].faceTexture").c_str()), i);
+		glUniform1i(glGetUniformLocation(programHandle, ("textureLayers[" + to_string(i) + "].faceTexture").c_str()), i);
 	}
 }

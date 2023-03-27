@@ -17,7 +17,6 @@ public:
 		int toonBands = 10;
 
 		bool toggle_global = 1, toggle_ambient = 1, toggle_diffuse = 1, toggle_specular = 1;
-
 	} shaderConf;
 
 	void AddLight(Lighting l) {
@@ -50,7 +49,7 @@ public:
 		glUniform1i(ref, activeLights);
 
 		for (int i = 0; i < activeLights; i++) {
-			lights[i].SetUniforms(programHandle,i);
+			lights[i].SetUniforms(programHandle, i);
 		}
 	}
 

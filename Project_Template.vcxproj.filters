@@ -61,9 +61,6 @@
     <ClCompile Include="helper\scene.cpp">
       <Filter>Src\Helper</Filter>
     </ClCompile>
-    <ClCompile Include="TextureLoad.cpp">
-      <Filter>Src\Helper</Filter>
-    </ClCompile>
     <ClCompile Include="Light.cpp">
       <Filter>Src\Assets</Filter>
     </ClCompile>
