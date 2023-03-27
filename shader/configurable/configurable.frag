@@ -11,7 +11,6 @@ uniform struct textureLayer{
     sampler2D faceTexture;
 } textureLayers[10];
 
-
 uniform int toonBands = 10;
 uniform bool enableToon = false;
 

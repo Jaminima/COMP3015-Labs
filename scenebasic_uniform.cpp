@@ -28,7 +28,7 @@ Asset fox("fox.obj", vec3(0, -1, -10));
 Asset submarine("submarine.obj", vec3(5, -1, 50));
 Asset torus("torus2.obj", vec3(0, -1, -2));
 Asset torus_nodump("torus2.obj", vec3(0, -1, -2));
-Asset cube("cube2.obj", vec3(10, 0, -5));
+Asset cube("cube2.obj", vec3(-2, 0, -2));
 
 void SceneBasic_Uniform::initScene()
 {
@@ -57,7 +57,8 @@ void SceneBasic_Uniform::initScene()
 	cube.Load();
 	cube.assetData->mat.ambient = vec4(0.1);
 	cube.assetData->mat.shininess = 10;
-	cube.AddTexture(prog.getHandle(), ".stone.png");
+	cube.AddTexture(prog.getHandle(), "stone.png");
+	cube.AddTexture(prog.getHandle(), "dirt.png");
 	cube.Build();
 	cube.Dump();
 
@@ -79,6 +80,7 @@ void SceneBasic_Uniform::initScene()
 	fox.assetData->mat.shininess = 10;
 	fox.assetData->scale = vec3(0.1);
 	fox.AddTexture(prog.getHandle(), "fox.png");
+	fox.AddTexture(prog.getHandle(), "dirt.png");
 	fox.Build();
 	fox.Dump();
 

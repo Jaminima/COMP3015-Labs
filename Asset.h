@@ -25,6 +25,11 @@ public:
 	vec4 ambient;
 	float shininess;
 
+	int activeTextureLayers = 0;
+	struct textureLayer {
+		GLuint faceTexture;
+	} textureLayers[10];
+
 	void SetUniforms(GLuint programHandle);
 };
 
@@ -84,10 +89,7 @@ public:
 
 	string srcFile;
 	string* srcData = 0x0;
-	bool loadedFromDump = false;
-
-	bool hasTexture = false;
-	GLuint texture;
+	bool loadedFromDump = false; 
 
 	AssetData* assetData;
 

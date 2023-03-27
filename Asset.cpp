@@ -242,8 +242,8 @@ void Asset::Render(GLuint programHandle, SceneObjects* sceneObjects)
 {
 	assetData->mat.SetUniforms(programHandle);
 
-	if (this->hasTexture) glBindTexture(GL_TEXTURE_2D, this->texture);
-	else glBindTexture(GL_TEXTURE_2D, 0);
+	/*if (this->hasTexture) glBindTexture(GL_TEXTURE_2D, this->texture);
+	else glBindTexture(GL_TEXTURE_2D, 0);*/
 
 	int meshCount = this->meshses.size();
 	for (int i = 0; i < meshCount; i++) {
@@ -253,9 +253,10 @@ void Asset::Render(GLuint programHandle, SceneObjects* sceneObjects)
 
 void Asset::AddTexture(GLuint program, string file)
 {
-	loadTexture(this->texture, "./assets/textures/"+file);
-	glUniform1i(glGetUniformLocation(program, "texture"), 0);
-	this->hasTexture = true;
+	loadTexture(assetData->mat.textureLayers[assetData->mat.activeTextureLayers].faceTexture, "./assets/textures/" + file);
+	//glUniform1i(glGetUniformLocation(program, "textureLayers[0].faceTexture"), 0);
+	assetData->mat.activeTextureLayers++;
+	//this->hasTexture = true;
 }
 
 inline void Material::SetUniforms(GLuint programHandle) {
@@ -264,4 +265,13 @@ inline void Material::SetUniforms(GLuint programHandle) {
 
 	ref = glGetUniformLocation(programHandle, "Mat.shininess");
 	glUniform1f(ref, shininess);
+
+	ref = glGetUniformLocation(programHandle, "activeTextureLayers");
+	glUniform1i(ref, activeTextureLayers);
+
+	for (int i = 0; i < activeTextureLayers; i++) {
+		glActiveTexture(GL_TEXTURE0+i);
+		glBindTexture(GL_TEXTURE_2D, textureLayers[i].faceTexture);
+		glUniform1i(glGetUniformLocation(programHandle, ("textureLayers["+to_string(i)+"].faceTexture").c_str()), i);
+	}
 }
