@@ -5,7 +5,13 @@ in vec3 LightIntensity;
 in vec2 vTextureCoordinate;
 layout (location = 0) out vec4 FragColor;
 
-uniform sampler2D faceTexture;
+uniform int activeTextureLayers = 0;
+
+uniform struct textureLayer{
+    sampler2D faceTexture;
+} textureLayers[10];
+
+
 uniform int toonBands = 10;
 uniform bool enableToon = false;
 
@@ -19,12 +25,21 @@ vec4 toon(vec4 c){
     return c;
 }
 
-void main() {
-    vec4 tex = texture(faceTexture, vTextureCoordinate);
-    
-    if (all(equal(tex.rgb,vec3(0)))) tex = vec4(1);
+vec4 mergeTextures(){
+    if (activeTextureLayers==0) return vec4(1);
 
-    FragColor = tex * Color;
+    vec3 texCum = vec3(0);
+    vec4 tex;
+    for (int i=0;i<activeTextureLayers;i++){
+        tex = texture(textureLayers[i].faceTexture, vTextureCoordinate);
+
+        texCum = mix(texCum.rgb,tex.rgb,tex.a);
+    }
+    return vec4(texCum/activeTextureLayers,1);
+}
+
+void main() {
+    FragColor = mergeTextures() * Color;
 
     if (enableToon){
         FragColor = toon(FragColor);
