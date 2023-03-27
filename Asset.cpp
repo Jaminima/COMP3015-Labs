@@ -251,12 +251,10 @@ void Asset::Render(GLuint programHandle, SceneObjects* sceneObjects)
 	}
 }
 
-void Asset::AddTexture(GLuint program, string file)
+void Material::AddTexture(GLuint program, string file)
 {
-	loadTexture(assetData->mat.textureLayers[assetData->mat.activeTextureLayers].faceTexture, "./assets/textures/" + file);
-	//glUniform1i(glGetUniformLocation(program, "textureLayers[0].faceTexture"), 0);
-	assetData->mat.activeTextureLayers++;
-	//this->hasTexture = true;
+	loadTexture(textureLayers[activeTextureLayers].faceTexture, "./assets/textures/" + file);
+	activeTextureLayers++;
 }
 
 inline void Material::SetUniforms(GLuint programHandle) {

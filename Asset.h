@@ -31,6 +31,8 @@ public:
 	} textureLayers[10];
 
 	void SetUniforms(GLuint programHandle);
+
+	void AddTexture(GLuint program, string file);
 };
 
 class MeshData {
@@ -122,8 +124,6 @@ public:
 	void Draw();
 
 	void Render(GLuint programHandle, SceneObjects* sceneObjects);
-
-	void AddTexture(GLuint program, string file);
 };
 
 #endif
