@@ -107,6 +107,7 @@ bool Asset::TryLoadDump()
 			idx += len;
 
 			Mesh* m = new Mesh(name);
+			delete m->components;
 
 			idx += BuildVector(&m -> data->vertexSet, str_buff, idx);
 
