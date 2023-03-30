@@ -63,6 +63,7 @@ Mesh::Mesh(string mesh_name)
 {
 	this->name = mesh_name;
 	this->components = new MeshComponents();
+	this->data = new MeshData();
 }
 
 template<typename T>
@@ -85,8 +86,6 @@ void Mesh::Build(Mesh* parent)
 	if (this->components == 0x0) throw exception("Component Data Is Missing During OBJ Parsing!");
 
 	if (this->subMesh!=0x0) this->subMesh->Build(this);
-
-	this->data = new MeshData();
 
 	MeshComponents* comp = parent != 0x0 ? parent->components : this->components;
 

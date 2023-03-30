@@ -65,6 +65,16 @@ int BuildVector(vector<T>* vec, char* data, int idx) {
 	return dLen + 8;
 }
 
+Mesh* findOrNewMesh(vector<Mesh>* meshes, string name) {
+	for (int i = 0; i < meshes->size(); i++) {
+		Mesh* m = &meshes->at(i);
+		if (m->name == name) {
+			return m;
+		}
+	}
+	return new Mesh(name);
+}
+
 bool Asset::TryLoadDump()
 {
 	string filePath = "./assets/dumps/" + srcFile + ".dump";
@@ -96,18 +106,30 @@ bool Asset::TryLoadDump()
 
 			idx += len;
 
-			Mesh m(name);
-			m.data = new MeshData();
+			Mesh* m = new Mesh(name);
 
-			idx += BuildVector(&m.data->vertexSet, str_buff, idx);
+			idx += BuildVector(&m -> data->vertexSet, str_buff, idx);
 
-			idx += BuildVector(&m.data->texCooSet, str_buff, idx);
+			idx += BuildVector(&m -> data->texCooSet, str_buff, idx);
 
-			idx += BuildVector(&m.data->normalSet, str_buff, idx);
+			idx += BuildVector(&m -> data->normalSet, str_buff, idx);
 
-			this->meshses.push_back(m);
+			int name_seperator = name.find("-");
 
-			string total = to_string(m.data->vertexSet.size() + m.data->texCooSet.size() + m.data->normalSet.size());
+			if (name_seperator > 0) {
+				m -> name = name.substr(name_seperator+1);
+				
+				string parentMeshName = name.substr(0, name_seperator);
+				Mesh* parent = findOrNewMesh(&this->meshses, parentMeshName);
+
+				parent->subMesh = new SubMesh(m, parent->subMesh);
+				this->meshses.push_back(*parent);
+			}
+			else {
+				this->meshses.push_back(*m);
+			}
+
+			string total = to_string(m->data->vertexSet.size() + m->data->texCooSet.size() + m->data->normalSet.size());
 
 			printf("Loaded Dump For Mesh %s Containing %s Elements\n", name.c_str(), total.c_str());
 		}
