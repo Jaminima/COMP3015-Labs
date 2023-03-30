@@ -6,13 +6,21 @@
 #include<string>
 #include <algorithm>
 
+#define lengthStringSize (size_t)8
+
 inline string GetFormattedLengthString(int length) {
 	string old_str = to_string(length);
 	const size_t n_zero = 8;
 
-	auto new_str = std::string(n_zero - std::min(n_zero, old_str.length()), '0') + old_str;
+	auto new_str = std::string(lengthStringSize - std::min(n_zero, old_str.length()), '0') + old_str;
 
 	return string(new_str);
+}
+
+inline void WriteTextWithLen(ofstream* fileStr,string text) {
+	string textLen = GetFormattedLengthString(text.size());
+	fileStr->write(textLen.c_str(), textLen.size());
+	fileStr->write(text.c_str(), text.size());
 }
 
 template<typename T>
@@ -29,10 +37,9 @@ void Mesh::Dump(ofstream* fileStr, Mesh* parent)
 
 	string n = parent != 0x0 ? parent->name + "-" + name : name;
 
-	string nameLen = GetFormattedLengthString(n.size());
-	fileStr->write(nameLen.c_str(), nameLen.size());
+	WriteTextWithLen(fileStr, n);
 
-	fileStr->write(n.c_str(), n.size());
+	WriteTextWithLen(fileStr, material);
 
 	DumpVertex(fileStr, &this->data->vertexSet);
 	DumpVertex(fileStr, &this->data->texCooSet);
@@ -75,6 +82,18 @@ Mesh* findOrNewMesh(vector<Mesh>* meshes, string name) {
 	return new Mesh(name);
 }
 
+inline string GetTextWithLength(char* strBuff, int startIdx) {
+	string lenStr(lengthStringSize,'\0');
+	memcpy(lenStr.data(), &strBuff[startIdx], lengthStringSize);
+
+	int len = stoi(lenStr);
+
+	string val(len, '\0');
+	memcpy(val.data(), &strBuff[startIdx + lengthStringSize], len);
+
+	return val;
+}
+
 bool Asset::TryLoadDump()
 {
 	string filePath = "./assets/dumps/" + srcFile + ".dump";
@@ -94,20 +113,17 @@ bool Asset::TryLoadDump()
 
 		int idx = 0;
 		while (idx < sz * 0.9) {
-			string lenStr;
-			memcpy(lenStr.data(), &str_buff[idx], 8);
+			string name = GetTextWithLength(str_buff, idx);
 
-			int len = stoi(lenStr);
-
-			idx += 8;
-
-			string name(len, '\0');
-			memcpy(name.data(), &str_buff[idx], len);
-
-			idx += len;
+			idx += name.size() + lengthStringSize;
 
 			Mesh* m = new Mesh(name);
 			delete m->components;
+
+			string mat = GetTextWithLength(str_buff, idx);
+			m->material = mat;
+
+			idx += mat.size() + lengthStringSize;
 
 			idx += BuildVector(&m -> data->vertexSet, str_buff, idx);
 

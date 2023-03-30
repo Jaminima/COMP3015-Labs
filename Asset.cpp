@@ -121,7 +121,12 @@ void Asset::ExecuteOBJOperation(string opCode, vector<string> operands)
 
 	Mesh* m = &this->meshses.back();
 
-	if (opCode == "usemtl") m->material = operands[0];
+	if (opCode == "usemtl") {
+		if (m->subMesh != 0x0)
+			m->subMesh->mesh->material = operands[0];
+		else
+			m->material = operands[0];
+	}
 
 	else if (opCode == "v") {
 		vec3 vertex(stof(operands[0]), stof(operands[1]), stof(operands[2]));
