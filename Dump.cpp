@@ -23,12 +23,16 @@ inline void DumpVertex(ofstream* fileStr, std::vector<T>* vec) {
 	fileStr->write((char*)vec->data(), vec->size() * sizeof(T));
 }
 
-void Mesh::Dump(ofstream* fileStr)
+void Mesh::Dump(ofstream* fileStr, Mesh* parent)
 {
-	string nameLen = GetFormattedLengthString(name.size());
+	if (subMesh != 0x0) subMesh->Dump(fileStr, this);
+
+	string n = parent != 0x0 ? parent->name + "-" + name : name;
+
+	string nameLen = GetFormattedLengthString(n.size());
 	fileStr->write(nameLen.c_str(), nameLen.size());
 
-	fileStr->write(name.c_str(), name.size());
+	fileStr->write(n.c_str(), n.size());
 
 	DumpVertex(fileStr, &this->data->vertexSet);
 	DumpVertex(fileStr, &this->data->texCooSet);
@@ -87,7 +91,7 @@ bool Asset::TryLoadDump()
 
 			idx += 8;
 
-			string name;
+			string name(len, '\0');
 			memcpy(name.data(), &str_buff[idx], len);
 
 			idx += len;
@@ -126,7 +130,7 @@ void Asset::Dump()
 
 	int meshCount = this->meshses.size();
 	for (int i = 0; i < meshCount; i++) {
-		this->meshses[i].Dump(&fileStr);
+		this->meshses[i].Dump(&fileStr, 0x0);
 	}
 
 	fileStr.flush();

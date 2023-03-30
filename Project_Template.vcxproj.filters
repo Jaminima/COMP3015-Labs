@@ -61,12 +61,6 @@
     <ClCompile Include="Light.cpp">
       <Filter>Src\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Dump.cpp">
-      <Filter>Src\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Comparison.cpp">
-      <Filter>Src\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="Asset.cpp">
       <Filter>Src\Scene\Assets</Filter>
     </ClCompile>
@@ -74,6 +68,12 @@
       <Filter>Src\Scene\Assets</Filter>
     </ClCompile>
     <ClCompile Include="Material.cpp">
+      <Filter>Src\Scene\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="Dump.cpp">
+      <Filter>Src\Scene\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="Comparison.cpp">
       <Filter>Src\Scene\Assets</Filter>
     </ClCompile>
   </ItemGroup>

@@ -17,6 +17,8 @@ using namespace glm;
 
 void Mesh::Draw()
 {
+	if (this->subMesh != 0x0) this->subMesh->Draw();
+
 	glGenVertexArrays(1, &this->vaoBuffer);
 	glBindVertexArray(this->vaoBuffer);
 
@@ -78,20 +80,24 @@ inline void PushFaceIdx(int idx, std::vector<T>* data, std::vector<T>* component
 	}
 }
 
-void Mesh::Build(bool generateColours)
+void Mesh::Build(Mesh* parent)
 {
 	if (this->components == 0x0) throw exception("Component Data Is Missing During OBJ Parsing!");
 
+	if (this->subMesh!=0x0) this->subMesh->Build(this);
+
 	this->data = new MeshData();
+
+	MeshComponents* comp = parent != 0x0 ? parent->components : this->components;
 
 	int indexCount = this->components->indexSet.size();
 	int thirdIndexCount = indexCount / 3.0f;
 	for (int i = indexCount - 1; i >= 0; i--) {
 		ivec3 idx = this->components->indexSet[i];
 
-		PushFaceIdx(idx.x, &this->data->vertexSet, &this->components->vertexSet);
-		PushFaceIdx(idx.y, &this->data->texCooSet, &this->components->texCooSet);
-		PushFaceIdx(idx.z, &this->data->normalSet, &this->components->normalSet);
+		PushFaceIdx(idx.x, &this->data->vertexSet, &comp->vertexSet);
+		PushFaceIdx(idx.y, &this->data->texCooSet, &comp->texCooSet);
+		PushFaceIdx(idx.z, &this->data->normalSet, &comp->normalSet);
 
 		//if (generateColours) {
 		//	int cIdx = i / thirdIndexCount;
@@ -108,6 +114,8 @@ void Mesh::Build(bool generateColours)
 
 void Mesh::Render(GLuint programHandle, AssetData* assetData, SceneObjects* sceneObjects)
 {
+	if (this->subMesh != 0x0) this->subMesh->Render(programHandle, assetData, sceneObjects);
+
 	glm::mat4 model(1.0f);
 	model = glm::translate(model, vec3(assetData->position));
 
@@ -140,3 +148,4 @@ void Mesh::Render(GLuint programHandle, AssetData* assetData, SceneObjects* scen
 
 	glBindVertexArray(0);
 }
+

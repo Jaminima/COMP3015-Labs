@@ -96,12 +96,11 @@ void Asset::ExecuteOBJOperation(string opCode, vector<string> operands)
 	}
 
 	else if (opCode == "g") {
-		Mesh m(operands[0]);
+		Mesh* m = new Mesh(operands[0]);
 
 		Mesh* back = &this->meshses.back();
-		m.parentMesh = back->parentMesh != 0x0 ? back->parentMesh : back;
 
-		this->meshses.push_back(m);
+		back->subMesh = new SubMesh(m, back->subMesh);
 	}
 
 	else if (opCode == "mtllib") {
@@ -188,6 +187,8 @@ void Asset::AppendPointToMesh(string idx, Mesh* m)
 {
 	vector<string> faceData = split(idx, "/");
 
+	if (m->subMesh != 0x0) m = m->subMesh->mesh;
+
 	ivec3 face;
 
 	switch (faceData.size())
@@ -226,7 +227,7 @@ void Asset::Build(bool generateColours)
 
 	int meshCount = this->meshses.size();
 	for (int i = 0; i < meshCount; i++) {
-		this->meshses[i].Build(generateColours);
+		this->meshses[i].Build(0x0);
 	}
 }
 
