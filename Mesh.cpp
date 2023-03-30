@@ -70,7 +70,7 @@ inline void PushFaceIdx(int idx, std::vector<T>* data, std::vector<T>* component
 		if (idx == -1) idx = compSize;
 
 		if (idx > compSize) {
-			//printf("Invalid Index Of %d\n", idx);
+			printf("Invalid Index Of %d\n", idx);
 		}
 		else {
 			data->push_back(components->at(idx - 1));

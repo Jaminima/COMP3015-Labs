@@ -6,7 +6,6 @@
 #include <sstream>
 #include <string>
 
-#include "TextureLoad.h"
 #include "SceneObjects.h"
 #include "Light.h"
 #include "helper/glslprogram.h"
@@ -94,6 +93,15 @@ void Asset::ExecuteOBJOperation(string opCode, vector<string> operands)
 		}
 
 		return;
+	}
+
+	else if (opCode == "g") {
+		Mesh m(operands[0]);
+
+		Mesh* back = &this->meshses.back();
+		m.parentMesh = back->parentMesh != 0x0 ? back->parentMesh : back;
+
+		this->meshses.push_back(m);
 	}
 
 	else if (opCode == "mtllib") {
@@ -251,25 +259,3 @@ void Asset::Render(GLuint programHandle, SceneObjects* sceneObjects)
 	}
 }
 
-void Material::AddTexture(GLuint program, string file)
-{
-	loadTexture(textureLayers[activeTextureLayers].faceTexture, "./assets/textures/" + file);
-	activeTextureLayers++;
-}
-
-inline void Material::SetUniforms(GLuint programHandle) {
-	GLuint ref = glGetUniformLocation(programHandle, "Mat.ambient");
-	glUniform4fv(ref, 1, glm::value_ptr(ambient));
-
-	ref = glGetUniformLocation(programHandle, "Mat.shininess");
-	glUniform1f(ref, shininess);
-
-	ref = glGetUniformLocation(programHandle, "activeTextureLayers");
-	glUniform1i(ref, activeTextureLayers);
-
-	for (int i = 0; i < activeTextureLayers; i++) {
-		glActiveTexture(GL_TEXTURE0 + i);
-		glBindTexture(GL_TEXTURE_2D, textureLayers[i].faceTexture);
-		glUniform1i(glGetUniformLocation(programHandle, ("textureLayers[" + to_string(i) + "].faceTexture").c_str()), i);
-	}
-}

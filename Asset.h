@@ -10,45 +10,12 @@
 #include <glm/ext/matrix_clip_space.hpp> // GLM: perspective and ortho
 #include <glm/gtc/type_ptr.hpp> // GLM: access to the value_ptr
 #include <glad/glad.h>
-
-#include "SceneObjects.h"
-#include "Camera.h"
 #include "helper/glslprogram.h"
 
-#define bufferCount 3
+#include "Mesh.h"
 
 using namespace std;
 using namespace glm;
-
-class Material {
-public:
-	vec4 ambient;
-	float shininess;
-
-	int activeTextureLayers = 0;
-	struct textureLayer {
-		GLuint faceTexture;
-	} textureLayers[10];
-
-	void SetUniforms(GLuint programHandle);
-
-	void AddTexture(GLuint program, string file);
-};
-
-class MeshData {
-public:
-	vector<vec4> colourSet;
-
-	vector<vec3> vertexSet;
-	vector<vec3> normalSet;
-
-	vector<vec2> texCooSet;
-};
-
-class MeshComponents : public MeshData {
-public:
-	vector<ivec3> indexSet;
-};
 
 class AssetData {
 public:
@@ -58,32 +25,6 @@ public:
 	vec3 scale = vec3(1);
 
 	Material mat;
-};
-
-class Mesh {
-private:
-
-public:
-	GLuint buffers[bufferCount];
-	GLuint vaoBuffer;
-
-	MeshComponents* components;
-	MeshData* data = 0x0;
-
-	string name;
-	string material;
-
-	Mesh(string mesh_name);
-
-	bool MeshEqual(Mesh* m);
-
-	void Build(bool generateColours = false);
-
-	void Draw();
-
-	void Dump(ofstream* fileStr);
-
-	void Render(GLuint programHandle, AssetData* assetData, SceneObjects* sceneObjects);
 };
 
 class Asset {
