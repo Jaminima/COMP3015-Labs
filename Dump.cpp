@@ -6,13 +6,21 @@
 #include<string>
 #include <algorithm>
 
+#define lengthStringSize (size_t)8
+
 inline string GetFormattedLengthString(int length) {
 	string old_str = to_string(length);
 	const size_t n_zero = 8;
 
-	auto new_str = std::string(n_zero - std::min(n_zero, old_str.length()), '0') + old_str;
+	auto new_str = std::string(lengthStringSize - std::min(n_zero, old_str.length()), '0') + old_str;
 
 	return string(new_str);
+}
+
+inline void WriteTextWithLen(ofstream* fileStr,string text) {
+	string textLen = GetFormattedLengthString(text.size());
+	fileStr->write(textLen.c_str(), textLen.size());
+	fileStr->write(text.c_str(), text.size());
 }
 
 template<typename T>
@@ -23,12 +31,15 @@ inline void DumpVertex(ofstream* fileStr, std::vector<T>* vec) {
 	fileStr->write((char*)vec->data(), vec->size() * sizeof(T));
 }
 
-void Mesh::Dump(ofstream* fileStr)
+void Mesh::Dump(ofstream* fileStr, Mesh* parent)
 {
-	string nameLen = GetFormattedLengthString(name.size());
-	fileStr->write(nameLen.c_str(), nameLen.size());
+	if (subMesh != 0x0) subMesh->Dump(fileStr, this);
 
-	fileStr->write(name.c_str(), name.size());
+	string n = parent != 0x0 ? parent->name + "-" + name : name;
+
+	WriteTextWithLen(fileStr, n);
+
+	WriteTextWithLen(fileStr, material);
 
 	DumpVertex(fileStr, &this->data->vertexSet);
 	DumpVertex(fileStr, &this->data->texCooSet);
@@ -61,6 +72,28 @@ int BuildVector(vector<T>* vec, char* data, int idx) {
 	return dLen + 8;
 }
 
+Mesh* findOrNewMesh(vector<Mesh>* meshes, string name) {
+	for (int i = 0; i < meshes->size(); i++) {
+		Mesh* m = &meshes->at(i);
+		if (m->name == name) {
+			return m;
+		}
+	}
+	return new Mesh(name);
+}
+
+inline string GetTextWithLength(char* strBuff, int startIdx) {
+	string lenStr(lengthStringSize,'\0');
+	memcpy(lenStr.data(), &strBuff[startIdx], lengthStringSize);
+
+	int len = stoi(lenStr);
+
+	string val(len, '\0');
+	memcpy(val.data(), &strBuff[startIdx + lengthStringSize], len);
+
+	return val;
+}
+
 bool Asset::TryLoadDump()
 {
 	string filePath = "./assets/dumps/" + srcFile + ".dump";
@@ -80,30 +113,40 @@ bool Asset::TryLoadDump()
 
 		int idx = 0;
 		while (idx < sz * 0.9) {
-			string lenStr;
-			memcpy((void*)lenStr.data(), &str_buff[idx], 8);
+			string name = GetTextWithLength(str_buff, idx);
 
-			int len = stoi(lenStr);
+			idx += name.size() + lengthStringSize;
 
-			idx += 8;
+			Mesh* m = new Mesh(name);
+			delete m->components;
 
-			string name;
-			memcpy((void*)name.data(), &str_buff[idx], len);
+			string mat = GetTextWithLength(str_buff, idx);
+			m->material = mat;
 
-			idx += len;
+			idx += mat.size() + lengthStringSize;
 
-			Mesh m(name);
-			m.data = new MeshData();
+			idx += BuildVector(&m -> data->vertexSet, str_buff, idx);
 
-			idx += BuildVector(&m.data->vertexSet, str_buff, idx);
+			idx += BuildVector(&m -> data->texCooSet, str_buff, idx);
 
-			idx += BuildVector(&m.data->texCooSet, str_buff, idx);
+			idx += BuildVector(&m -> data->normalSet, str_buff, idx);
 
-			idx += BuildVector(&m.data->normalSet, str_buff, idx);
+			int name_seperator = name.find("-");
 
-			this->meshses.push_back(m);
+			if (name_seperator > 0) {
+				m -> name = name.substr(name_seperator+1);
+				
+				string parentMeshName = name.substr(0, name_seperator);
+				Mesh* parent = findOrNewMesh(&this->meshses, parentMeshName);
 
-			string total = to_string(m.data->vertexSet.size() + m.data->texCooSet.size() + m.data->normalSet.size());
+				parent->subMesh = new SubMesh(m, parent->subMesh);
+				this->meshses.push_back(*parent);
+			}
+			else {
+				this->meshses.push_back(*m);
+			}
+
+			string total = to_string(m->data->vertexSet.size() + m->data->texCooSet.size() + m->data->normalSet.size());
 
 			printf("Loaded Dump For Mesh %s Containing %s Elements\n", name.c_str(), total.c_str());
 		}
@@ -126,7 +169,7 @@ void Asset::Dump()
 
 	int meshCount = this->meshses.size();
 	for (int i = 0; i < meshCount; i++) {
-		this->meshses[i].Dump(&fileStr);
+		this->meshses[i].Dump(&fileStr, 0x0);
 	}
 
 	fileStr.flush();

@@ -5,9 +5,6 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Src\Assets">
-      <UniqueIdentifier>{1e112ae3-9275-4918-913f-739789fee7ba}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Shaders">
       <UniqueIdentifier>{d6ca4009-877c-4d89-9774-b4c1370f02f1}</UniqueIdentifier>
     </Filter>
@@ -26,6 +23,12 @@
     <Filter Include="Shaders\configurable">
       <UniqueIdentifier>{e08e7da4-39ed-4fa6-938d-951647e7624d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Scene">
+      <UniqueIdentifier>{1e112ae3-9275-4918-913f-739789fee7ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Scene\Assets">
+      <UniqueIdentifier>{7797ba22-d83d-4a49-af04-abb6cf54c210}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -40,12 +43,6 @@
     <ClCompile Include="scenebasic_uniform.cpp">
       <Filter>Src</Filter>
     </ClCompile>
-    <ClCompile Include="Mesh.cpp">
-      <Filter>Src\Assets</Filter>
-    </ClCompile>
-    <ClCompile Include="Asset.cpp">
-      <Filter>Src\Assets</Filter>
-    </ClCompile>
     <ClCompile Include="utils.cpp">
       <Filter>Src\Misc</Filter>
     </ClCompile>
@@ -53,19 +50,28 @@
       <Filter>Src\Misc</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
-      <Filter>Src\Assets</Filter>
+      <Filter>Src\Scene</Filter>
     </ClCompile>
     <ClCompile Include="helper\scene.cpp">
       <Filter>Src\Helper</Filter>
     </ClCompile>
     <ClCompile Include="Light.cpp">
-      <Filter>Src\Assets</Filter>
+      <Filter>Src\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset.cpp">
+      <Filter>Src\Scene\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Src\Scene\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>Src\Scene\Assets</Filter>
     </ClCompile>
     <ClCompile Include="Dump.cpp">
-      <Filter>Src\Assets</Filter>
+      <Filter>Src\Scene\Assets</Filter>
     </ClCompile>
     <ClCompile Include="Comparison.cpp">
-      <Filter>Src\Assets</Filter>
+      <Filter>Src\Scene\Assets</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -114,23 +120,29 @@
     <ClInclude Include="scenebasic_uniform.h">
       <Filter>Src</Filter>
     </ClInclude>
-    <ClInclude Include="Asset.h">
-      <Filter>Src\Assets</Filter>
-    </ClInclude>
     <ClInclude Include="utils.h">
       <Filter>Src\Misc</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
-      <Filter>Src\Assets</Filter>
+      <Filter>Src\Scene</Filter>
     </ClInclude>
     <ClInclude Include="TextureLoad.h">
       <Filter>Src\Helper</Filter>
     </ClInclude>
     <ClInclude Include="Light.h">
-      <Filter>Src\Assets</Filter>
+      <Filter>Src\Scene</Filter>
     </ClInclude>
     <ClInclude Include="SceneObjects.h">
-      <Filter>Src\Assets</Filter>
+      <Filter>Src\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset.h">
+      <Filter>Src\Scene\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>Src\Scene\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Src\Scene\Assets</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

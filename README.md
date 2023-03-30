@@ -35,3 +35,7 @@ Historical shaders are provided in <u>**/shaders**</u> and give a look into the 
 The asset loading code is mainly located withing <u>**Asset.cpp**</u> and attempts to parse suitable .obj files into memory. In here code related to the loading and exporting of dumps is located.
 
 The dump system takes the data arrays constructed from the parsing of .obj files and puts them into formatted files. Such that the mesh data can be read in a far more rapid time. From tests it has taken loading times from 20~ seconds to <2 seconds, a significant improvement!
+
+## Self Assessed Grade
+
+I believe I have acheived the **<u>50-60</u>** range. As i have satisified the majority of elements in this band, excluding the Skybox which I did not tackle. I do satisfy parts of <u>**60-70**</u> (>1 model & light) however I believe this is only enough to strengthen my mark not push me up a band.

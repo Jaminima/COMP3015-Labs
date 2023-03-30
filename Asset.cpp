@@ -6,7 +6,6 @@
 #include <sstream>
 #include <string>
 
-#include "TextureLoad.h"
 #include "SceneObjects.h"
 #include "Light.h"
 #include "helper/glslprogram.h"
@@ -96,6 +95,14 @@ void Asset::ExecuteOBJOperation(string opCode, vector<string> operands)
 		return;
 	}
 
+	else if (opCode == "g") {
+		Mesh* m = new Mesh(operands[0]);
+
+		Mesh* back = &this->meshses.back();
+
+		back->subMesh = new SubMesh(m, back->subMesh);
+	}
+
 	else if (opCode == "mtllib") {
 		this->materialFiles.push_back(operands[0]);
 
@@ -114,7 +121,12 @@ void Asset::ExecuteOBJOperation(string opCode, vector<string> operands)
 
 	Mesh* m = &this->meshses.back();
 
-	if (opCode == "usemtl") m->material = operands[0];
+	if (opCode == "usemtl") {
+		if (m->subMesh != 0x0)
+			m->subMesh->mesh->material = operands[0];
+		else
+			m->material = operands[0];
+	}
 
 	else if (opCode == "v") {
 		vec3 vertex(stof(operands[0]), stof(operands[1]), stof(operands[2]));
@@ -180,6 +192,8 @@ void Asset::AppendPointToMesh(string idx, Mesh* m)
 {
 	vector<string> faceData = split(idx, "/");
 
+	if (m->subMesh != 0x0) m = m->subMesh->mesh;
+
 	ivec3 face;
 
 	switch (faceData.size())
@@ -218,7 +232,7 @@ void Asset::Build(bool generateColours)
 
 	int meshCount = this->meshses.size();
 	for (int i = 0; i < meshCount; i++) {
-		this->meshses[i].Build(generateColours);
+		this->meshses[i].Build(0x0);
 	}
 }
 
@@ -251,25 +265,3 @@ void Asset::Render(GLuint programHandle, SceneObjects* sceneObjects)
 	}
 }
 
-void Material::AddTexture(GLuint program, string file)
-{
-	loadTexture(textureLayers[activeTextureLayers].faceTexture, "./assets/textures/" + file);
-	activeTextureLayers++;
-}
-
-inline void Material::SetUniforms(GLuint programHandle) {
-	GLuint ref = glGetUniformLocation(programHandle, "Mat.ambient");
-	glUniform4fv(ref, 1, glm::value_ptr(ambient));
-
-	ref = glGetUniformLocation(programHandle, "Mat.shininess");
-	glUniform1f(ref, shininess);
-
-	ref = glGetUniformLocation(programHandle, "activeTextureLayers");
-	glUniform1i(ref, activeTextureLayers);
-
-	for (int i = 0; i < activeTextureLayers; i++) {
-		glActiveTexture(GL_TEXTURE0 + i);
-		glBindTexture(GL_TEXTURE_2D, textureLayers[i].faceTexture);
-		glUniform1i(glGetUniformLocation(programHandle, ("textureLayers[" + to_string(i) + "].faceTexture").c_str()), i);
-	}
-}
