@@ -10,12 +10,23 @@
 using namespace glm;
 
 class Lighting {
+private:
+	vec4 ViewPosition;
+
 public:
 	vec4 ambient;
 	vec4 diffuse;
 	vec3 Position;
-	vec4 ViewPosition;
 	vec4 specular;
+
+	Lighting(vec4 _ambient = vec4(0), vec4 _diffuse = vec4(0), vec3 _position = vec3(0), vec4 _specular = vec4(0)) {
+		this->ambient = _ambient;
+		this->diffuse = _diffuse;
+		this->Position = _position;
+		this->specular = _specular;
+
+		this->ViewPosition = vec4(0);
+	}
 
 	void SetUniforms(GLuint programHandle, int lightId = 0) {
 		string lightStr = "Light[" + to_string(lightId) + "].";

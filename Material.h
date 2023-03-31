@@ -10,6 +10,8 @@ using namespace std;
 
 class Material {
 public:
+	string name;
+
 	vec4 ambient;
 	float shininess;
 
@@ -17,6 +19,8 @@ public:
 	struct textureLayer {
 		GLuint faceTexture;
 	} textureLayers[10];
+
+	Material(string name, vec4 ambient = vec4(0), float shininess = 1);
 
 	void SetUniforms(GLuint programHandle);
 

@@ -54,34 +54,59 @@ void SceneBasic_Uniform::initScene()
 
 	sceneObjects.UpdateAllLightViews(&sceneObjects.cam);
 
+
+	//Cube
 	cube.FullInit();
-	cube.assetData->mat.ambient = vec4(0.1);
-	cube.assetData->mat.shininess = 10;
-	cube.assetData->mat.AddTexture(prog.getHandle(), "stone.png");
-	cube.assetData->mat.AddTexture(prog.getHandle(), "dirt.png");
+	Material cubeMat("CubeMat", vec4(0.1), 10);
+	cubeMat.AddTexture(prog.getHandle(), "stone.png");
+	cubeMat.AddTexture(prog.getHandle(), "dirt.png");
 
+	cube.materials.push_back(cubeMat);
+	cube.SetDefaultMat(&cube.materials.back());
+
+
+	//Torus
 	torus.FullInit();
-	torus.assetData->mat.ambient = vec4(0.1);
-	torus.assetData->mat.shininess = 10;
+	Material torusMat("TorusMat", vec4(0.1), 10);
 
+	torus.materials.push_back(torusMat);
+	torus.SetDefaultMat(&torus.materials.back());
+
+
+	//Flat Plane
 	flatplane.FullInit();
-	flatplane.assetData->mat.ambient = vec4(0.1);
-	flatplane.assetData->mat.shininess = 10;
 	flatplane.assetData->scale = vec3(10);
-	flatplane.assetData->mat.AddTexture(prog.getHandle(), "floor.png");
 
+	Material flatplaneMat("FlatPlaneMat", vec4(0.1), 10);
+	flatplaneMat.AddTexture(prog.getHandle(), "floor.png");
+
+	flatplane.materials.push_back(flatplaneMat);
+	flatplane.SetDefaultMat(&flatplane.materials.back());
+
+
+	//Fox
 	fox.FullInit();
-	fox.assetData->mat.ambient = vec4(0.1);
-	fox.assetData->mat.shininess = 10;
 	fox.assetData->scale = vec3(0.05);
-	fox.assetData->mat.AddTexture(prog.getHandle(), "fox.png");
-	fox.assetData->mat.AddTexture(prog.getHandle(), "dirt.png");
 
+	Material foxMat("FoxMat", vec4(0.1), 10);
+	foxMat.AddTexture(prog.getHandle(), "fox.png");
+	foxMat.AddTexture(prog.getHandle(), "dirt.png");
+
+	fox.materials.push_back(foxMat);
+	fox.SetDefaultMat(&fox.materials.back());
+
+
+	//Submarinee
 	submarine.FullInit();
-	submarine.assetData->mat.ambient = vec4(0.1);
-	submarine.assetData->mat.shininess = 10;
 	submarine.assetData->scale = vec3(0.1);
 
+	Material submarineMat("SubMat", vec4(0.1), 1);
+
+	submarine.materials.push_back(submarineMat);
+	submarine.SetDefaultMat(&submarine.materials.back());
+
+
+	//Wrap Up
 	std::cout << std::endl;
 
 	prog.printActiveUniforms();

@@ -3,6 +3,13 @@
 #include <glm/gtc/type_ptr.hpp> // GLM: access to the value_ptr
 #include "TextureLoad.h"
 
+Material::Material(string name, vec4 ambient, float shininess)
+{
+	this->name = name;
+	this->ambient = ambient;
+	this->shininess = shininess;
+}
+
 void Material::SetUniforms(GLuint programHandle) {
 	GLuint ref = glGetUniformLocation(programHandle, "Mat.ambient");
 	glUniform4fv(ref, 1, glm::value_ptr(ambient));

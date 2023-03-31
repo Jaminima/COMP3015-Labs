@@ -39,7 +39,7 @@ void Mesh::Dump(ofstream* fileStr, Mesh* parent)
 
 	WriteTextWithLen(fileStr, n);
 
-	WriteTextWithLen(fileStr, material);
+	WriteTextWithLen(fileStr, mat != 0x0 ? mat->name : "");
 
 	DumpVertex(fileStr, &this->data->vertexSet);
 	DumpVertex(fileStr, &this->data->texCooSet);
@@ -121,7 +121,7 @@ bool Asset::TryLoadDump()
 			delete m->components;
 
 			string mat = GetTextWithLength(str_buff, idx);
-			m->material = mat;
+			m->mat = new Material(mat);
 
 			idx += mat.size() + lengthStringSize;
 

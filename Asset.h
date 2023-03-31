@@ -23,8 +23,6 @@ public:
 	vec3 rotation;
 
 	vec3 scale = vec3(1);
-
-	Material mat;
 };
 
 class Asset {
@@ -37,12 +35,15 @@ public:
 	AssetData* assetData;
 
 	vector<string> materialFiles;
+	vector<Material> materials;
 
 	vector<Mesh> meshses;
 
 	Asset(string srcFile);
 
 	Asset(string srcFile, vec3 pos = vec3(), vec3 rot = vec3());
+
+	void SetDefaultMat(Material* mat);
 
 	void FullInit();
 

@@ -123,9 +123,9 @@ void Asset::ExecuteOBJOperation(string opCode, vector<string> operands)
 
 	if (opCode == "usemtl") {
 		if (m->subMesh != 0x0)
-			m->subMesh->mesh->material = operands[0];
+			m->subMesh->mesh->mat = new Material(operands[0]);
 		else
-			m->material = operands[0];
+			m->mat = new Material(operands[0]);
 	}
 
 	else if (opCode == "v") {
@@ -252,6 +252,13 @@ Asset::Asset(string srcFile, vec3 pos, vec3 rot)
 	this->assetData->rotation = rot;
 }
 
+void Asset::SetDefaultMat(Material* mat)
+{
+	for (int i=0; i < meshses.size(); i++) {
+		meshses[i].mat = mat;
+	}
+}
+
 void Asset::FullInit()
 {
 	this->Load();
@@ -262,8 +269,6 @@ void Asset::FullInit()
 
 void Asset::Render(GLuint programHandle, SceneObjects* sceneObjects)
 {
-	assetData->mat.SetUniforms(programHandle);
-
 	/*if (this->hasTexture) glBindTexture(GL_TEXTURE_2D, this->texture);
 	else glBindTexture(GL_TEXTURE_2D, 0);*/
 

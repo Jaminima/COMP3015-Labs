@@ -59,11 +59,13 @@ void Mesh::Draw()
 	glBindVertexArray(0);
 }
 
-Mesh::Mesh(string mesh_name)
+Mesh::Mesh(string mesh_name, Material* mat)
 {
 	this->name = mesh_name;
 	this->components = new MeshComponents();
 	this->data = new MeshData();
+
+	this->mat = mat;
 }
 
 template<typename T>
@@ -114,6 +116,8 @@ void Mesh::Build(Mesh* parent)
 void Mesh::Render(GLuint programHandle, AssetData* assetData, SceneObjects* sceneObjects)
 {
 	if (this->subMesh != 0x0) this->subMesh->Render(programHandle, assetData, sceneObjects);
+
+	this->mat->SetUniforms(programHandle);
 
 	glm::mat4 model(1.0f);
 	model = glm::translate(model, vec3(assetData->position));

@@ -39,9 +39,9 @@ public:
 
 	SubMesh* subMesh = 0x0;
 	string name;
-	string material;
+	Material* mat;
 
-	Mesh(string mesh_name);
+	Mesh(string mesh_name, Material* mat = 0x0);
 
 	bool MeshEqual(Mesh* m);
 
