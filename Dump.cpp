@@ -84,12 +84,12 @@ Mesh* findOrNewMesh(vector<Mesh>* meshes, string name) {
 
 inline string GetTextWithLength(char* strBuff, int startIdx) {
 	string lenStr(lengthStringSize,'\0');
-	memcpy(lenStr.data(), &strBuff[startIdx], lengthStringSize);
+	memcpy((void*)lenStr.data(), &strBuff[startIdx], lengthStringSize);
 
 	int len = stoi(lenStr);
 
 	string val(len, '\0');
-	memcpy(val.data(), &strBuff[startIdx + lengthStringSize], len);
+	memcpy((void*)val.data(), &strBuff[startIdx + lengthStringSize], len);
 
 	return val;
 }
