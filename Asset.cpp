@@ -252,6 +252,14 @@ Asset::Asset(string srcFile, vec3 pos, vec3 rot)
 	this->assetData->rotation = rot;
 }
 
+void Asset::FullInit()
+{
+	this->Load();
+	this->Build();
+	this->Dump();
+	this->Draw();
+}
+
 void Asset::Render(GLuint programHandle, SceneObjects* sceneObjects)
 {
 	assetData->mat.SetUniforms(programHandle);

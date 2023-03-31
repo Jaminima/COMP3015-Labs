@@ -54,53 +54,37 @@ void SceneBasic_Uniform::initScene()
 
 	sceneObjects.UpdateAllLightViews(&sceneObjects.cam);
 
-	cube.Load();
+	cube.FullInit();
 	cube.assetData->mat.ambient = vec4(0.1);
 	cube.assetData->mat.shininess = 10;
 	cube.assetData->mat.AddTexture(prog.getHandle(), "stone.png");
 	cube.assetData->mat.AddTexture(prog.getHandle(), "dirt.png");
-	cube.Build();
-	cube.Dump();
 
-	torus.Load();
+	torus.FullInit();
 	torus.assetData->mat.ambient = vec4(0.1);
 	torus.assetData->mat.shininess = 10;
-	torus.Build();
-	torus.Dump();
 
-	flatplane.Load();
+	flatplane.FullInit();
 	flatplane.assetData->mat.ambient = vec4(0.1);
 	flatplane.assetData->mat.shininess = 10;
 	flatplane.assetData->scale = vec3(10);
 	flatplane.assetData->mat.AddTexture(prog.getHandle(), "floor.png");
-	flatplane.Build();
-	flatplane.Dump();
 
-	fox.Load();
+	fox.FullInit();
 	fox.assetData->mat.ambient = vec4(0.1);
 	fox.assetData->mat.shininess = 10;
 	fox.assetData->scale = vec3(0.05);
 	fox.assetData->mat.AddTexture(prog.getHandle(), "fox.png");
 	fox.assetData->mat.AddTexture(prog.getHandle(), "dirt.png");
-	fox.Build();
-	fox.Dump();
 
-	submarine.Load();
+	submarine.FullInit();
 	submarine.assetData->mat.ambient = vec4(0.1);
 	submarine.assetData->mat.shininess = 10;
 	submarine.assetData->scale = vec3(0.1);
-	submarine.Build();
-	submarine.Dump();
 
 	std::cout << std::endl;
 
 	prog.printActiveUniforms();
-
-	cube.Draw();
-	torus.Draw();
-	fox.Draw();
-	submarine.Draw();
-	flatplane.Draw();
 
 	sceneObjects.cam.updateMatrix();
 }

@@ -44,6 +44,8 @@ public:
 
 	Asset(string srcFile, vec3 pos = vec3(), vec3 rot = vec3());
 
+	void FullInit();
+
 	bool AssetEqual(Asset* a);
 
 	void Load(bool ignoreDump = false);
