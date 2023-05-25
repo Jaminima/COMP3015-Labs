@@ -55,8 +55,13 @@ void SceneBasic_Uniform::initScene()
 
 	sceneObjects.UpdateAllLightViews(&sceneObjects.cam);
 
-	//Full Screen Quad
+	//Full Screen 
 	fullScreenQuad.FullInit();
+	Material fsqMat("fsqMat", vec4(0), 0);
+	fsqMat.AddTexture(prog.getHandle(), "blank.png");
+
+	fullScreenQuad.materials.push_back(fsqMat);
+	fullScreenQuad.SetDefaultMat(&fullScreenQuad.materials.back());
 
 	//Cube
 	cube.FullInit();
@@ -223,6 +228,7 @@ void SceneBasic_Uniform::render()
 	sceneObjects.shaderConf.ignoreTransforms = true;
 	sceneObjects.SetShaderConfig(programHandle);
 
+	fullScreenQuad.materials[0].textureLayers[0].faceTexture = renderedTexture;
 	fullScreenQuad.Render(programHandle, &sceneObjects);
 
 	glDeleteFramebuffers(1, &frameBuffer);
