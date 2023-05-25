@@ -125,6 +125,9 @@ void SceneBasic_Uniform::compile()
 		//prog.compileShader("shader/phong/phong.frag");
 		//prog.compileShader("shader/toon.frag");
 		prog.compileShader("shader/configurable/configurable.frag");
+
+
+		prog.compileShader("shader/advanced/edge.frag");
 		prog.link();
 		prog.use();
 	}
