@@ -172,6 +172,32 @@ void SceneBasic_Uniform::update(float dt)
 	boundAngles(torRot);
 }
 
+void SceneBasic_Uniform::primaryRender(GLuint programHandle) {
+	sceneObjects.shaderConf.enableEdge = false;
+	sceneObjects.shaderConf.ignoreTransforms = false;
+	sceneObjects.SetShaderConfig(programHandle);
+
+	sceneObjects.SetAllLightUniforms(programHandle);
+
+	cube.Render(programHandle, &sceneObjects);
+	torus.Render(programHandle, &sceneObjects);
+	fox.Render(programHandle, &sceneObjects);
+	submarine.Render(programHandle, &sceneObjects);
+	flatplane.Render(programHandle, &sceneObjects);
+}
+
+void SceneBasic_Uniform::postProcessing(GLuint programHandle, GLuint renderedTexture)
+{
+	sceneObjects.shaderConf.enableEdge = true;
+	sceneObjects.shaderConf.ignoreTransforms = true;
+	sceneObjects.SetShaderConfig(programHandle);
+
+	fullScreenQuad.materials[0].textureLayers[0].faceTexture = renderedTexture;
+	fullScreenQuad.Render(programHandle, &sceneObjects);
+}
+
+
+
 void SceneBasic_Uniform::render()
 {
 	glClearColor(0, 0, 0, 1);
@@ -210,26 +236,14 @@ void SceneBasic_Uniform::render()
 
 	GLuint programHandle = prog.getHandle();
 
-	sceneObjects.shaderConf.enableEdge = false;
-	sceneObjects.shaderConf.ignoreTransforms = false;
-	sceneObjects.SetShaderConfig(programHandle);
-
-	sceneObjects.SetAllLightUniforms(programHandle);
-
-	cube.Render(programHandle, &sceneObjects);
-	torus.Render(programHandle, &sceneObjects);
-	fox.Render(programHandle, &sceneObjects);
-	submarine.Render(programHandle, &sceneObjects);
-	flatplane.Render(programHandle, &sceneObjects);
+	primaryRender(programHandle);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-	sceneObjects.shaderConf.enableEdge = true;
-	sceneObjects.shaderConf.ignoreTransforms = true;
-	sceneObjects.SetShaderConfig(programHandle);
+	glDisable(GL_DEPTH_TEST);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	fullScreenQuad.materials[0].textureLayers[0].faceTexture = renderedTexture;
-	fullScreenQuad.Render(programHandle, &sceneObjects);
+	postProcessing(programHandle, renderedTexture);
 
 	glDeleteFramebuffers(1, &frameBuffer);
 	glDeleteTextures(1, &renderedTexture);

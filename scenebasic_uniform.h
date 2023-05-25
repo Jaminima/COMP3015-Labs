@@ -21,6 +21,10 @@ public:
 	void initScene();
 	void update(float t);
 	void render();
+
+	void primaryRender(GLuint programHandle);
+	void postProcessing(GLuint programHandle, GLuint renderedTexture);
+
 	void resize(int, int);
 
 	// Inherited via Scene
