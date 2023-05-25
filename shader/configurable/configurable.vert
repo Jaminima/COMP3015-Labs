@@ -15,6 +15,7 @@ uniform mat4 ModelViewMatrix;
 uniform mat3 NormalMatrix;
 
 uniform int lights = 1;
+uniform bool ignoreTransforms = false;
 
 uniform struct Lighting {
     vec4 ambient;
@@ -57,21 +58,28 @@ vec4 ProcessLight(int lightID, vec3 N, vec3 V, vec3 view, vec3 normal){
 
 void main()
 {
-    vec3 N = normalize(NormalMatrix * VertexNormal);
-    vec3 V = vec3(ModelViewMatrix * vec4(VertexPosition,1));
+    if (!ignoreTransforms){
+        vec3 N = normalize(NormalMatrix * VertexNormal);
+        vec3 V = vec3(ModelViewMatrix * vec4(VertexPosition,1));
 
-    vec3 view = normalize(-V);
-    vec3 normal = normalize(N);
+        vec3 view = normalize(-V);
+        vec3 normal = normalize(N);
 
-    vec4 lightColour = vec4(0);
+        vec4 lightColour = vec4(0);
 
-    for (int i=0;i<lights;i++){
-        lightColour+=ProcessLight(i,N,V,view,normal);
+        for (int i=0;i<lights;i++){
+            lightColour+=ProcessLight(i,N,V,view,normal);
+        }
+
+
+        Color = lightColour/lights;
+        vTextureCoordinate = VertexTextureCoordinate;
+
+        gl_Position = ProjectionMatrix * ModelViewMatrix * vec4(VertexPosition,1.0);
     }
-
-
-    Color = lightColour/lights;
-    vTextureCoordinate = VertexTextureCoordinate;
-
-    gl_Position = ProjectionMatrix * ModelViewMatrix * vec4(VertexPosition,1.0);
+    else{
+        Color = vec4(255);
+        vTextureCoordinate = VertexTextureCoordinate;
+        gl_Position = mat4(1) * vec4(VertexPosition,1.0);
+    }
 }

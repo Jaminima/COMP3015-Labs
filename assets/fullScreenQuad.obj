@@ -1,0 +1,24 @@
+# Blender v2.76 (sub 0) OBJ File: ''
+# www.blender.org
+mtllib fsq.mtl
+o fsq
+
+v -1.0 -1.0 0.0
+v 1.0 -1.0 0.0
+v 1.0 1.0 0.0
+
+v -1.0 -1.0 0.0
+v 1.0 1.0 0.0
+v -1.0 1.0 0.0
+
+vt 0.0 0.0
+vt 1.0 0.0
+vt 1.0 1.0
+
+vt 0.0 0.0
+vt 1.0 1.0
+vt 0.0 1.0
+usemtl Material
+s off
+f 1/1/ 2/2/ 3/3/
+f 6/6/ 4/4/ 5/5/ 

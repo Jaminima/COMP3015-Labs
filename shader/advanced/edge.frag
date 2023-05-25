@@ -1,5 +1,5 @@
 #version 460
 
-void main() {
-    
+vec4 calculateEdge() {
+    return vec4(255);
 }

@@ -29,6 +29,7 @@ Asset submarine("submarine.obj", vec3(5, -1, 50));
 Asset torus("torus2.obj", vec3(0, -0.6, -2), vec3(40, 45, 0));
 Asset flatplane("flatplane.obj", vec3(0, -1, 0));
 Asset cube("cube2.obj", vec3(-2, 0, -2));
+Asset fullScreenQuad("fullScreenQuad.obj", vec3());
 
 void SceneBasic_Uniform::initScene()
 {
@@ -54,6 +55,8 @@ void SceneBasic_Uniform::initScene()
 
 	sceneObjects.UpdateAllLightViews(&sceneObjects.cam);
 
+	//Full Screen Quad
+	fullScreenQuad.FullInit();
 
 	//Cube
 	cube.FullInit();
@@ -117,6 +120,7 @@ void SceneBasic_Uniform::initScene()
 void SceneBasic_Uniform::compile()
 {
 	try {
+
 		//prog.compileShader("shader/phong/phong.vert");
 		//prog.compileShader("shader/phong/blinn.vert");
 		//prog.compileShader("shader/phong/blinnMulti.vert");
@@ -126,14 +130,10 @@ void SceneBasic_Uniform::compile()
 		//prog.compileShader("shader/toon.frag");
 		prog.compileShader("shader/configurable/configurable.frag");
 
+		prog.compileShader("shader/advanced/edge.frag");
+
 		prog.link();
 		prog.use();
-
-		advprog = new GLSLProgram[1];
-
-		advprog[0].compileShader("shader/advanced/edge.frag");
-		/*advprog[0].link();
-		advprog[0].use();*/
 	}
 	catch (GLSLProgramException& e) {
 		cerr << e.what() << endl;
@@ -205,6 +205,8 @@ void SceneBasic_Uniform::render()
 
 	GLuint programHandle = prog.getHandle();
 
+	sceneObjects.shaderConf.enableEdge = false;
+	sceneObjects.shaderConf.ignoreTransforms = false;
 	sceneObjects.SetShaderConfig(programHandle);
 
 	sceneObjects.SetAllLightUniforms(programHandle);
@@ -217,6 +219,14 @@ void SceneBasic_Uniform::render()
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
+	sceneObjects.shaderConf.enableEdge = true;
+	sceneObjects.shaderConf.ignoreTransforms = true;
+	sceneObjects.SetShaderConfig(programHandle);
+
+	fullScreenQuad.Render(programHandle, &sceneObjects);
+
+	glDeleteFramebuffers(1, &frameBuffer);
+	glDeleteTextures(1, &renderedTexture);
 }
 
 void SceneBasic_Uniform::resize(int w, int h)

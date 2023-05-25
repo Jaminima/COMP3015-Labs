@@ -30,7 +30,7 @@
       <UniqueIdentifier>{7797ba22-d83d-4a49-af04-abb6cf54c210}</UniqueIdentifier>
     </Filter>
     <Filter Include="Shaders\advanced">
-      <UniqueIdentifier>{cdd10b9d-c22e-4096-98b7-22d72f1a9ab5}</UniqueIdentifier>
+      <UniqueIdentifier>{afec7a98-0a1c-40ee-bea6-f68715fe8d94}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

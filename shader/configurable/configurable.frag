@@ -13,6 +13,7 @@ uniform struct textureLayer{
 
 uniform int toonBands = 10;
 uniform bool enableToon = false;
+uniform bool enableEdge = false;
 
 vec4 toon(vec4 c){
     c *= toonBands;
@@ -37,10 +38,16 @@ vec4 mergeTextures(){
     return vec4(texCum/activeTextureLayers,1);
 }
 
+vec4 calculateEdge();
+
 void main() {
     FragColor = mergeTextures() * Color;
 
-    if (enableToon){
+    if (enableEdge){
+        FragColor = calculateEdge();
+    }
+
+    else if (enableToon){
         FragColor = toon(FragColor);
     }
 }

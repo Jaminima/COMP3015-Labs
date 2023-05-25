@@ -14,6 +14,8 @@ public:
 	{
 	public:
 		bool enableToon = false;
+		bool enableEdge = false;
+		bool ignoreTransforms = false;
 		int toonBands = 10;
 
 		bool toggle_global = 1, toggle_ambient = 1, toggle_diffuse = 1, toggle_specular = 1;
@@ -27,6 +29,12 @@ public:
 	void SetShaderConfig(GLuint programHandle) {
 		GLuint ref = glGetUniformLocation(programHandle, "enableToon");
 		glUniform1i(ref, shaderConf.enableToon);
+
+		ref = glGetUniformLocation(programHandle, "enableEdge");
+		glUniform1i(ref, shaderConf.enableEdge);
+
+		ref = glGetUniformLocation(programHandle, "ignoreTransforms");
+		glUniform1i(ref, shaderConf.ignoreTransforms);
 
 		ref = glGetUniformLocation(programHandle, "toonBands");
 		glUniform1i(ref, shaderConf.toonBands);

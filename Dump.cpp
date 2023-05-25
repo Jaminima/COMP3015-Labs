@@ -96,7 +96,7 @@ inline string GetTextWithLength(char* strBuff, int startIdx) {
 
 bool Asset::TryLoadDump()
 {
-	string filePath = "./assets/dumps/" + srcFile + ".dump";
+	string filePath = "./assets/" + srcFile + ".dump";
 
 	ifstream file(filePath, ios::binary | ios::ate);
 	if (file) {
@@ -165,7 +165,7 @@ void Asset::Dump()
 		return;
 	}
 
-	ofstream fileStr("./assets/dumps/" + srcFile + ".dump", ios::binary);
+	ofstream fileStr("./assets/" + srcFile + ".dump", ios::binary);
 
 	int meshCount = this->meshses.size();
 	for (int i = 0; i < meshCount; i++) {
