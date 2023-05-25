@@ -126,10 +126,14 @@ void SceneBasic_Uniform::compile()
 		//prog.compileShader("shader/toon.frag");
 		prog.compileShader("shader/configurable/configurable.frag");
 
-
-		prog.compileShader("shader/advanced/edge.frag");
 		prog.link();
 		prog.use();
+
+		advprog = new GLSLProgram[1];
+
+		advprog[0].compileShader("shader/advanced/edge.frag");
+		/*advprog[0].link();
+		advprog[0].use();*/
 	}
 	catch (GLSLProgramException& e) {
 		cerr << e.what() << endl;
@@ -175,6 +179,30 @@ void SceneBasic_Uniform::render()
 	glDepthFunc(GL_LEQUAL);
 	glEnable(GL_DEPTH_TEST);
 
+	//http://www.opengl-tutorial.org/intermediate-tutorials/tutorial-14-render-to-texture/
+	//https://gist.github.com/Hebali/6ebfc66106459aacee6a9fac029d0115
+	GLuint frameBuffer;
+	glGenFramebuffers(1, &frameBuffer);
+	glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
+
+	GLuint renderedTexture;
+	glGenTextures(1, &renderedTexture);
+
+	// "Bind" the newly created texture : all future texture functions will modify this texture
+	glBindTexture(GL_TEXTURE_2D, renderedTexture);
+
+	// Give an empty image to OpenGL ( the last "0" )
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+	// Set "renderedTexture" as our colour attachement #0
+	glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, renderedTexture, 0);
+
+	// Set the list of draw buffers.
+	GLenum DrawBuffers[1] = { GL_COLOR_ATTACHMENT0 };
+	glDrawBuffers(1, DrawBuffers); // "1" is the size of DrawBuffers
+
 	GLuint programHandle = prog.getHandle();
 
 	sceneObjects.SetShaderConfig(programHandle);
@@ -186,6 +214,9 @@ void SceneBasic_Uniform::render()
 	fox.Render(programHandle, &sceneObjects);
 	submarine.Render(programHandle, &sceneObjects);
 	flatplane.Render(programHandle, &sceneObjects);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
 }
 
 void SceneBasic_Uniform::resize(int w, int h)

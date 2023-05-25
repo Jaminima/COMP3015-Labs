@@ -11,6 +11,7 @@ class SceneBasic_Uniform : public Scene
 private:
 	GLuint vaoHandle;
 	GLSLProgram prog;
+	GLSLProgram *advprog;
 	float angle;
 
 	void compile();
