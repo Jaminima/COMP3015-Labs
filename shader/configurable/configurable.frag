@@ -39,12 +39,14 @@ vec4 mergeTextures(){
 }
 
 vec4 calculateEdge();
+vec4 calculateGausian();
 
 void main() {
     FragColor = mergeTextures() * Color;
 
     if (enableEdge){
-        FragColor = calculateEdge();
+        //FragColor = calculateEdge();
+        FragColor = calculateGausian();
     }
 
     else if (enableToon){
