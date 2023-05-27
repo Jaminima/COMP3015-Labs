@@ -16,10 +16,10 @@ public:
 		bool enableToon = false;
 		bool enableEdge = false;
 		bool enableBlur = false;
-		bool ignoreTransforms = false;
+		bool isPostProcessing = false;
 		int toonBands = 10;
 
-		bool toggle_global = 1, toggle_ambient = 1, toggle_diffuse = 1, toggle_specular = 1;
+		bool toggle_global = 1, toggle_ambient = 1, toggle_diffuse = 1, toggle_specular = 1, toggle_blur = 1, toggle_edge = 1;
 	} shaderConf;
 
 	void AddLight(Lighting l) {
@@ -38,8 +38,8 @@ public:
 		ref = glGetUniformLocation(programHandle, "enableBlur");
 		glUniform1i(ref, shaderConf.enableBlur);
 
-		ref = glGetUniformLocation(programHandle, "ignoreTransforms");
-		glUniform1i(ref, shaderConf.ignoreTransforms);
+		ref = glGetUniformLocation(programHandle, "isPostProcessing");
+		glUniform1i(ref, shaderConf.isPostProcessing);
 
 		ref = glGetUniformLocation(programHandle, "toonBands");
 		glUniform1i(ref, shaderConf.toonBands);

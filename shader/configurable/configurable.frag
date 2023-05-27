@@ -15,6 +15,7 @@ uniform int toonBands = 10;
 uniform bool enableToon = false;
 uniform bool enableEdge = false;
 uniform bool enableBlur = false;
+uniform bool isPostProcessing = false;
 
 vec4 toon(vec4 c){
     c *= toonBands;
@@ -44,21 +45,27 @@ vec4 calculateGausian(vec2 idx);
 vec4 calculateEdgeWithGausian(vec2 idx);
 
 void main() {
-    FragColor = mergeTextures() * Color;
+    if (isPostProcessing){
+        if (enableEdge && enableBlur){
+            FragColor = calculateEdgeWithGausian(vTextureCoordinate);
+        }
 
-    if (enableEdge && enableBlur){
-        FragColor = calculateEdgeWithGausian(vTextureCoordinate);
+        else if (enableEdge){
+            FragColor = calculateEdge(vTextureCoordinate);
+        }
+
+        else if (enableBlur){
+            FragColor = calculateGausian(vTextureCoordinate);
+        }
+        else{
+            FragColor = texture(textureLayers[0].faceTexture, vTextureCoordinate);
+        }
     }
+    else{
+        FragColor = mergeTextures() * Color;
 
-    else if (enableEdge){
-        FragColor = calculateEdge(vTextureCoordinate);
-    }
-
-    else if (enableBlur){
-        FragColor = calculateGausian(vTextureCoordinate);
-    }
-
-    else if (enableToon){
-        FragColor = toon(FragColor);
+        if (enableToon){
+            FragColor = toon(FragColor);
+        }
     }
 }

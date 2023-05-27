@@ -15,7 +15,7 @@ uniform mat4 ModelViewMatrix;
 uniform mat3 NormalMatrix;
 
 uniform int lights = 1;
-uniform bool ignoreTransforms = false;
+uniform bool isPostProcessing = false;
 
 uniform struct Lighting {
     vec4 ambient;
@@ -58,7 +58,7 @@ vec4 ProcessLight(int lightID, vec3 N, vec3 V, vec3 view, vec3 normal){
 
 void main()
 {
-    if (!ignoreTransforms){
+    if (!isPostProcessing){
         vec3 N = normalize(NormalMatrix * VertexNormal);
         vec3 V = vec3(ModelViewMatrix * vec4(VertexPosition,1));
 

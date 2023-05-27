@@ -202,7 +202,7 @@ void SceneBasic_Uniform::update(float dt)
 
 void SceneBasic_Uniform::primaryRender(GLuint programHandle) {
 	sceneObjects.shaderConf.enableEdge = false;
-	sceneObjects.shaderConf.ignoreTransforms = false;
+	sceneObjects.shaderConf.isPostProcessing = false;
 	sceneObjects.SetShaderConfig(programHandle);
 
 	sceneObjects.SetAllLightUniforms(programHandle);
@@ -216,9 +216,9 @@ void SceneBasic_Uniform::primaryRender(GLuint programHandle) {
 
 void SceneBasic_Uniform::postProcessing(GLuint programHandle, GLuint renderedTexture)
 {
-	sceneObjects.shaderConf.enableEdge = true;
-	sceneObjects.shaderConf.enableBlur = true;
-	sceneObjects.shaderConf.ignoreTransforms = true;
+	sceneObjects.shaderConf.enableEdge = sceneObjects.shaderConf.toggle_edge;
+	sceneObjects.shaderConf.enableBlur = sceneObjects.shaderConf.toggle_blur;
+	sceneObjects.shaderConf.isPostProcessing = true;
 	sceneObjects.SetShaderConfig(programHandle);
 
 	fullScreenQuad.materials[0].textureLayers[0].faceTexture = renderedTexture;
@@ -282,6 +282,12 @@ void SceneBasic_Uniform::keyActve(int key, int mods, float dt)
 			break;
 		case 'S':
 			sceneObjects.shaderConf.toggle_specular = !sceneObjects.shaderConf.toggle_specular;
+			break;
+		case 'E':
+			sceneObjects.shaderConf.toggle_edge = !sceneObjects.shaderConf.toggle_edge;
+			break;
+		case 'B':
+			sceneObjects.shaderConf.toggle_blur = !sceneObjects.shaderConf.toggle_blur;
 			break;
 		}
 	}
