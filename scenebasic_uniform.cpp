@@ -217,6 +217,7 @@ void SceneBasic_Uniform::primaryRender(GLuint programHandle) {
 void SceneBasic_Uniform::postProcessing(GLuint programHandle, GLuint renderedTexture)
 {
 	sceneObjects.shaderConf.enableEdge = true;
+	sceneObjects.shaderConf.enableBlur = true;
 	sceneObjects.shaderConf.ignoreTransforms = true;
 	sceneObjects.SetShaderConfig(programHandle);
 

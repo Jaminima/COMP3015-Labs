@@ -15,6 +15,7 @@ public:
 	public:
 		bool enableToon = false;
 		bool enableEdge = false;
+		bool enableBlur = false;
 		bool ignoreTransforms = false;
 		int toonBands = 10;
 
@@ -32,6 +33,10 @@ public:
 
 		ref = glGetUniformLocation(programHandle, "enableEdge");
 		glUniform1i(ref, shaderConf.enableEdge);
+
+
+		ref = glGetUniformLocation(programHandle, "enableBlur");
+		glUniform1i(ref, shaderConf.enableBlur);
 
 		ref = glGetUniformLocation(programHandle, "ignoreTransforms");
 		glUniform1i(ref, shaderConf.ignoreTransforms);
