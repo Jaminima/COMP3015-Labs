@@ -34,6 +34,7 @@ Asset fullScreenQuad("fullScreenQuad.obj", vec3());
 void SceneBasic_Uniform::initScene()
 {
 	compile();
+	initFBO();
 
 	Lighting l1 = Lighting();
 
@@ -122,6 +123,33 @@ void SceneBasic_Uniform::initScene()
 	sceneObjects.cam.updateMatrix();
 }
 
+void SceneBasic_Uniform::initFBO()
+{
+	//http://www.opengl-tutorial.org/intermediate-tutorials/tutorial-14-render-to-texture/
+	//https://gist.github.com/Hebali/6ebfc66106459aacee6a9fac029d0115
+	glGenFramebuffers(1, &frameBuffer);
+	glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
+
+	glGenTextures(1, &renderedTexture);
+
+	// "Bind" the newly created texture : all future texture functions will modify this texture
+	glBindTexture(GL_TEXTURE_2D, renderedTexture);
+
+	// Give an empty image to OpenGL ( the last "0" )
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+	// Set "renderedTexture" as our colour attachement #0
+	glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, renderedTexture, 0);
+
+	// Set the list of draw buffers.
+	GLenum DrawBuffers[1] = { GL_COLOR_ATTACHMENT0 };
+	glDrawBuffers(1, DrawBuffers); // "1" is the size of DrawBuffers
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
 void SceneBasic_Uniform::compile()
 {
 	try {
@@ -200,6 +228,8 @@ void SceneBasic_Uniform::postProcessing(GLuint programHandle, GLuint renderedTex
 
 void SceneBasic_Uniform::render()
 {
+	glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
+
 	glClearColor(0, 0, 0, 1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -210,43 +240,16 @@ void SceneBasic_Uniform::render()
 	glDepthFunc(GL_LEQUAL);
 	glEnable(GL_DEPTH_TEST);
 
-	//http://www.opengl-tutorial.org/intermediate-tutorials/tutorial-14-render-to-texture/
-	//https://gist.github.com/Hebali/6ebfc66106459aacee6a9fac029d0115
-	GLuint frameBuffer;
-	glGenFramebuffers(1, &frameBuffer);
-	glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
-
-	GLuint renderedTexture;
-	glGenTextures(1, &renderedTexture);
-
-	// "Bind" the newly created texture : all future texture functions will modify this texture
-	glBindTexture(GL_TEXTURE_2D, renderedTexture);
-
-	// Give an empty image to OpenGL ( the last "0" )
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-
-	// Set "renderedTexture" as our colour attachement #0
-	glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, renderedTexture, 0);
-
-	// Set the list of draw buffers.
-	GLenum DrawBuffers[1] = { GL_COLOR_ATTACHMENT0 };
-	glDrawBuffers(1, DrawBuffers); // "1" is the size of DrawBuffers
-
 	GLuint programHandle = prog.getHandle();
 
 	primaryRender(programHandle);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-	glDisable(GL_DEPTH_TEST);
+	//glDisable(GL_DEPTH_TEST);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	postProcessing(programHandle, renderedTexture);
-
-	glDeleteFramebuffers(1, &frameBuffer);
-	glDeleteTextures(1, &renderedTexture);
 }
 
 void SceneBasic_Uniform::resize(int w, int h)

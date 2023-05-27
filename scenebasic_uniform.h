@@ -19,6 +19,7 @@ public:
 	SceneBasic_Uniform();
 
 	void initScene();
+	void initFBO();
 	void update(float t);
 	void render();
 
