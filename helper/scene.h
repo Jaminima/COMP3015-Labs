@@ -85,5 +85,5 @@ public:
 protected:
 	bool m_animate;
 
-	GLuint frameBuffer, renderedTexture;
+	GLuint frameBuffer, renderedTexture, depthBuffer;
 };
