@@ -78,6 +78,7 @@ void SceneBasic_Uniform::initScene()
 	torus.FullInit();
 	Material torusMat("TorusMat", vec4(0.1), 10);
 
+	torusMat.canDisintergrate = true;
 	torus.materials.push_back(torusMat);
 	torus.SetDefaultMat(&torus.materials.back());
 
@@ -204,6 +205,7 @@ void SceneBasic_Uniform::update(float dt)
 void SceneBasic_Uniform::primaryRender(GLuint programHandle) {
 	sceneObjects.shaderConf.enableEdge = false;
 	sceneObjects.shaderConf.isPostProcessing = false;
+	sceneObjects.shaderConf.time++;
 	sceneObjects.SetShaderConfig(programHandle);
 
 	sceneObjects.SetAllLightUniforms(programHandle);

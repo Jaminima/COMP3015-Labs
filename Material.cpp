@@ -20,6 +20,9 @@ void Material::SetUniforms(GLuint programHandle) {
 	ref = glGetUniformLocation(programHandle, "activeTextureLayers");
 	glUniform1i(ref, activeTextureLayers);
 
+	ref = glGetUniformLocation(programHandle, "disintergrate");
+	glUniform1i(ref, canDisintergrate);
+
 	for (int i = 0; i < activeTextureLayers; i++) {
 		glActiveTexture(GL_TEXTURE0 + i);
 		glBindTexture(GL_TEXTURE_2D, textureLayers[i].faceTexture);

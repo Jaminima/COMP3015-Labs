@@ -14,6 +14,7 @@ public:
 
 	vec4 ambient;
 	float shininess;
+	bool canDisintergrate = false;
 
 	int activeTextureLayers = 0;
 	struct textureLayer {

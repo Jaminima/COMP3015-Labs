@@ -2,6 +2,9 @@
 
 in vec2 vTextureCoordinate;
 
+uniform int time=0;
+uniform bool disintergrate=false;
+
 uniform struct textureLayer{
     sampler2D faceTexture;
 } textureLayers[10];
@@ -12,7 +15,7 @@ float rand(vec2 co){
 
 void applyDisintergration(){
     float r = rand(gl_FragCoord.xy);
-    if (r < 0.5){
+    if (disintergrate && r < 1 - (1000.0f/time)){
         discard;
     }
 }

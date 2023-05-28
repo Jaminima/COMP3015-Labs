@@ -17,7 +17,7 @@ public:
 		bool enableEdge = false;
 		bool enableBlur = false;
 		bool isPostProcessing = false;
-		int toonBands = 10;
+		int toonBands = 10, time = 0;
 
 		bool toggle_global = 1, toggle_ambient = 1, toggle_diffuse = 1, toggle_specular = 1, toggle_blur = 1, toggle_edge = 1;
 	} shaderConf;
@@ -33,7 +33,6 @@ public:
 
 		ref = glGetUniformLocation(programHandle, "enableEdge");
 		glUniform1i(ref, shaderConf.enableEdge);
-
 
 		ref = glGetUniformLocation(programHandle, "enableBlur");
 		glUniform1i(ref, shaderConf.enableBlur);
@@ -55,6 +54,9 @@ public:
 
 		ref = glGetUniformLocation(programHandle, "toggle_specular");
 		glUniform1i(ref, shaderConf.toggle_specular);
+
+		ref = glGetUniformLocation(programHandle, "time");
+		glUniform1i(ref, shaderConf.time);
 	}
 
 	void SetAllLightUniforms(GLuint programHandle) {
