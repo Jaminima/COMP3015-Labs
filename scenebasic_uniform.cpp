@@ -287,6 +287,10 @@ void SceneBasic_Uniform::keyActve(int key, int mods, float dt)
 		case 'S':
 			sceneObjects.shaderConf.toggle_specular = !sceneObjects.shaderConf.toggle_specular;
 			break;
+		case 'I':
+			sceneObjects.shaderConf.enableDisintergrate = !sceneObjects.shaderConf.enableDisintergrate;
+			sceneObjects.shaderConf.time = 0;
+			break;
 		case 'E':
 			sceneObjects.shaderConf.toggle_edge = !sceneObjects.shaderConf.toggle_edge;
 			break;

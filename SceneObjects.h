@@ -16,6 +16,7 @@ public:
 		bool enableToon = false;
 		bool enableEdge = false;
 		bool enableBlur = false;
+		bool enableDisintergrate = false;
 		bool isPostProcessing = false;
 		int toonBands = 10;
 		float time = 0;
@@ -37,6 +38,9 @@ public:
 
 		ref = glGetUniformLocation(programHandle, "enableBlur");
 		glUniform1i(ref, shaderConf.enableBlur);
+
+		ref = glGetUniformLocation(programHandle, "enableDisintergrate");
+		glUniform1i(ref, shaderConf.enableDisintergrate);
 
 		ref = glGetUniformLocation(programHandle, "isPostProcessing");
 		glUniform1i(ref, shaderConf.isPostProcessing);

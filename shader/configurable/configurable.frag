@@ -15,6 +15,7 @@ uniform int toonBands = 10;
 uniform bool enableToon = false;
 uniform bool enableEdge = false;
 uniform bool enableBlur = false;
+uniform bool enableDisintergrate=false;
 uniform bool isPostProcessing = false;
 
 vec4 toon(vec4 c){
@@ -66,7 +67,9 @@ void main() {
     else{
         FragColor = mergeTextures() * Color;
 
-        applyDisintergration();
+        if (enableDisintergrate){
+            applyDisintergration();
+        }
 
         if (enableToon){
             FragColor = toon(FragColor);
