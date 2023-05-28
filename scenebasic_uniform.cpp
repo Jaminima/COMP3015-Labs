@@ -178,6 +178,8 @@ void SceneBasic_Uniform::compile()
 
 void SceneBasic_Uniform::update(float dt)
 {
+	sceneObjects.shaderConf.time += dt;
+
 	processKeys(dt);
 
 	vec3* cubeRot = &cube.assetData->rotation;
@@ -205,7 +207,6 @@ void SceneBasic_Uniform::update(float dt)
 void SceneBasic_Uniform::primaryRender(GLuint programHandle) {
 	sceneObjects.shaderConf.enableEdge = false;
 	sceneObjects.shaderConf.isPostProcessing = false;
-	sceneObjects.shaderConf.time++;
 	sceneObjects.SetShaderConfig(programHandle);
 
 	sceneObjects.SetAllLightUniforms(programHandle);

@@ -17,9 +17,10 @@ public:
 		bool enableEdge = false;
 		bool enableBlur = false;
 		bool isPostProcessing = false;
-		int toonBands = 10, time = 0;
+		int toonBands = 10;
+		float time = 0;
 
-		bool toggle_global = 1, toggle_ambient = 1, toggle_diffuse = 1, toggle_specular = 1, toggle_blur = 1, toggle_edge = 1;
+		bool toggle_global = 1, toggle_ambient = 1, toggle_diffuse = 1, toggle_specular = 1, toggle_blur = 0, toggle_edge = 0;
 	} shaderConf;
 
 	void AddLight(Lighting l) {
@@ -56,7 +57,7 @@ public:
 		glUniform1i(ref, shaderConf.toggle_specular);
 
 		ref = glGetUniformLocation(programHandle, "time");
-		glUniform1i(ref, shaderConf.time);
+		glUniform1f(ref, shaderConf.time);
 	}
 
 	void SetAllLightUniforms(GLuint programHandle) {
