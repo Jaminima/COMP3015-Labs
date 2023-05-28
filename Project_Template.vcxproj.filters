@@ -100,7 +100,10 @@
     <None Include="shader\configurable\configurable.vert">
       <Filter>Shaders\configurable</Filter>
     </None>
-    <None Include="shader\advanced\edge.frag">
+    <None Include="shader\advanced\filters.frag">
+      <Filter>Shaders\advanced</Filter>
+    </None>
+    <None Include="shader\advanced\disintergration.frag">
       <Filter>Shaders\advanced</Filter>
     </None>
   </ItemGroup>

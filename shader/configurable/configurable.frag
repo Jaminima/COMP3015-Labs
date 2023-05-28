@@ -44,6 +44,8 @@ vec4 calculateEdge(vec2 idx);
 vec4 calculateGausian(vec2 idx);
 vec4 calculateEdgeWithGausian(vec2 idx);
 
+void applyDisintergration();
+
 void main() {
     if (isPostProcessing){
         if (enableEdge && enableBlur){
@@ -63,6 +65,8 @@ void main() {
     }
     else{
         FragColor = mergeTextures() * Color;
+
+        applyDisintergration();
 
         if (enableToon){
             FragColor = toon(FragColor);

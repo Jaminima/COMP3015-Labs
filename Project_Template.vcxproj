@@ -166,7 +166,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="shader\advanced\edge.frag" />
+    <None Include="shader\advanced\disintergration.frag" />
+    <None Include="shader\advanced\filters.frag" />
     <None Include="shader\configurable\configurable.frag" />
     <None Include="shader\configurable\configurable.vert" />
     <None Include="shader\phong\blinn.vert" />

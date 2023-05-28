@@ -163,7 +163,8 @@ void SceneBasic_Uniform::compile()
 		//prog.compileShader("shader/toon.frag");
 		prog.compileShader("shader/configurable/configurable.frag");
 
-		prog.compileShader("shader/advanced/edge.frag");
+		prog.compileShader("shader/advanced/filters.frag");
+		prog.compileShader("shader/advanced/disintergration.frag");
 
 		prog.link();
 		prog.use();
