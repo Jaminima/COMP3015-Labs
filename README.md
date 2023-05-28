@@ -38,4 +38,10 @@ The dump system takes the data arrays constructed from the parsing of .obj files
 
 ## Self Assessed Grade
 
+### Coursework 1
+
 I believe I have acheived the **<u>50-60</u>** range. As i have satisified the majority of elements in this band, excluding the Skybox which I did not tackle. I do satisfy parts of <u>**60-70**</u> (>1 model & light) however I believe this is only enough to strengthen my mark not push me up a band.
+
+### Coursework 2
+
+I believe I have acheived the **<u>50-60</u>** range. I have satisified this band, implementing disintergration, render to texture, edge detection and gaussian blur.
