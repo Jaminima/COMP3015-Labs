@@ -14,6 +14,8 @@
 
 [COMP3015 CW1 - YouTube](https://youtu.be/t2YZadDNy1w)
 
+[COMP3015 CW2 - YouTube](https://youtu.be/E1YhH3i6VVE)
+
 ## Code
 
 My first step when working with this project was to transform the rendering code into OOP. This enabled me to more easily load in, render and configure individual assets. It also resulted in a far more elegant looking code.
